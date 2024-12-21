@@ -51,6 +51,16 @@
     usbutils # lsusb
   ];
 
+  # Install VS Code
+  programs.vscode = {
+  enable = true;
+  extensions = with pkgs.vscode-extensions; [
+    dracula-theme.theme-dracula
+    vscodevim.vim
+    yzhang.markdown-all-in-one
+    ];
+  };
+
   # basic configuration of git, please change to your own
   programs.git = {
     enable = true;
