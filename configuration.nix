@@ -118,6 +118,7 @@
     htop
     nixfmt-rfc-style # autoformatter
     jupyter-all # jupyter packaged with ipython, etc.
+    gnuchess
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
