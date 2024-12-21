@@ -134,6 +134,9 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
+  # Fix for SVG icons not showing
+  services.xserver.gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
