@@ -108,6 +108,7 @@
     git
     manix # for looking up nix documentation
     libreoffice-qt6-fresh
+    htop
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
