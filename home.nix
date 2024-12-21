@@ -20,7 +20,6 @@
   #     xxx
   # '';
 
-
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
     # here is some command line tools I use frequently
@@ -58,14 +57,6 @@
     userName = "Andrew Stewart";
     userEmail = "stewart.jonathan.a@gmail.com";
   };
-
-  programs.bash = {
-    enable = true;
-    enableCompletion = true;
-    # TODO add your custom bashrc here
-    bashrcExtra = ''
-      export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
-    '';
 
   # This value determines the home Manager release that your
   # configuration is compatible with. This helps avoid breakage
