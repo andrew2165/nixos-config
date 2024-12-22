@@ -1,5 +1,5 @@
 {
-  description = "NixOS VM configuration";
+  description = "NixOS VM configuration & more";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
