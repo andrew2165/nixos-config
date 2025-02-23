@@ -16,6 +16,9 @@
   boot.loader.grub.useOSProber = true;
   boot.loader.grub.configurationLimit = 10; # Number of configs retained
 
+  # Enable automatic garbage collection
+  nix.gc.automatic = true;
+
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -31,7 +34,6 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
     LC_IDENTIFICATION = "en_US.UTF-8";
