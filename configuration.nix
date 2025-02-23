@@ -82,7 +82,7 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.andrew = {
-    name = "Andrew";
+    name = "andrew";
     isNormalUser = true;
     description = "andrew";
     extraGroups = [

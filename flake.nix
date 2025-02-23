@@ -18,7 +18,7 @@
     { nixpkgs, home-manager, ... } @ input: {
       nixosConfigurations = {
         # TODO please change the hostname to your own
-        nixos = nixpkgs.lib.nixosSystem {
+        nixosVM = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
 
           modules = [
@@ -30,7 +30,6 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
 
-              # TODO replace ryan with your own username
               home-manager.users.andrew = import ./home.nix;
 
               # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
