@@ -14,6 +14,7 @@
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.useOSProber = true;
+  boot.loader.grub.configurationLimit = 10 # Number of configs retained
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -81,6 +82,7 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.andrew = {
+    name = "Andrew";
     isNormalUser = true;
     description = "andrew";
     extraGroups = [
