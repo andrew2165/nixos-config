@@ -123,6 +123,7 @@
     nixfmt-rfc-style # autoformatter
     jupyter-all # jupyter packaged with ipython, etc.
     gnuchess
+    bottles
   ];
 
   programs.steam = {
@@ -151,7 +152,7 @@
     # content of authorized_keys file
     # note: ssh-copy-id will add user@your-machine after the public key
     # but we can remove the "@your-machine" part
-];
+  ];
 
   # Fix for SVG icons not showing
   services.xserver.gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
