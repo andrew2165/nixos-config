@@ -146,7 +146,7 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-  users.users."user".openssh.authorizedKeys.keys = [
+  users.users."andrew".openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFTSJ+CahcqGec/tsOcZDxsAyFQ1h8TxCgVxq1bSePr jonathanstewart" 
     # content of authorized_keys file
     # note: ssh-copy-id will add user@your-machine after the public key
