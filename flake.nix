@@ -12,10 +12,44 @@
       # to avoid problems caused by different versions of nixpkgs.
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Nixos-generators for building live images and sd card builds
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    { self, nixpkgs, home-manager, ... } @ input: {
+    { self, nixpkgs, home-manager, nixos-generators, ... } @ input: {
+
+        # Formats used by Nixos-generators as a module
+        # A single nixos config outputting multiple formats.
+        # Alternatively put this in a configuration.nix.
+        nixosModules.myFormats = { config, ... }: {
+          imports = [
+            nixos-generators.nixosModules.all-formats
+          ];
+
+          nixpkgs.hostPlatform = "x86_64-linux";
+
+          # customize an existing format
+          formatConfigs.vmware = { config, ... }: {
+            services.openssh.enable = true;
+          };
+
+          # define a new format
+          #formatConfigs.my-custom-format = { config, modulesPath, ... }: {
+          #  imports = [ "${toString modulesPath}/installer/cd-dvd/installation-cd-base.nix" ];
+          # formatAttr = "isoImage";
+          #  fileExtension = ".iso";
+          #  networking.wireless.networks = {
+              # ...
+          #  };
+          #};
+        };
+      
+      # Defining my Nixos Configurations
       nixosConfigurations = {
         
         nixosVM = nixpkgs.lib.nixosSystem {
@@ -36,11 +70,12 @@
           ];
         };
 
-        # TODO: rewrite using Nixos Generators so it actually runs
+        # TODO: Check to see if this works
+        # https://github.com/nix-community/nixos-generators
+        # run ex: nix build .#nixosConfigurations.my-machine.config.formats.vmware
         nixosISO = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
           modules = [
-            "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+            self.nixosModules.myFormats
             ./liveISO/configuration.nix
           ];
         };
