@@ -15,7 +15,7 @@
   };
 
   outputs =
-    { nixpkgs, home-manager, ... } @ input: {
+    { self, nixpkgs, home-manager, ... } @ input: {
       nixosConfigurations = {
         
         nixosVM = nixpkgs.lib.nixosSystem {
@@ -33,6 +33,13 @@
 
               # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
             }
+          ];
+        };
+
+        nixosISO = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./liveISO/configuration.nix
           ];
         };
       };
