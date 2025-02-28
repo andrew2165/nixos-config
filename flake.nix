@@ -36,6 +36,7 @@
           ];
         };
 
+        # TODO: rewrite using Nixos Generators so it actually runs
         nixosISO = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
