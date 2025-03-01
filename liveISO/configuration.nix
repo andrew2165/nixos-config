@@ -17,6 +17,16 @@
     services.xserver.desktopManager.gnome.enable = true;
     services.gnome.games.enable = true;
 
+    networking.wireless.enable = true;
+    networking.wireless.networks = {};
+
+    networking.networkmanager = {
+        enable=true;
+        unmanaged = [
+        "*" "except:type:wwan" "except:type:gsm"
+        ];
+    };
+
     # Enable OpenGL
     hardware.graphics = {
         enable = true;
