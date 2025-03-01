@@ -19,12 +19,13 @@
 
     networking.wireless.enable = true;
     networking.wireless.networks = {};
+    networking.wireless.wifi.backend = "iwd";
 
     networking.networkmanager = {
         enable=true;
-        unmanaged = [
+        /* unmanaged = [
         "*" "except:type:wwan" "except:type:gsm"
-        ];
+        ]; */
     };
 
     # Enable OpenGL

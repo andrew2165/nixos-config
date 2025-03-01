@@ -79,9 +79,10 @@
           ];
         };
 
-        # TODO: Check to see if this works
+        # TODO: Check to see if the network settings in the config work
         # https://github.com/nix-community/nixos-generators
         # run ex: nix build .#nixosConfigurations.my-machine.config.formats.vmware
+        # for this one: nix build .#nixosConfigurations.nixosISO.config.formats.nixosISO
         nixosISO = nixpkgs.lib.nixosSystem {
           modules = [
             self.nixosModules.myFormats
