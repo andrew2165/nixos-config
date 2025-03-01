@@ -3,13 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+
     # home-manager, used for managing user configuration
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
-      # The `follows` keyword in inputs is used for inheritance.
-      # Here, `inputs.nixpkgs` of home-manager is kept consistent with
-      # the `inputs.nixpkgs` of the current flake,
-      # to avoid problems caused by different versions of nixpkgs.
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -29,13 +26,16 @@
         nixosModules.myFormats = { config, ... }: {
           imports = [
             nixos-generators.nixosModules.all-formats
-          ];
+          ];niv
 
           nixpkgs.hostPlatform = "x86_64-linux";
 
           # customize an existing format
           formatConfigs.vmware = { config, ... }: {
             services.openssh.enable = true;
+            modules = [
+              ./liveISO/configuration.nix
+            ];
           };
 
           # define a new format
@@ -76,7 +76,7 @@
         nixosISO = nixpkgs.lib.nixosSystem {
           modules = [
             self.nixosModules.myFormats
-            ./liveISO/configuration.nix
+            #./liveISO/configuration.nix
           ];
         };
       };
