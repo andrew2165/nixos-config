@@ -6,10 +6,13 @@
         lm_sensors
         fastfetch
         bottles
-        ];
+        networkmanager
+        curl
+    ];
+
+    programs.firefox.enable = true;
     
     nixpkgs.config.allowUnfree = true;
-
 
     # Endable Gnome desktop
     services.xserver.enable = true;
@@ -17,15 +20,16 @@
     services.xserver.desktopManager.gnome.enable = true;
     services.gnome.games.enable = true;
 
-    networking.wireless.enable = true;
-    networking.wireless.networks = {};
-    networking.wireless.wifi.backend = "iwd";
+    #networking.wireless.enable = true;
+    #networking.wireless.networks = {};
+    #networking.wireless.wifi.backend = "iwd";
 
     networking.networkmanager = {
         enable=true;
         /* unmanaged = [
         "*" "except:type:wwan" "except:type:gsm"
         ]; */
+        #wifi.backend = "iwd";
     };
 
     # Enable OpenGL
