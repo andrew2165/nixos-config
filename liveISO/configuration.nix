@@ -5,10 +5,17 @@
         git
         lm_sensors
         fastfetch
+        bottles
         ];
     
     nixpkgs.config.allowUnfree = true;
 
+
+    # Endable Gnome desktop
+    services.xserver.enable = true;
+    services.xserver.displayManager.gdm.enable = true;
+    services.xserver.desktopManager.gnome.enable = true;
+    services.gnome.games.enable = true;
 
     # Enable OpenGL
     hardware.graphics = {
