@@ -31,13 +31,13 @@
           nixpkgs.hostPlatform = "x86_64-linux";
 
           formatConfigs.nixosISO = { config, modulesPath, ... }: {
-            imports = [ "${toString modulesPath}/installer/cd-dvd/installation-cd-base.nix" ];
-            formatAttr = "isoImage";
-            fileExtension = ".iso";
-            modules = [
+            imports = [ 
+              "${toString modulesPath}/installer/cd-dvd/installation-cd-base.nix"
               ./liveISO/configuration.nix
             ];
-          }
+            formatAttr = "isoImage";
+            fileExtension = ".iso";
+          };
 
           # customize an existing format
           # formatConfigs.vmware = { config, ... }: {
