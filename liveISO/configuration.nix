@@ -32,6 +32,19 @@
         #wifi.backend = "iwd";
     };
 
+    users.users.andrew = {
+        name = "andrew";
+        isNormalUser = true;
+        description = "andrew";
+        extraGroups = [
+        "networkmanager"
+        "wheel"
+        ];
+        packages = with pkgs; [
+        thunderbird
+        ];
+    };
+
     # Enable OpenGL
     hardware.graphics = {
         enable = true;
