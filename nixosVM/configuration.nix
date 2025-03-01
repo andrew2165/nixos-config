@@ -124,6 +124,7 @@
     jupyter-all # jupyter packaged with ipython, etc.
     gnuchess
     bottles
+    tmux
   ];
 
   programs.steam = {
