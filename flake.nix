@@ -26,17 +26,26 @@
         nixosModules.myFormats = { config, ... }: {
           imports = [
             nixos-generators.nixosModules.all-formats
-          ];niv
+          ];
 
           nixpkgs.hostPlatform = "x86_64-linux";
 
-          # customize an existing format
-          formatConfigs.vmware = { config, ... }: {
-            services.openssh.enable = true;
+          formatConfigs.nixosISO = { config, modulesPath, ... }: {
+            imports = [ "${toString modulesPath}/installer/cd-dvd/installation-cd-base.nix" ];
+            formatAttr = "isoImage";
+            fileExtension = ".iso";
             modules = [
               ./liveISO/configuration.nix
             ];
-          };
+          }
+
+          # customize an existing format
+          # formatConfigs.vmware = { config, ... }: {
+          #   services.openssh.enable = true;
+          #   modules = [
+          #     ./liveISO/configuration.nix
+          #   ];
+          # };
 
           # define a new format
           #formatConfigs.my-custom-format = { config, modulesPath, ... }: {
