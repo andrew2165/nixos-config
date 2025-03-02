@@ -10,6 +10,8 @@
         curl
     ];
 
+    nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    
     programs.firefox.enable = true;
     
     nixpkgs.config.allowUnfree = true;
@@ -20,7 +22,7 @@
     services.xserver.desktopManager.gnome.enable = true;
     services.gnome.games.enable = true;
 
-    #networking.wireless.enable = true;
+    networking.wireless.enable = false;
     #networking.wireless.networks = {};
     #networking.wireless.wifi.backend = "iwd";
 
