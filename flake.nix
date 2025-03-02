@@ -20,6 +20,8 @@
   outputs =
     { self, nixpkgs, home-manager, nixos-generators, ... } @ input: {
 
+        # TODO: all the nixos generators stuff can probably get reformatted into a flake
+        # see https://github.com/nix-community/nixos-generators?tab=readme-ov-file
         # Formats used by Nixos-generators as a module
         # A single nixos config outputting multiple formats.
         # Alternatively put this in a configuration.nix.
@@ -34,6 +36,7 @@
             imports = [ 
               "${toString modulesPath}/installer/cd-dvd/installation-cd-base.nix"
               ./liveISO/configuration.nix
+              {virtualisation.diskSize = 10 * 1024;} # this might work, not sure untested
             ];
             formatAttr = "isoImage";
             fileExtension = ".iso";
@@ -59,8 +62,7 @@
         };
       
       # Defining my Nixos Configurations
-      nixosConfigurations = {
-        
+      nixosConfigurations = { 
         nixosVM = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
@@ -78,8 +80,7 @@
             }
           ];
         };
-
-        # TODO: Check to see if the network settings in the config work
+        
         # https://github.com/nix-community/nixos-generators
         # run ex: nix build .#nixosConfigurations.my-machine.config.formats.vmware
         # for this one: nix build .#nixosConfigurations.nixosISO.config.formats.nixosISO
