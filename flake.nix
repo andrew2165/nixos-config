@@ -44,6 +44,8 @@
         # for this one: nix build .#nixosConfigurations.nixosISO.config.formats.nixosISO
       };
 
+      # Nixos-Generators
+      # run: sudo nix build .#liveISO
       packages.x86_64-linux = {
         liveISO = nixos-generators.nixosGenerate {
           system = "x86_64-linux";
@@ -51,6 +53,15 @@
             ./liveISO/configuration.nix
           ];
           format = "iso";
+        };
+      };
+      packages.aarch64-linux = {
+        raspberryPi = nixos-generators.nixosGenerate {
+          system = "aarch64-linux";
+          modules = [
+            ./liveISO/configuration.nix
+          ];
+          format = "sd-aarch64";
         };
       };
     };
