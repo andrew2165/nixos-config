@@ -158,6 +158,9 @@
   # Fix for SVG icons not showing
   services.xserver.gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
 
+  # Enable binfmt emulation of aarch64-linux.
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
