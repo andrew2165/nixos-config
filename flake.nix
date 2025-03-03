@@ -15,6 +15,10 @@
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    inputs.nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -55,11 +59,14 @@
           format = "iso";
         };
       };
+      # sudo nix build .#raspberryPi --system aarch64-linux
+      # But must have cross compilation enabled, see nixos-generators documentation
       packages.aarch64-linux = {
         raspberryPi = nixos-generators.nixosGenerate {
           system = "aarch64-linux";
           modules = [
             ./liveISO/configuration.nix
+            nixos-hardware.nixosModules.raspberry-pi-3
           ];
           format = "sd-aarch64";
         };
