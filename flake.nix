@@ -63,7 +63,7 @@
       raspberryPi = nixos-generators.nixosGenerate {
         system = "aarch64-linux";
         modules = [
-          ./liveISO/configuration.nix
+          ./raspberryPi/configuration.nix
           nixos-hardware.nixosModules.raspberry-pi-3
         ];
         format = "sd-aarch64";
