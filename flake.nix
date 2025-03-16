@@ -33,7 +33,7 @@
           ./nixosVM/configuration.nix
           agenix.nixosModules.default
           {
-            environment.systemPackages = [ agenix.packages.${system}.default ];
+            environment.systemPackages = [ agenix.packages."x86_64-linux".default ];
           }
 
           # make home-manager as a module of nixos
@@ -64,7 +64,7 @@
           ./liveISO/configuration.nix 
           agenix.nixosModules.default
           {
-            environment.systemPackages = [ agenix.packages.${system}.default ];
+            environment.systemPackages = [ agenix.packages."x86_64-linux".default ];
           }
         ];
         format = "iso";
@@ -80,7 +80,7 @@
           nixos-hardware.nixosModules.raspberry-pi-3
           agenix.nixosModules.default
           {
-            environment.systemPackages = [ agenix.packages.${system}.default ];
+            environment.systemPackages = [ agenix.packages."aarch64-linux".default ];
           }
         ];
         format = "sd-aarch64";
