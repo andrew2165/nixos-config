@@ -36,6 +36,8 @@
           agenix.nixosModules.default
           {
             environment.systemPackages = [ agenix.packages."x86_64-linux".default ];
+            age.secrets."wifi-pswd".file = ../secrets/wifi-pswd.age;
+            age.secrets."nixpi-andrew-pswd".file = ../secrets/nixpi-andrew-pswd.age;
           }
 
           # make home-manager as a module of nixos
@@ -67,6 +69,8 @@
           agenix.nixosModules.default
           {
             environment.systemPackages = [ agenix.packages."x86_64-linux".default ];
+            age.secrets."wifi-pswd".file = ../secrets/wifi-pswd.age;
+            age.secrets."nixpi-andrew-pswd".file = ../secrets/nixpi-andrew-pswd.age;
           }
         ];
         format = "iso";
@@ -83,6 +87,8 @@
           agenix.nixosModules.default
           {
             environment.systemPackages = [ agenix.packages."aarch64-linux".default ];
+            age.secrets."wifi-pswd".file = ../secrets/wifi-pswd.age;
+            age.secrets."nixpi-andrew-pswd".file = ../secrets/nixpi-andrew-pswd.age;
           }
         ];
         format = "sd-aarch64";

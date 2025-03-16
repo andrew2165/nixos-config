@@ -11,8 +11,8 @@
   ];
 
   # Define Secrets Locations
-  age.secrets."wifi-pswd".file = ../secrets/wifi-pswd.age;
-  age.secrets."nixpi-andrew-pswd".file = ../secrets/nixpi-andrew-pswd.age;
+  #age.secrets."wifi-pswd".file = ../secrets/wifi-pswd.age;
+  #age.secrets."nixpi-andrew-pswd".file = ../secrets/nixpi-andrew-pswd.age;
 
   # Bootloader.
   boot.loader.grub.enable = true;
