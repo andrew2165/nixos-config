@@ -33,7 +33,8 @@
         system = "x86_64-linux";
         modules = [
           ./nixosVM/configuration.nix
-          agenix.nixosModules.default {
+          agenix.nixosModules.default 
+          {
             environment.systemPackages = [ agenix.packages."x86_64-linux".default ];
             age.secrets."wifi-pswd".file = ./secrets/wifi-pswd.age;
             age.secrets."nixpi-andrew-pswd".file = ./secrets/nixpi-andrew-pswd.age;
