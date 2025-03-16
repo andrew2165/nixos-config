@@ -2,7 +2,7 @@ let
     mbp = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFTSJ+CahcqGec/tsOcZDxsAyFQ1h8TxCgVxq1bSePr";
     endeavor-nixos = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKeyCw1VxK87xr+cYZdjqW/MIPTjxzOg7q7isrn3bdC4";
 in {
-    "battery-way-pswd.age".publicKeys = [
+    "wifi-pswd.age".publicKeys = [
         mbp 
         endeavor-nixos
     ];

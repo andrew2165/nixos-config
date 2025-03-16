@@ -10,6 +10,10 @@
     ./hardware-configuration.nix
   ];
 
+  # Define Secrets Locations
+  age.secrets."wifi-pswd-pswd".file = ../secrets/wifi-pswd-pswd.age;
+  age.secrets."nixpi-andrew-pswd".file = ../secrets/nixpi-andrew-pswd.age;
+
   # Bootloader.
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";

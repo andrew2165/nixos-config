@@ -2,6 +2,10 @@
 {
     # https://discourse.nixos.org/t/flake-to-create-a-simple-sd-image-for-rpi4-cross/35185/24
 
+    # Define Secrets Locations
+    age.secrets."wifi-pswd".file = ../secrets/wifi-pswd.age;
+    age.secrets."nixpi-andrew-pswd".file = ../secrets/nixpi-andrew-pswd.age;
+
     # TODO: get hardware scan
     # actually, do I even need to HW scan??
     imports = [
@@ -13,12 +17,13 @@
     nix.gc.automatic = true;
 
     networking.hostName = "nixPi"; # Define your hostname.
+
     #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
     networking.wireless = {
         enable = true;
         networks = {
             ClickHereForViruses = {
-                psk = ""; # TODO: develop secrets workflow and include this
+                psk = builtins.readFile config.age.secrets."wifi-pswd".path;
             };
         };
     };
@@ -43,6 +48,7 @@
         name = "andrew";
         isNormalUser = true;
         description = "andrew";
+        passwordFile = config.age.secrets."nixpi-andrew-pswd".path;
         extraGroups = [
             "networkmanager"
             "wheel"

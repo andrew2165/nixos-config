@@ -11,6 +11,8 @@
     };
 
     # For secrets Management
+    # can be run ad hoc with 
+    # nix run github:ryantm/agenix -- --help
     agenix.url = "github:ryantm/agenix";
 
     # Nixos-generators for building live images, sd card, etc.
