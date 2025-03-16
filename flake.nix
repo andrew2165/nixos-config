@@ -10,9 +10,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # For secrets Management
-    # can be run ad hoc with 
+    # Agenix for secrets Management. Can be run ad hoc with:
     # nix run github:ryantm/agenix -- --help
+    # nix run github:ryantm/agenix -- -e wifi-pswd.age
     agenix.url = "github:ryantm/agenix";
 
     # Nixos-generators for building live images, sd card, etc.
@@ -33,17 +33,15 @@
         system = "x86_64-linux";
         modules = [
           ./nixosVM/configuration.nix
-          agenix.nixosModules.default
-          {
+          agenix.nixosModules.default {
             environment.systemPackages = [ agenix.packages."x86_64-linux".default ];
-            age.secrets."wifi-pswd".file = ../secrets/wifi-pswd.age;
-            age.secrets."nixpi-andrew-pswd".file = ../secrets/nixpi-andrew-pswd.age;
+            age.secrets."wifi-pswd".file = ./secrets/wifi-pswd.age;
+            age.secrets."nixpi-andrew-pswd".file = ./secrets/nixpi-andrew-pswd.age;
           }
 
           # make home-manager as a module of nixos
           # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
-          home-manager.nixosModules.home-manager
-          {
+          home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
 
