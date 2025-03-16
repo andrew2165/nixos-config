@@ -11,7 +11,7 @@
   ];
 
   # Define Secrets Locations
-  age.secrets."wifi-pswd-pswd".file = ../secrets/wifi-pswd-pswd.age;
+  age.secrets."wifi-pswd".file = ../secrets/wifi-pswd.age;
   age.secrets."nixpi-andrew-pswd".file = ../secrets/nixpi-andrew-pswd.age;
 
   # Bootloader.
