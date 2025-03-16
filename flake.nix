@@ -1,5 +1,5 @@
 {
-  description = "NixOS VM configuration & more";
+  description = "NixOS configurations & more";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
@@ -9,6 +9,9 @@
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # For secrets Management
+    agenix.url = "github:ryantm/agenix";
 
     # Nixos-generators for building live images, sd card, etc.
     nixos-generators = {
@@ -21,13 +24,14 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-generators, nixos-hardware, ... }@input: {
+  outputs = { self, nixpkgs, home-manager, nixos-generators, nixos-hardware, agenix, ... }@input: {
     # Defining my Nixos Configurations
     nixosConfigurations = {
       nixosVM = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           ./nixosVM/configuration.nix
+          agenix.nixosModules.default
 
           # make home-manager as a module of nixos
           # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
@@ -53,7 +57,10 @@
     packages.x86_64-linux = {
       liveISO = nixos-generators.nixosGenerate {
         system = "x86_64-linux";
-        modules = [ ./liveISO/configuration.nix ];
+        modules = [ 
+          ./liveISO/configuration.nix 
+          agenix.nixosModules.default
+        ];
         format = "iso";
       };
     };
@@ -63,8 +70,9 @@
       raspberryPi = nixos-generators.nixosGenerate {
         system = "aarch64-linux";
         modules = [
-          ./raspberryPi/configuration.nix
+          ./raspberryPI/configuration.nix
           nixos-hardware.nixosModules.raspberry-pi-3
+          agenix.nixosModules.default
         ];
         format = "sd-aarch64";
       };
