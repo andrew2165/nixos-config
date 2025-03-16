@@ -69,6 +69,7 @@
           agenix.nixosModules.default
           {
             environment.systemPackages = [ agenix.packages."x86_64-linux".default ];
+            age.identityPaths = [ "/home/andrew/.ssh/id_ed25519" ];
             age.secrets."wifi-pswd".file = ../secrets/wifi-pswd.age;
             age.secrets."nixpi-andrew-pswd".file = ../secrets/nixpi-andrew-pswd.age;
           }
