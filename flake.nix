@@ -32,6 +32,9 @@
         modules = [
           ./nixosVM/configuration.nix
           agenix.nixosModules.default
+          {
+            environment.systemPackages = [ agenix.packages.${system}.default ];
+          }
 
           # make home-manager as a module of nixos
           # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
@@ -60,6 +63,9 @@
         modules = [ 
           ./liveISO/configuration.nix 
           agenix.nixosModules.default
+          {
+            environment.systemPackages = [ agenix.packages.${system}.default ];
+          }
         ];
         format = "iso";
       };
@@ -73,6 +79,9 @@
           ./raspberryPI/configuration.nix
           nixos-hardware.nixosModules.raspberry-pi-3
           agenix.nixosModules.default
+          {
+            environment.systemPackages = [ agenix.packages.${system}.default ];
+          }
         ];
         format = "sd-aarch64";
       };
