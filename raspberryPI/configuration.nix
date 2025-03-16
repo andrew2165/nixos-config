@@ -20,11 +20,34 @@
 
     #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
     #passphrase = builtins.readFile config.age.secrets."wifi-pswd".path;
-    networking.wireless = {
-        enable = true;
-        networks = {
+    # networking.wireless = {
+    #     enable = true;
+    #     networks = {
+    #         ClickHereForViruses = {
+    #             psk = builtins.readFile config.age.secrets."wifi-pswd".path;
+    #         };
+    #     };
+    # };
+
+    networking.networkmanager.ensureProfiles = {
+        environmentFiles = [
+            config.age.secrets."wifi-pswd".path
+        ];
+
+        profiles = {
             ClickHereForViruses = {
-                psk = builtins.readFile config.age.secrets."wifi-pswd".path;
+                connection = {
+                    id = "ClickHereForViruses";
+                    type = "wifi";
+                };
+                wifi = {
+                    mode = "infrastructure";
+                    ssid = "ClickHereForViruses";
+                };
+                wifi-security = {
+                    key-mgmt = "wpa-psk";
+                    psk = "$PSK";
+                };
             };
         };
     };
