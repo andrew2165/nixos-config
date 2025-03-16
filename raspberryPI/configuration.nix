@@ -19,11 +19,12 @@
     networking.hostName = "nixPi"; # Define your hostname.
 
     #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+    passphrase = builtins.readFile config.age.secrets."wifi-pswd".path;
     networking.wireless = {
         enable = true;
         networks = {
             ClickHereForViruses = {
-                psk = builtins.readFile config.age.secrets."wifi-pswd".path;
+                psk = passphrase;
             };
         };
     };
