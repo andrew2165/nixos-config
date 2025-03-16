@@ -18,39 +18,44 @@
 
     networking.hostName = "nixPi"; # Define your hostname.
 
+    # Testing out GNOME desktop
+    services.xserver.enable = true;
+    services.xserver.displayManager.gdm.enable = true;
+    services.xserver.desktopManager.gnome.enable = true;
+
     #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
     #passphrase = builtins.readFile config.age.secrets."wifi-pswd".path;
-    # networking.wireless = {
-    #     enable = true;
-    #     networks = {
+    networking.wireless = {
+        enable = true;
+        # networks = {
+        #     ClickHereForViruses = {
+        #         psk = builtins.readFile config.age.secrets."wifi-pswd".path;
+        #     };
+        # };
+    };
+
+    # networking.networkmanager.ensureProfiles = {
+    #     environmentFiles = [
+    #         config.age.secrets."wifi-pswd".path
+    #     ];
+
+    #     profiles = {
     #         ClickHereForViruses = {
-    #             psk = builtins.readFile config.age.secrets."wifi-pswd".path;
+    #             connection = {
+    #                 id = "ClickHereForViruses";
+    #                 type = "wifi";
+    #             };
+    #             wifi = {
+    #                 mode = "infrastructure";
+    #                 ssid = "ClickHereForViruses";
+    #             };
+    #             wifi-security = {
+    #                 key-mgmt = "wpa-psk";
+    #                 psk = "$PSK";
+    #             };
     #         };
     #     };
     # };
-
-    networking.networkmanager.ensureProfiles = {
-        environmentFiles = [
-            config.age.secrets."wifi-pswd".path
-        ];
-
-        profiles = {
-            ClickHereForViruses = {
-                connection = {
-                    id = "ClickHereForViruses";
-                    type = "wifi";
-                };
-                wifi = {
-                    mode = "infrastructure";
-                    ssid = "ClickHereForViruses";
-                };
-                wifi-security = {
-                    key-mgmt = "wpa-psk";
-                    psk = "$PSK";
-                };
-            };
-        };
-    };
 
     # Enable networking
     # networking.networkmanager.enable = true;
@@ -72,7 +77,8 @@
         name = "andrew";
         isNormalUser = true;
         description = "andrew";
-        passwordFile = config.age.secrets."nixpi-andrew-pswd".path;
+        initialPassword = "raspberrypi";
+        #passwordFile = config.age.secrets."nixpi-andrew-pswd".path;
         extraGroups = [
             "networkmanager"
             "wheel"

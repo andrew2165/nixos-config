@@ -54,9 +54,13 @@
         ];
       };
 
-      # https://github.com/nix-community/nixos-generators
-      # run ex: nix build .#nixosConfigurations.my-machine.config.formats.vmware
-      # for this one: nix build .#nixosConfigurations.nixosISO.config.formats.nixosISO
+      piNix = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        modules = [
+          ./raspberryPI/configuration.nix
+          nixos-hardware.nixosModules.raspberry-pi-3
+        ];
+      };
     };
 
     # Nixos-Generators
@@ -80,19 +84,19 @@
     # sudo nix build .#raspberryPi --system aarch64-linux
     # But must have cross compilation enabled, see nixos-generators documentation
     packages.aarch64-linux = {
-      raspberryPi = nixos-generators.nixosGenerate {
+      raspberryPiSD = nixos-generators.nixosGenerate {
         system = "aarch64-linux";
         modules = [
           ./raspberryPI/configuration.nix
           nixos-hardware.nixosModules.raspberry-pi-3
-          agenix.nixosModules.default
-          {
-            environment.systemPackages = [ agenix.packages."aarch64-linux".default ];
-            age.identityPaths = [ "/home/andrew/.ssh/id_ed25519" ];
-            age.secrets."wifi-pswd".file = ../secrets/wifi-pswd.age;
-            age.secrets."nixpi-andrew-pswd".file = ../secrets/nixpi-andrew-pswd.age;
-            age.secrets."nixpi-andrew-pswd".path = "/nix/store/secrets/nixpi-andrew-pswd.age"
-          }
+          # agenix.nixosModules.default
+          # {
+          #   environment.systemPackages = [ agenix.packages."aarch64-linux".default ];
+          #   age.identityPaths = [ "/home/andrew/.ssh/id_ed25519" ];
+          #   age.secrets."wifi-pswd".file = ../secrets/wifi-pswd.age;
+          #   age.secrets."nixpi-andrew-pswd".file = ../secrets/nixpi-andrew-pswd.age;
+          #   age.secrets."nixpi-andrew-pswd".path = "/nix/store/secrets/nixpi-andrew-pswd.age";
+          # }
         ];
         format = "sd-aarch64";
       };
