@@ -10,8 +10,10 @@
     # actually, do I even need to HW scan??
     imports = [
         # Include the results of the hardware scan.
-        #./hardware-configuration.nix
+        ./hardware-configuration.nix
     ];
+
+
 
     # Enable automatic garbage collection
     nix.gc.automatic = true;
