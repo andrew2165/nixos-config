@@ -54,7 +54,7 @@
         ];
       };
 
-      piNix = nixpkgs.lib.nixosSystem {
+      nixPi = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [
           ./raspberryPI/configuration.nix

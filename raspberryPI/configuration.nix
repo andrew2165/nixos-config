@@ -19,20 +19,20 @@
     networking.hostName = "nixPi"; # Define your hostname.
 
     # Testing out GNOME desktop
-    services.xserver.enable = true;
-    services.xserver.displayManager.gdm.enable = true;
-    services.xserver.desktopManager.gnome.enable = true;
+    #services.xserver.enable = true;
+    #services.xserver.displayManager.gdm.enable = true;
+    #services.xserver.desktopManager.gnome.enable = true;
 
     #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
     #passphrase = builtins.readFile config.age.secrets."wifi-pswd".path;
-    networking.wireless = {
-        enable = true;
+    #networking.wireless = {
+     #   enable = true;
         # networks = {
         #     ClickHereForViruses = {
         #         psk = builtins.readFile config.age.secrets."wifi-pswd".path;
         #     };
         # };
-    };
+    #};
 
     # networking.networkmanager.ensureProfiles = {
     #     environmentFiles = [
@@ -58,7 +58,7 @@
     # };
 
     # Enable networking
-    # networking.networkmanager.enable = true;
+    networking.networkmanager.enable = true;
 
     # Set your time zone.
     time.timeZone = "America/New_York";
@@ -98,6 +98,7 @@
         nixfmt-rfc-style # autoformatter
         jupyter-all # jupyter packaged with ipython, etc.
         tmux
+        cowsay
     ];
     
     # Enable the OpenSSH daemon.
