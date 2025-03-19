@@ -2,62 +2,11 @@
 {
     # https://discourse.nixos.org/t/flake-to-create-a-simple-sd-image-for-rpi4-cross/35185/24
 
-    # Define Secrets Locations
-    #age.secrets."wifi-pswd".file = ../secrets/wifi-pswd.age;
-    #age.secrets."nixpi-andrew-pswd".file = ../secrets/nixpi-andrew-pswd.age;
-
-    # TODO: get hardware scan
-    # actually, do I even need to HW scan??
-    imports = [
-        # Include the results of the hardware scan.
-        #./hardware-configuration.nix
-    ];
-
-
 
     # Enable automatic garbage collection
     nix.gc.automatic = true;
 
     networking.hostName = "nixPi"; # Define your hostname.
-
-    # Testing out GNOME desktop
-    #services.xserver.enable = true;
-    #services.xserver.displayManager.gdm.enable = true;
-    #services.xserver.desktopManager.gnome.enable = true;
-
-    #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-    #passphrase = builtins.readFile config.age.secrets."wifi-pswd".path;
-    #networking.wireless = {
-     #   enable = true;
-        # networks = {
-        #     ClickHereForViruses = {
-        #         psk = builtins.readFile config.age.secrets."wifi-pswd".path;
-        #     };
-        # };
-    #};
-
-    # networking.networkmanager.ensureProfiles = {
-    #     environmentFiles = [
-    #         config.age.secrets."wifi-pswd".path
-    #     ];
-
-    #     profiles = {
-    #         ClickHereForViruses = {
-    #             connection = {
-    #                 id = "ClickHereForViruses";
-    #                 type = "wifi";
-    #             };
-    #             wifi = {
-    #                 mode = "infrastructure";
-    #                 ssid = "ClickHereForViruses";
-    #             };
-    #             wifi-security = {
-    #                 key-mgmt = "wpa-psk";
-    #                 psk = "$PSK";
-    #             };
-    #         };
-    #     };
-    # };
 
     # Enable networking
     networking.networkmanager.enable = true;
@@ -86,6 +35,11 @@
             "wheel"
         ];
     };
+    
+    # Add andrew to trusted users group for remote deploy
+    nix.settings.trusted-users = [
+        "andrew"
+    ];
 
     # List packages installed in system profile. To search, run:
     # $ nix search wget
