@@ -54,6 +54,8 @@
         ];
       };
 
+      # Remote deploy
+      # sudo nixos-rebuild switch --flake .#nixPi --use-remote-sudo --build-host andrew@localhost --target-host andrew@192.168.0.137
       nixPi = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [
