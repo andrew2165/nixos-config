@@ -58,6 +58,8 @@
         system = "aarch64-linux";
         modules = [
           ./raspberryPI/configuration.nix
+          ./raspberryPI/configuration2.nix
+          # TODO: test to see if this hw conf needs to make it into the actual config or if it is good in the flake
           nixos-hardware.nixosModules.raspberry-pi-3
         ];
       };
@@ -81,7 +83,7 @@
         format = "iso";
       };
     };
-    # sudo nix build .#raspberryPi --system aarch64-linux
+    # sudo nix build .#raspberryPiSD --system aarch64-linux
     # But must have cross compilation enabled, see nixos-generators documentation
     packages.aarch64-linux = {
       raspberryPiSD = nixos-generators.nixosGenerate {
