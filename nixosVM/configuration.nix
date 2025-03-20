@@ -130,6 +130,7 @@
     gnuchess
     bottles
     tmux
+    colmena
   ];
 
   programs.steam = {
