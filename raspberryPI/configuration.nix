@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, agenix, ... }:
 {
     # https://discourse.nixos.org/t/flake-to-create-a-simple-sd-image-for-rpi4-cross/35185/24
 
