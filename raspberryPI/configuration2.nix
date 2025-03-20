@@ -1,4 +1,4 @@
-{ config, pkgs, lib, agenix, ... }:
+{ config, pkgs, lib, agenix, inputs, ... }:
 {
     # Things here are included in the rebuild of a remote deploy but not the initial SD img
 
