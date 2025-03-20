@@ -10,4 +10,8 @@ in {
         mbp 
         endeavor-nixos
     ];
+    "tailscale-auth-key1.age".publicKeys = [
+        mbp 
+        endeavor-nixos
+    ];
 }

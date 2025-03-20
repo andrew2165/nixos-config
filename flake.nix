@@ -39,6 +39,7 @@
             age.identityPaths = [ "/home/andrew/.ssh/id_ed25519" ];
             age.secrets."wifi-pswd".file = ./secrets/wifi-pswd.age;
             age.secrets."nixpi-andrew-pswd".file = ./secrets/nixpi-andrew-pswd.age;
+            age.secrets."tailscale-auth-key1.age".file = ./secrets/tailscale-auth-key1.age;
           }
 
           # make home-manager as a module of nixos
