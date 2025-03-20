@@ -77,6 +77,10 @@
             ./raspberryPI/configuration.nix
             ./raspberryPI/configuration2.nix
             nixos-hardware.nixosModules.raspberry-pi-3
+            {
+              age.secrets."nixpi-andrew-pswd".file = ./secrets/nixpi-andrew-pswd.age;
+              age.secrets."tailscale-auth-key1.age".file = ./secrets/tailscale-auth-key1.age;
+            }
           ];
         };
       };
