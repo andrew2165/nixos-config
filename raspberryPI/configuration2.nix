@@ -9,4 +9,9 @@
         ./hardware-configuration.nix
     ];
 
+    services.tailscale = {
+        enable = true;
+        authKeyFile = age.secrets."tailscale-auth-key1.age".path;
+    };
+
 }
