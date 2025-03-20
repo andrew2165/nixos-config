@@ -58,67 +58,68 @@
           ];
         };
 
-      # For Remote Deploy
-      # colmena apply --impure
-      colmena = {
-        meta = {
-          nixpkgs = import nixpkgs {
+        # For Remote Deploy
+        # colmena apply --impure
+        colmena = {
+          meta = {
+            nixpkgs = import nixpkgs {
+              system = "x86_64-linux";
+              #overlays = [ ];
+            };
+          };
+
+          nixPi = {
+            deployment = {
+              targetHost = "192.168.0.137";
+              targetUser = "root";
+            };
+            imports = [
+              ./raspberryPI/configuration.nix
+              ./raspberryPI/configuration2.nix
+              nixos-hardware.nixosModules.raspberry-pi-3
+            ];
+          };
+        };
+
+        # Nixos-Generators
+        # run: sudo nix build .#liveISO
+        packages.x86_64-linux = {
+          liveISO = nixos-generators.nixosGenerate {
             system = "x86_64-linux";
-            #overlays = [ ];
+            modules = [
+              ./liveISO/configuration.nix
+              agenix.nixosModules.default
+              {
+                environment.systemPackages =
+                  [ agenix.packages."x86_64-linux".default ];
+                age.identityPaths = [ "/home/andrew/.ssh/id_ed25519" ];
+                age.secrets."wifi-pswd".file = ../secrets/wifi-pswd.age;
+                age.secrets."nixpi-andrew-pswd".file =
+                  ../secrets/nixpi-andrew-pswd.age;
+              }
+            ];
+            format = "iso";
           };
         };
-
-        nixPi = {
-          deployment = {
-            targetHost = "192.168.0.137";
-            targetUser = "root";
+        # sudo nix build .#raspberryPiSD --system aarch64-linux
+        # But must have cross compilation enabled, see nixos-generators documentation
+        packages.aarch64-linux = {
+          raspberryPiSD = nixos-generators.nixosGenerate {
+            system = "aarch64-linux";
+            modules = [
+              ./raspberryPI/configuration.nix
+              nixos-hardware.nixosModules.raspberry-pi-3
+              # agenix.nixosModules.default
+              # {
+              #   environment.systemPackages = [ agenix.packages."aarch64-linux".default ];
+              #   age.identityPaths = [ "/home/andrew/.ssh/id_ed25519" ];
+              #   age.secrets."wifi-pswd".file = ../secrets/wifi-pswd.age;
+              #   age.secrets."nixpi-andrew-pswd".file = ../secrets/nixpi-andrew-pswd.age;
+              #   age.secrets."nixpi-andrew-pswd".path = "/nix/store/secrets/nixpi-andrew-pswd.age";
+              # }
+            ];
+            format = "sd-aarch64";
           };
-          imports = [
-            ./raspberryPI/configuration.nix
-            ./raspberryPI/configuration2.nix
-            nixos-hardware.nixosModules.raspberry-pi-3
-          ];
-        };
-      };
-
-      # Nixos-Generators
-      # run: sudo nix build .#liveISO
-      packages.x86_64-linux = {
-        liveISO = nixos-generators.nixosGenerate {
-          system = "x86_64-linux";
-          modules = [
-            ./liveISO/configuration.nix
-            agenix.nixosModules.default
-            {
-              environment.systemPackages =
-                [ agenix.packages."x86_64-linux".default ];
-              age.identityPaths = [ "/home/andrew/.ssh/id_ed25519" ];
-              age.secrets."wifi-pswd".file = ../secrets/wifi-pswd.age;
-              age.secrets."nixpi-andrew-pswd".file =
-                ../secrets/nixpi-andrew-pswd.age;
-            }
-          ];
-          format = "iso";
-        };
-      };
-      # sudo nix build .#raspberryPiSD --system aarch64-linux
-      # But must have cross compilation enabled, see nixos-generators documentation
-      packages.aarch64-linux = {
-        raspberryPiSD = nixos-generators.nixosGenerate {
-          system = "aarch64-linux";
-          modules = [
-            ./raspberryPI/configuration.nix
-            nixos-hardware.nixosModules.raspberry-pi-3
-            # agenix.nixosModules.default
-            # {
-            #   environment.systemPackages = [ agenix.packages."aarch64-linux".default ];
-            #   age.identityPaths = [ "/home/andrew/.ssh/id_ed25519" ];
-            #   age.secrets."wifi-pswd".file = ../secrets/wifi-pswd.age;
-            #   age.secrets."nixpi-andrew-pswd".file = ../secrets/nixpi-andrew-pswd.age;
-            #   age.secrets."nixpi-andrew-pswd".path = "/nix/store/secrets/nixpi-andrew-pswd.age";
-            # }
-          ];
-          format = "sd-aarch64";
         };
       };
     };
