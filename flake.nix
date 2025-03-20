@@ -66,7 +66,7 @@
             system = "x86_64-linux";
             #overlays = [ ];
           };
-          agenix = import agenix
+          #agenix = import agenix;
         };
 
         nixPi = {

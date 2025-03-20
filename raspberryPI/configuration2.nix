@@ -11,7 +11,7 @@
 
     services.tailscale = {
         enable = true;
-        authKeyFile = age.secrets."tailscale-auth-key1.age".path;
+        #authKeyFile = age.secrets."tailscale-auth-key1.age".path;
     };
 
 }
