@@ -82,8 +82,8 @@
             {
               environment.systemPackages = [ agenix.packages."aarch64-linux".default ];
               #age.identityPaths = [ "/home/andrew/.ssh/id_ed25519" ];
-              age.secrets."nixpi-andrew-pswd".file = ./secrets/nixpi-andrew-pswd.age;
-              age.secrets."tailscale-auth-key1.age".file = ./secrets/tailscale-auth-key1.age;
+              #age.secrets."nixpi-andrew-pswd".file = ./secrets/nixpi-andrew-pswd.age;
+              #age.secrets."tailscale-auth-key1.age".file = ./secrets/tailscale-auth-key1.age;
             }
           ];
         };
