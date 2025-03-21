@@ -1,6 +1,7 @@
 let
     mbp = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFTSJ+CahcqGec/tsOcZDxsAyFQ1h8TxCgVxq1bSePr";
     endeavor-nixos = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKeyCw1VxK87xr+cYZdjqW/MIPTjxzOg7q7isrn3bdC4";
+    nixPi-test = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPuwH6/WPRkArKQT86nWzwBBWK7h8fv6/LEX3do5gevp";
 in {
     "wifi-pswd.age".publicKeys = [
         mbp 
@@ -13,5 +14,6 @@ in {
     "tailscale-auth-key1.age".publicKeys = [
         mbp 
         endeavor-nixos
+        nixPi-test
     ];
 }
