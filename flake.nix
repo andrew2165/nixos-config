@@ -56,10 +56,10 @@
           ];
         };
 
-      testServer = nixpkgs.lib.nixosSystem {
+      internalServer = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ./testServer/configuration.nix
+          ./internalServer/configuration.nix
         ];
       };
 

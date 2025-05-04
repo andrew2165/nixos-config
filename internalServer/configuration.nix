@@ -4,6 +4,10 @@
    nix.settings = {
      experimental-features = "nix-command flakes";
    };
+
+   imports = [
+    # Include hardware scan
+   ];
    
    environment.systemPackages = with pkgs; [
      vim
@@ -16,6 +20,7 @@
      nixfmt-rfc-style
    ];
    
+   /*
    fileSystems."/" = {
      device = "/dev/disk/by-label/nixos";
      fsType = "ext4";
@@ -29,6 +34,7 @@
        device = "/dev/disk/by-label/swap";
      }
    ];
+   */
    
    time.timeZone = "Europe/London";
    i18n.defaultLocale = "en_US.UTF-8";
