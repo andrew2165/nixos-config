@@ -7,6 +7,7 @@
 
    imports = [
     # Include hardware scan
+    ./hardware-configuration.nix
    ];
    
    environment.systemPackages = with pkgs; [
