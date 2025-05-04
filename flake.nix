@@ -60,7 +60,7 @@
         system = "x86_64-linux";
         modules = [
           ./testServer/configuration.nix
-        ]
+        ];
       };
 
       };

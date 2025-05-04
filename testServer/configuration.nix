@@ -9,7 +9,8 @@
      vim
      git
      fastfetch
-     fail2banhtop
+     fail2ban
+     htop
      tmux
      manix # for looking up nix documentation
      nixfmt-rfc-style
