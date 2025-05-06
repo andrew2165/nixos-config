@@ -73,6 +73,15 @@
        KbdInteractiveAuthentication = false;
      };
    };
+
+   services.tailscale.enable = true;
+
+   services.caddy = {
+      enable = true;
+      virtualHosts."internaltest.stewartinternal.com".extraConfig = ''
+        respond "Hello, internal!"
+      '';
+   };
    
    networking.firewall.allowedTCPPorts = [ 22 ];
    
