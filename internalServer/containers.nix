@@ -14,4 +14,8 @@
         };
     };
 
+    # TODO: stand up karakeep with docker compose
+
+    # TODO: figure out where to host networked ollama
+
 }
