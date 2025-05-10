@@ -8,6 +8,7 @@
    imports = [
     # Include hardware scan
     ./hardware-configuration.nix
+    ./containers.nix
    ];
    
    environment.systemPackages = with pkgs; [
@@ -48,11 +49,12 @@
    users.users = {
      root.hashedPassword = "!"; # Disable root login
      andrew = {
-        name = "andrew";
+       name = "andrew";
        isNormalUser = true;
        extraGroups = [ 
         "wheel"
         "networkmanager" 
+        "podman"
        ];
        openssh.authorizedKeys.keys = [
          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICZCeaMfoy/5Tef0FnIkLrqhE6BIvjL+XfIDXczkTiDR andrew"
