@@ -24,9 +24,9 @@
         fsType = "cifs";
         options = let
             # this line prevents hanging on network split
-            automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+            automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,user,users";
             credentials = config.age.secrets.tanker-karakeep-smb-pswd.path;
-        in ["${automount_opts},credentials=${credentials}"];
+        in ["${automount_opts},credentials=${credentials},uid=1000,gid=100"];
     };
 
     # TODO: stand up karakeep with docker compose
