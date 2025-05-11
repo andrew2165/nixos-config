@@ -37,7 +37,7 @@
     # Decrypt .env file with secrets
     age.secrets.karakeep-env-file = {
         file = ../secrets/karakeep-env-file.age;
-        path = "./";
+        path = "/home/andrew/nixos-config/internalServer/.env";
     };
 
     # Start karakeep compose as systemd service
