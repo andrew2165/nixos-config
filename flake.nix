@@ -61,6 +61,7 @@
         modules = [
           ./internalServer/configuration.nix
           agenix.nixosModules.default
+          {environment.systemPackages = [ agenix.packages.${system}.default ];}
         ];
       };
 
