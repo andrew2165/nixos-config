@@ -1,7 +1,7 @@
 let
     mbp = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFTSJ+CahcqGec/tsOcZDxsAyFQ1h8TxCgVxq1bSePr";
     endeavor-nixos = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKeyCw1VxK87xr+cYZdjqW/MIPTjxzOg7q7isrn3bdC4";
-    endeavor-nixos-internalServer = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGSBPlZgcSd3Y9RHWZCemFFjJkR4g41JREEvXeplv74X";
+    endeavor-nixos-internalServer = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIMm0YCKQRYGVs7XQa7BFue61gI36gFqEinEBP5mN7OT";
     nixPi-test = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPuwH6/WPRkArKQT86nWzwBBWK7h8fv6/LEX3do5gevp";
 in {
     "wifi-pswd.age".publicKeys = [
