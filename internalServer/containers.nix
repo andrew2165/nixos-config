@@ -42,8 +42,9 @@
 
     # Start karakeep compose as systemd service
     systemd.services.karakeep-docker-compose = {
+        path = [ pkgs.podman-compose ];
         script = ''
-        podman-compose -f ${./docker-compose.yml}
+        podman-compose -f ${./docker-compose.yml} up --detach
         '';
         wantedBy = ["multi-user.target"];
         # If you use podman
