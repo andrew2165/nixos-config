@@ -44,6 +44,7 @@
     systemd.services.karakeep-docker-compose = {
         path = [ 
             pkgs.podman-compose
+            pkgs.podman
         ];
         script = ''
         podman-compose -f ${./docker-compose.yml} up --detach
