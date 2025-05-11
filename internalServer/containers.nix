@@ -7,15 +7,15 @@
 
     # Enable common container config files in /etc/containers
     virtualisation.containers.enable = true;
-    virtualisation = {
-    podman = {
-        enable = true;
-        # Create a `docker` alias for podman, to use it as a drop-in replacement
-        dockerCompat = true;
-        # Required for containers under podman-compose to be able to talk to each other.
-        defaultNetwork.settings.dns_enabled = true;
-        };
-    };
+    #virtualisation = {
+    #podman = {
+    #    enable = true;
+    #    # Create a `docker` alias for podman, to use it as a drop-in replacement
+     #   dockerCompat = true;
+     #   # Required for containers under podman-compose to be able to talk to each other.
+    #    defaultNetwork.settings.dns_enabled = true;
+    #    };
+    #};
 
     age.secrets.tanker-karakeep-smb-pswd.file = ../secrets/tanker-karakeep-smb-pswd.age;
 
@@ -43,17 +43,17 @@
     # Start karakeep compose as systemd service
     systemd.services.karakeep-docker-compose = {
         path = [ 
-            pkgs.podman-compose
-            pkgs.podman
+            pkgs.docker-compose
+            pkgs.docker
         ];
         script = ''
-        podman-compose -f ${./docker-compose.yml} up --detach
+        docker-compose -f ${./docker-compose.yml} up --detach
         '';
         wantedBy = ["multi-user.target"];
         # If you use podman
-        after = ["podman.service" "podman.socket"];
+        #after = ["podman.service" "podman.socket"];
         # If you use docker
-        # after = ["docker.service" "docker.socket"];
+        after = ["docker.service" "docker.socket"];
     };
 
     # TODO: figure out where to host networked ollama
