@@ -35,22 +35,22 @@
 
     # TODO: stand up karakeep with docker compose
     # Decrypt .env file with secrets
-    age.secrets.karakeep-env-file = {
-        file = ../secrets/karakeep-env-file.age;
-        path = "/home/andrew/nixos-config/internalServer/.env";
-    };
+    # age.secrets.karakeep-env-file = {
+    #     file = ../secrets/karakeep-env-file.age;
+    #     path = "/home/andrew/nixos-config/internalServer/";
+    # };
 
     # Start karakeep compose as systemd service
-    # systemd.services.karakeep-docker-compose = {
-    #     script = ''
-    #     podman-compose -f ${./docker-compose.yml}
-    #     '';
-    #     wantedBy = ["multi-user.target"];
-    #     # If you use podman
-    #     after = ["podman.service" "podman.socket"];
-    #     # If you use docker
-    #     # after = ["docker.service" "docker.socket"];
-    # };
+    systemd.services.karakeep-docker-compose = {
+        script = ''
+        podman-compose -f ${./docker-compose.yml}
+        '';
+        wantedBy = ["multi-user.target"];
+        # If you use podman
+        after = ["podman.service" "podman.socket"];
+        # If you use docker
+        # after = ["docker.service" "docker.socket"];
+    };
 
     # TODO: figure out where to host networked ollama
 
