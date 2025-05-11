@@ -47,6 +47,7 @@
    boot.loader.grub.enable = true;
    boot.loader.grub.device = "/dev/sda";
    boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" "ext4" ];
+   boot.loader.grub.configurationLimit = 5; # Number of configs retained
    
    users.users = {
      root.hashedPassword = "!"; # Disable root login

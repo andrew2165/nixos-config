@@ -30,7 +30,7 @@ services:
       - --remote-debugging-port=9222
       - --hide-scrollbars
   meilisearch:
-    image: docker.io/getmeili/meilisearch:v1.13.3
+    image: docker.io/getmeili/meilisearch
     restart: unless-stopped
     env_file:
       - /home/andrew/nixos-config/internalServer/.env
