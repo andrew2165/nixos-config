@@ -21,7 +21,7 @@
     #environment.systemPackages = [ pkgs.cifs-utils ];
     networking.firewall.extraCommands = ''iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns'';
     fileSystems."/mnt/karakeep_share" = {
-        device = "//100.113.228.33/user/karakeep";
+        device = "//100.113.228.33/karakeep";
         fsType = "cifs";
         options = let
             # this line prevents hanging on network split
