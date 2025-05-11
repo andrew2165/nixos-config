@@ -60,6 +60,7 @@
         system = "x86_64-linux";
         modules = [
           ./internalServer/configuration.nix
+          agenix.nixosModules.default
         ];
       };
 

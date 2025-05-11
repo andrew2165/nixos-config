@@ -14,6 +14,21 @@
         };
     };
 
+    age.secrets.tanker-karakeep-smb-pswd.file = ../secrets/tanker-karakeep-smb-pswd.age;
+
+    # Mount karakeep share
+    # For mount.cifs, required unless domain name resolution is not needed.
+    #environment.systemPackages = [ pkgs.cifs-utils ];
+    fileSystems."/mnt/karakeep_share" = {
+        device = "//100.113.228.33/user/karakeep";
+        fsType = "cifs";
+        options = let
+            # this line prevents hanging on network split
+            automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+            credentials = config.age.secrets.tanker-karakeep-smb-pswd.path;
+        in ["${automount_opts},credentials=${credentials}"];
+    };
+
     # TODO: stand up karakeep with docker compose
 
     # TODO: figure out where to host networked ollama
