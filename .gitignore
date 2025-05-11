@@ -1,4 +1,3 @@
 .DS_Store
 result/
 iso_build_results/
-internalServer/.env
