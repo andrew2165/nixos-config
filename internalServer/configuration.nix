@@ -21,6 +21,7 @@
      manix # for looking up nix documentation
      nixfmt-rfc-style
      cifs-utils
+     podman-compose
    ];
    
    /*
