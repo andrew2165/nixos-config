@@ -33,7 +33,7 @@ services:
     image: docker.io/getmeili/meilisearch:v1.13.3
     restart: unless-stopped
     env_file:
-      - .env
+      - /home/andrew/nixos-config/internalServer/.env
     environment:
       MEILI_NO_ANALYTICS: "true"
     volumes:
