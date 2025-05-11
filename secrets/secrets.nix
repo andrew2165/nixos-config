@@ -21,4 +21,9 @@ in {
         mbp
         endeavor-nixos-internalServer
     ];
+    "karakeep-env-file.age".publicKeys = [
+        mbp
+        endeavor-nixos-internalServer
+        endeavor-nixos
+    ];
 }

@@ -1,6 +1,9 @@
 { config, pkgs, ... }: {
 
     # Nix file for all of the containerized services running
+    # Running:
+    # Karakeep
+    # Ollama
 
     # Enable common container config files in /etc/containers
     virtualisation.containers.enable = true;
@@ -31,6 +34,23 @@
     };
 
     # TODO: stand up karakeep with docker compose
+    # Decrypt .env file with secrets
+    age.secrets.karakeep-env-file = {
+        file = ../secrets/karakeep-env-file.age;
+        path = ./.env;
+    };
+
+    # Start karakeep compose as systemd service
+    systemd.services.karakeep-docker-compose = {
+        script = ''
+        podman compose -f ${./path-to/docker-compose.yml}
+        '';
+        wantedBy = ["multi-user.target"];
+        # If you use podman
+        after = ["podman.service" "podman.socket"];
+        # If you use docker
+        # after = ["docker.service" "docker.socket"];
+    };
 
     # TODO: figure out where to host networked ollama
 

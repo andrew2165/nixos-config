@@ -42,17 +42,17 @@
             age.secrets."tailscale-auth-key1.age".file = ./secrets/tailscale-auth-key1.age;
           }
 
-            # make home-manager as a module of nixos
-            # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
+          # make home-manager as a module of nixos
+          # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
 
-              home-manager.users.andrew = import ./nixosVM/home.nix;
+            home-manager.users.andrew = import ./nixosVM/home.nix;
 
-              # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
-            }
+            # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
+          }
           ];
         };
 
