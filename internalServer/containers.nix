@@ -42,7 +42,9 @@
 
     # Start karakeep compose as systemd service
     systemd.services.karakeep-docker-compose = {
-        path = [ pkgs.podman-compose ];
+        path = [ 
+            pkgs.podman-compose
+        ];
         script = ''
         podman-compose -f ${./docker-compose.yml} up --detach
         '';

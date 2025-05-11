@@ -30,14 +30,14 @@ services:
       - --remote-debugging-port=9222
       - --hide-scrollbars
   meilisearch:
-    image: getmeili/meilisearch:v1.13.3
+    image: docker.io/getmeili/meilisearch:v1.13.3
     restart: unless-stopped
     env_file:
       - .env
     environment:
       MEILI_NO_ANALYTICS: "true"
     volumes:
-      - meilisearch:/meili_data
+      - /mnt/karakeep_share/meilisearch:/meili_data
 
 volumes:
   meilisearch:
