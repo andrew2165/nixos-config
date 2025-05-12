@@ -34,7 +34,8 @@
         in ["${automount_opts},credentials=${credentials},uid=1000,gid=100"];
     };
 
-    # TODO: stand up karakeep with docker compose
+    # TODO: this only stores things locally as the database doesnt play nice
+    # with the smb share so figure out how to sync things
     # Decrypt .env file with secrets
     # age.secrets.karakeep-env-file = {
     #     file = ../secrets/karakeep-env-file.age;

@@ -6,7 +6,7 @@ services:
       # By default, the data is stored in a docker volume called "data".
       # If you want to mount a custom directory, change the volume mapping to:
       # - /path/to/your/directory:/data
-      - /mnt/karakeep_share/data:/data
+      - ~/karakeep/data:/data
     ports:
       - 3000:3000
     env_file:
@@ -49,7 +49,7 @@ services:
       MEILI_MASTER_KEY: S/tSFa2DkZThfWG8na+WPNzjRGX9h15GHKA1tGSMCeU4mbnH
       NEXTAUTH_URL: http://localhost:3000
     volumes:
-      - /mnt/karakeep_share/meilisearch:/meili_data
+      - ~/karakeep/meilisearch:/meili_data
 
 volumes:
   meilisearch:
