@@ -28,7 +28,7 @@ services:
       OLLAMA_BASE_URL: http://localhost:11434
       INFERENCE_TEXT_MODEL: llama3.1:8b
       INFERENCE_IMAGE_MODEL: llava:7b
-      INFERENCE_JOB_TIMEOUT_SEC: 60
+      INFERENCE_JOB_TIMEOUT_SEC: 120
   chrome:
     image: gcr.io/zenika-hub/alpine-chrome:123
     restart: unless-stopped
@@ -54,6 +54,13 @@ services:
       NEXTAUTH_URL: http://localhost:3000
     volumes:
       - /home/andrew/karakeep/meilisearch:/meili_data
+  ollama:
+    image: ollama/ollama:0.6.8
+    restart: unless-stopped
+    ports:
+      - 11434:11434
+    volumes:
+      - /home/andrew/ollama:/root/.ollama
 
 volumes:
   meilisearch:

@@ -60,18 +60,18 @@
 
     # TODO: figure out where to host networked ollama
 
-    systemd.services.ollama = {
-        path = [
-            pkgs.docker
-        ];
-        script = ''
-            docker run -d -v ~/ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama:0.6.8
-        '';
-        wantedBy = ["multi-user.target"];
-        # If you use podman
-        #after = ["podman.service" "podman.socket"];
-        # If you use docker
-        after = ["docker.service" "docker.socket"];
-    };
+    # systemd.services.ollama = {
+    #     path = [
+    #         pkgs.docker
+    #     ];
+    #     script = ''
+    #         docker run -d -v ~/ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama:0.6.8
+    #     '';
+    #     wantedBy = ["multi-user.target"];
+    #     # If you use podman
+    #     #after = ["podman.service" "podman.socket"];
+    #     # If you use docker
+    #     after = ["docker.service" "docker.socket"];
+    # };
 
 }
