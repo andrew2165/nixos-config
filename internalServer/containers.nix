@@ -34,15 +34,7 @@
         in ["${automount_opts},credentials=${credentials},uid=1000,gid=100"];
     };
 
-    # TODO: this only stores things locally as the database doesnt play nice
-    # with the smb share so figure out how to sync things
-    # Decrypt .env file with secrets
-    # age.secrets.karakeep-env-file = {
-    #     file = ../secrets/karakeep-env-file.age;
-    #     path = "/home/andrew/nixos-config/internalServer/";
-    # };
-
-    # Start karakeep compose as systemd service
+    # Start karakeep (& ollama) compose as systemd service
     systemd.services.karakeep-docker-compose = {
         path = [ 
             pkgs.docker-compose
@@ -57,21 +49,5 @@
         # If you use docker
         after = ["docker.service" "docker.socket"];
     };
-
-    # TODO: figure out where to host networked ollama
-
-    # systemd.services.ollama = {
-    #     path = [
-    #         pkgs.docker
-    #     ];
-    #     script = ''
-    #         docker run -d -v ~/ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama:0.6.8
-    #     '';
-    #     wantedBy = ["multi-user.target"];
-    #     # If you use podman
-    #     #after = ["podman.service" "podman.socket"];
-    #     # If you use docker
-    #     after = ["docker.service" "docker.socket"];
-    # };
 
 }
