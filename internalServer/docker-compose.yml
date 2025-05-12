@@ -25,6 +25,10 @@ services:
       NEXTAUTH_SECRET: qbd7vJGcsp8q9f/wzIeRwiI6S/tq37icLd/Macl6erGLhpRR
       MEILI_MASTER_KEY: S/tSFa2DkZThfWG8na+WPNzjRGX9h15GHKA1tGSMCeU4mbnH
       NEXTAUTH_URL: http://localhost:3000
+      OLLAMA_BASE_URL: http://localhost:11434
+      INFERENCE_TEXT_MODEL: llama3.1:8b
+      INFERENCE_IMAGE_MODEL: llava:7b
+      INFERENCE_JOB_TIMEOUT_SEC: 60
   chrome:
     image: gcr.io/zenika-hub/alpine-chrome:123
     restart: unless-stopped
