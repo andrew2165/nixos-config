@@ -7,6 +7,7 @@
 
     # Enable common container config files in /etc/containers
     virtualisation.containers.enable = true;
+    virtualisation.docker.enable = true;
     #virtualisation = {
     #podman = {
     #    enable = true;
