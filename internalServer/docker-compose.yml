@@ -1,12 +1,12 @@
 services:
   web:
-    image: ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION}
+    image: ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION:-release}
     restart: unless-stopped
     volumes:
       # By default, the data is stored in a docker volume called "data".
       # If you want to mount a custom directory, change the volume mapping to:
       # - /path/to/your/directory:/data
-      - /mnt/karakeep_share/data/:/data
+      - /mnt/karakeep_share/data:/data
     ports:
       - 3000:3000
     env_file:
@@ -30,7 +30,7 @@ services:
       - --remote-debugging-port=9222
       - --hide-scrollbars
   meilisearch:
-    image: docker.io/getmeili/meilisearch:v1.13.3
+    image: getmeili/meilisearch:v1.13.3
     restart: unless-stopped
     env_file:
       - /home/andrew/nixos-config/internalServer/.env
