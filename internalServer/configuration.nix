@@ -110,7 +110,7 @@
    
    networking.hostName = "internalServer"; # Define your hostname.
    networking.firewall = {
-    allowedTCPPorts = [ 22 80 443 3000 ];
+    allowedTCPPorts = [ 22 80 443 3000 11434];
     allowedUDPPorts = [ 41641 ];
    };
    
