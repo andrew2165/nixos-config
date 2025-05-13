@@ -26,47 +26,52 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-generators, nixos-hardware, agenix, ... }@input: {
-    # Defining my Nixos Configurations
-    nixosConfigurations = {
-      nixosVM = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./nixosVM/configuration.nix
-          agenix.nixosModules.default 
-          {
-            environment.systemPackages = [ agenix.packages."x86_64-linux".default ];
-            age.identityPaths = [ "/home/andrew/.ssh/id_ed25519" ];
-            age.secrets."wifi-pswd".file = ./secrets/wifi-pswd.age;
-            age.secrets."nixpi-andrew-pswd".file = ./secrets/nixpi-andrew-pswd.age;
-            age.secrets."tailscale-auth-key1.age".file = ./secrets/tailscale-auth-key1.age;
-          }
+  outputs = { self, nixpkgs, home-manager, nixos-generators, nixos-hardware
+    , agenix, ... }@input: {
+      # Defining my Nixos Configurations
+      nixosConfigurations = {
+        nixosVM = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./nixosVM/configuration.nix
+            agenix.nixosModules.default
+            {
+              environment.systemPackages =
+                [ agenix.packages."x86_64-linux".default ];
+              age.identityPaths = [ "/home/andrew/.ssh/id_ed25519" ];
+              age.secrets."wifi-pswd".file = ./secrets/wifi-pswd.age;
+              age.secrets."nixpi-andrew-pswd".file =
+                ./secrets/nixpi-andrew-pswd.age;
+              age.secrets."tailscale-auth-key1.age".file =
+                ./secrets/tailscale-auth-key1.age;
+            }
 
-          # make home-manager as a module of nixos
-          # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
+            # make home-manager as a module of nixos
+            # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
 
-            home-manager.users.andrew = import ./nixosVM/home.nix;
+              home-manager.users.andrew = import ./nixosVM/home.nix;
 
-            # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
-          }
+              # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
+            }
           ];
         };
 
-      internalServer = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./internalServer/configuration.nix
-          agenix.nixosModules.default
-          {
-            environment.systemPackages = [ agenix.packages."x86_64-linux".default ];
-            age.identityPaths = [ "/home/andrew/.ssh/id_ed25519" ];
-          }
-        ];
-      };
+        internalServer = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./internalServer/configuration.nix
+            agenix.nixosModules.default
+            {
+              environment.systemPackages =
+                [ agenix.packages."x86_64-linux".default ];
+              age.identityPaths = [ "/home/andrew/.ssh/id_ed25519" ];
+            }
+          ];
+        };
 
       };
 
@@ -92,7 +97,8 @@
             nixos-hardware.nixosModules.raspberry-pi-3
             agenix.nixosModules.default
             {
-              environment.systemPackages = [ agenix.packages."aarch64-linux".default ];
+              environment.systemPackages =
+                [ agenix.packages."aarch64-linux".default ];
               #age.identityPaths = [ "/home/andrew/.ssh/id_ed25519" ];
               #age.secrets."nixpi-andrew-pswd".file = ./secrets/nixpi-andrew-pswd.age;
               #age.secrets."tailscale-auth-key1.age".file = ./secrets/tailscale-auth-key1.age;

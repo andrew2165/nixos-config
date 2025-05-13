@@ -28,7 +28,8 @@ services:
       OLLAMA_BASE_URL: http://ollama:11434
       INFERENCE_TEXT_MODEL: llama3.1:8b
       INFERENCE_IMAGE_MODEL: llava:7b
-      INFERENCE_JOB_TIMEOUT_SEC: 120
+      INFERENCE_JOB_TIMEOUT_SEC: 250 
+      INFERENCE_CONTEXT_LENGTH: 5462 # or increase based on testing
   chrome:
     image: gcr.io/zenika-hub/alpine-chrome:123
     restart: unless-stopped
