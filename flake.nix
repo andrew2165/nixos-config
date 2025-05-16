@@ -83,7 +83,7 @@
             system = "x86_64-linux";
             #overlays = [ ];
           };
-          #agenix = import agenix;
+          specialArgs = { inherit agenix nixos-hardware; };
         };
 
         nixPi = {
@@ -92,10 +92,10 @@
             targetUser = "root";
           };
           imports = [
+            agenix.nixosModules.default
             ./raspberryPI/configuration.nix
             ./raspberryPI/configuration2.nix
             nixos-hardware.nixosModules.raspberry-pi-3
-            agenix.nixosModules.default
             {
               environment.systemPackages =
                 [ agenix.packages."aarch64-linux".default ];
