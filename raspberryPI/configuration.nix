@@ -6,6 +6,12 @@
 
   networking.hostName = "nixPi"; # Define your hostname.
 
+  # Adding this for quick testing - 5/15
+  agenix.secrets.tailscale_auth = {
+    file = ../secrets/tailscale-auth-key1.age;
+    path = "/home/andrew";
+  };
+
   # Enable networking
   networking.networkmanager.enable = true;
 
@@ -45,6 +51,8 @@
     jupyter-all # jupyter packaged with ipython, etc.
     tmux
     cowsay
+    usbutils
+    nut # network ups tools
   ];
 
   # Enable the OpenSSH daemon.
