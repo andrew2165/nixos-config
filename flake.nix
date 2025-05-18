@@ -86,6 +86,7 @@
           specialArgs = { inherit agenix nixos-hardware; };
         };
 
+        # note: nixPi-ups config moved to private repo
         nixPi = {
           deployment = {
             targetHost = "192.168.0.137";
