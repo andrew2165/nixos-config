@@ -14,6 +14,9 @@
   #age.secrets."wifi-pswd".file = ../secrets/wifi-pswd.age;
   #age.secrets."nixpi-andrew-pswd".file = ../secrets/nixpi-andrew-pswd.age;
 
+  # Run as a vm, ename QEMU guest agent
+  services.qemuGuest.enable = true;
+
   # Bootloader.
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";

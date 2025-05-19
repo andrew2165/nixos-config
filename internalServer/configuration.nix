@@ -1,6 +1,10 @@
 { config, pkgs, ... }:
 
 {
+
+  # Run as a vm, ename QEMU guest agent
+  services.qemuGuest.enable = true;
+
   nix.settings = { experimental-features = "nix-command flakes"; };
 
   imports = [
