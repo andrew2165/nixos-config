@@ -2,12 +2,14 @@
   description = "NixOS configurations & more";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+
+    nixpkgs-24-11.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
 
     # home-manager, used for managing user configuration
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-24-11";
     };
 
     # Agenix for secrets Management. Can be run ad hoc with:
@@ -26,7 +28,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-generators, nixos-hardware
+  outputs = { self, nixpkgs, nixpkgs-24-11, home-manager, nixos-generators, nixos-hardware
     , agenix, ... }@input: {
       # Defining my Nixos Configurations
       nixosConfigurations = {
@@ -60,7 +62,7 @@
           ];
         };
 
-        internalServer = nixpkgs.lib.nixosSystem {
+        internalServer = nixpkgs-24-11.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             ./internalServer/configuration.nix
