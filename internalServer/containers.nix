@@ -37,10 +37,13 @@
 
     # rsync karakeep homedir to smb share for backup
     systemd.services.karakeep-rsync = {
+        path = [
+            pkgs.rsync
+        ];
         script = ''
         while :
         do
-            ${pkgs.nix}/bin/rsync -avu --delete "/home/andrew/karakeep/" "/mnt/karakeep_share"
+            rsync -avu --delete "/home/andrew/karakeep/" "/mnt/karakeep_share"
             sleep 1800
         done
         '';
