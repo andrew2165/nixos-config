@@ -35,16 +35,16 @@
         in ["${automount_opts},credentials=${credentials},uid=1000,gid=100"];
     };
 
-    # # rsync karakeep homedir to smb share for backup
-    # systemd.services."karakeep-rsync" = {
-    #     script = ''
-    #     while :
-    #     do
-    #         rsync -avu --delete "/home/andrew/karakeep/" "/mnt/karakeep_share"
-    #         sleep 1800
-    #     done
-    #     '';
-    # };
+    # rsync karakeep homedir to smb share for backup
+    systemd.services.karakeep-rsync = {
+        script = ''
+        while :
+        do
+            ${pkgs.nix}/bin/rsync -avu --delete "/home/andrew/karakeep/" "/mnt/karakeep_share"
+            sleep 1800
+        done
+        '';
+    };
 
     # Start karakeep (& ollama) compose as systemd service
     systemd.services.karakeep-docker-compose = {
