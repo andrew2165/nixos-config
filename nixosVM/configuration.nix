@@ -126,6 +126,7 @@
     bottles
     tmux
     colmena
+    gnome-tweaks # tool to customize gnome
   ];
 
   programs.steam = {
