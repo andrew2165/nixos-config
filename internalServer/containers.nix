@@ -37,6 +37,7 @@
 
     # rsync karakeep homedir to smb share for backup
     systemd.services.karakeep-rsync = {
+        wantedBy = [ "multi-user.target" ];
         path = [
             pkgs.rsync
         ];
@@ -45,6 +46,7 @@
         do
             rsync -avu --delete "/home/andrew/karakeep/" "/mnt/karakeep_share"
             sleep 1800
+            echo "synced - sleeping for 1800 seconds"
         done
         '';
     };
