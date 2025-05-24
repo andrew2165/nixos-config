@@ -27,6 +27,7 @@
     #podman-compose
     docker
     docker-compose
+    rsync
   ];
 
   /* fileSystems."/" = {

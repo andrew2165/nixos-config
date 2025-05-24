@@ -21,6 +21,7 @@
     age.secrets.tanker-karakeep-smb-pswd.file = ../secrets/tanker-karakeep-smb-pswd.age;
 
     # Mount karakeep share
+    # BUT karakeep does not do well with the SMB share being the location for the Volumes, if I had to bet the database throws a hissy fit
     # For mount.cifs, required unless domain name resolution is not needed.
     #environment.systemPackages = [ pkgs.cifs-utils ];
     networking.firewall.extraCommands = ''iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns'';
@@ -33,6 +34,17 @@
             credentials = config.age.secrets.tanker-karakeep-smb-pswd.path;
         in ["${automount_opts},credentials=${credentials},uid=1000,gid=100"];
     };
+
+    # # rsync karakeep homedir to smb share for backup
+    # systemd.services."karakeep-rsync" = {
+    #     script = ''
+    #     while :
+    #     do
+    #         rsync -avu --delete "/home/andrew/karakeep/" "/mnt/karakeep_share"
+    #         sleep 1800
+    #     done
+    #     '';
+    # };
 
     # Start karakeep (& ollama) compose as systemd service
     systemd.services.karakeep-docker-compose = {
