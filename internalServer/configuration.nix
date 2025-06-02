@@ -12,6 +12,7 @@
     ./hardware-configuration.nix
     ./containers.nix
     ./caddy.nix
+    ./paperless.nix
   ];
 
   environment.systemPackages = with pkgs; [
