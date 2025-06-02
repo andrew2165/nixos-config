@@ -85,7 +85,7 @@
 
   networking.hostName = "internalServer"; # Define your hostname.
   networking.firewall = {
-    allowedTCPPorts = [ 22 80 443 3000 11434 ];
+    allowedTCPPorts = [ 22 80 443 3000 11434 8092 ];
     allowedUDPPorts = [ 41641 ];
   };
 

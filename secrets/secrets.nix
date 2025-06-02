@@ -19,4 +19,6 @@ in {
     [ mbp endeavor-nixos-internalServer desktop-knvu2bv-wsl ];
   "karakeep-env-file.age".publicKeys =
     [ mbp endeavor-nixos-internalServer endeavor-nixos desktop-knvu2bv-wsl ];
+  "paperless.age".publicKeys = 
+    [ mbp endeavor-nixos-internalServer endeavor-nixos desktop-knvu2bv-wsl ];
 }
