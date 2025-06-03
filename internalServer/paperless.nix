@@ -31,7 +31,14 @@
         before = [ "paperless-scheduler.service" ];
     }];
 
-    age.secrets.paperless.file = ../secrets/paperless.age;
+    age.secrets.paperless.file = {
+        file = ../secrets/paperless.age;
+        #path = /home/andrew/paperless/env_file;
+    };
+    age.secrets.paperless-web-key = {
+        file = ../secrets/paperless-web-key.age;
+        #path = /home/andrew/paperless/web-key;
+    };
 
     # Currently broken and the paperless-web.service fails bc it is missing
     # the PAPERLESS_SECRET_KEY so make sure to set it using secrets 
@@ -46,8 +53,10 @@
         mediaDir = "/mnt/paperless/media";
         dataDir = "/mnt/paperless/data";
         environmentFile = config.age.secrets.paperless.path;
-        settings = {
-            #PAPERLESS_SECRET_KEY = "";
+        settings = let 
+            key = builtins.readFile config.age.secrets.paperless-web-key.path; # doesn't matter here
+        in {
+            PAPERLESS_SECRET_KEY = "${key}";
         };
         exporter = {
             enable = true;
