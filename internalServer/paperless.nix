@@ -1,15 +1,34 @@
 { config, pkgs, ... }: {
 
     networking.firewall.extraCommands = ''iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns'';
+    # fileSystems."/mnt/paperless" = {
+    #     device = "//100.113.228.33/paperless";
+    #     fsType = "cifs";
+    #     options = let
+    #         # this line prevents hanging on network split
+    #         automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,user,users,file_mode=0770,dir_mode=0770";
+    #         # This "karakeep" pwd is for this server in general
+    #         credentials = config.age.secrets.tanker-karakeep-smb-pswd.path;
+    #     in ["${automount_opts},credentials=${credentials},uid=1000,gid=100"];
+    # };
+
     fileSystems."/mnt/paperless" = {
         device = "//100.113.228.33/paperless";
         fsType = "cifs";
         options = let
-            # this line prevents hanging on network split
-            automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,user,users,file_mode=0770,dir_mode=0770";
-            # This "karakeep" pwd is for this server in general
-            credentials = config.age.secrets.tanker-karakeep-smb-pswd.path;
-        in ["${automount_opts},credentials=${credentials},uid=1000,gid=100"];
+        credentials = config.age.secrets.tanker-karakeep-smb-pswd.path;
+        in [
+        "credentials=${credentials}"
+        "uid=1000"
+        "gid=100"
+        "file_mode=0770"
+        "dir_mode=0770"
+        "user"
+        "users"
+        "noauto"
+        ];
+        automount = true;  # separate attribute, tells NixOS to create an `.automount` unit
+        mountOptions = [ "x-systemd.device-timeout=5s" "x-systemd.mount-timeout=5s" ];
     };
 
     age.secrets.paperless.file = ../secrets/paperless.age;
