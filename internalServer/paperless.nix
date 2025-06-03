@@ -28,6 +28,7 @@
         description = "Automount for Paperless NGX";
         where = "/mnt/paperless";
         wantedBy = [ "multi-user.target" ];
+        before = [ "paperless-scheduler.service" ];
     }];
 
     age.secrets.paperless.file = ../secrets/paperless.age;
