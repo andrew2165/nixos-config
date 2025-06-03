@@ -16,19 +16,21 @@
         device = "//100.113.228.33/paperless";
         fsType = "cifs";
         options = let
-        credentials = config.age.secrets.tanker-karakeep-smb-pswd.path;
+            credentials = config.age.secrets.tanker-karakeep-smb-pswd.path;
         in [
-        "credentials=${credentials}"
-        "uid=1000"
-        "gid=100"
-        "file_mode=0770"
-        "dir_mode=0770"
-        "user"
-        "users"
-        "noauto"
+            "credentials=${credentials}"
+            "uid=1000"
+            "gid=100"
+            "file_mode=0770"
+            "dir_mode=0770"
+            "user"
+            "users"
+            "x-systemd.automount"
+            "noauto"
+            "x-systemd.idle-timeout=60"
+            "x-systemd.device-timeout=5s"
+            "x-systemd.mount-timeout=5s"
         ];
-        automount = true;  # separate attribute, tells NixOS to create an `.automount` unit
-        mountOptions = [ "x-systemd.device-timeout=5s" "x-systemd.mount-timeout=5s" ];
     };
 
     age.secrets.paperless.file = ../secrets/paperless.age;
