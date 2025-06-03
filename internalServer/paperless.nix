@@ -12,26 +12,23 @@
     #     in ["${automount_opts},credentials=${credentials},uid=1000,gid=100"];
     # };
 
-    fileSystems."/mnt/paperless" = {
-        device = "//100.113.228.33/paperless";
-        fsType = "cifs";
+    # https://discourse.nixos.org/t/systemd-mounts-and-systemd-automounts-options-causing-an-error/13796/2
+    
+    age.secrets.tanker-paperless-smb-pswd.file = ../secrets/tanker-karakeep-smb-pswd.age;
+    systemd.mounts = [{
+        description = "Paperless mount";
+        what = "//100.113.228.33/paperless";
+        where = "/mnt/paperless";
+        type = "cifs";
         options = let
-            credentials = config.age.secrets.tanker-karakeep-smb-pswd.path;
-        in [
-            "credentials=${credentials}"
-            "uid=1000"
-            "gid=100"
-            "file_mode=0770"
-            "dir_mode=0770"
-            "user"
-            "users"
-            "x-systemd.automount"
-            "noauto"
-            "x-systemd.idle-timeout=60"
-            "x-systemd.device-timeout=5s"
-            "x-systemd.mount-timeout=5s"
-        ];
-    };
+                credentials = config.age.secrets.tanker-paperless-smb-pswd.path;
+            in ["credentials=${credentials},rw"];
+    }];
+    systemd.automounts = [{
+        description = "Automount for Paperless NGX";
+        where = "/mnt/paperless";
+        wantedBy = [ "multi-user.target" ];
+    }];
 
     age.secrets.paperless.file = ../secrets/paperless.age;
 
