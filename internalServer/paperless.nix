@@ -22,7 +22,7 @@
         type = "cifs";
         options = let
                 credentials = config.age.secrets.tanker-paperless-smb-pswd.path;
-            in ["credentials=${credentials},rw"];
+            in "credentials=${credentials},rw,file_mode=0770,dir_mode=0770";
     }];
     systemd.automounts = [{
         description = "Automount for Paperless NGX";
