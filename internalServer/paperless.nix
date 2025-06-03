@@ -6,7 +6,7 @@
         fsType = "cifs";
         options = let
             # this line prevents hanging on network split
-            automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,user,users";
+            automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,user,users,file_mode=0770,dir_mode=0770";
             # This "karakeep" pwd is for this server in general
             credentials = config.age.secrets.tanker-karakeep-smb-pswd.path;
         in ["${automount_opts},credentials=${credentials},uid=1000,gid=100"];
@@ -16,6 +16,7 @@
 
     services.paperless = {
         enable = true;
+        #user = "andrew";
         consumptionDir = "/mnt/paperless/ingest";
         consumptionDirIsPublic = true;
         address = "100.122.79.75";
