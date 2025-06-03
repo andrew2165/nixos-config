@@ -33,6 +33,9 @@
 
     age.secrets.paperless.file = ../secrets/paperless.age;
 
+    # Currently broken and the paperless-web.service fails bc it is missing
+    # the PAPERLESS_SECRET_KEY so make sure to set it using secrets 
+    # it can be any random string of characters
     services.paperless = {
         enable = true;
         #user = "andrew";
@@ -43,6 +46,9 @@
         mediaDir = "/mnt/paperless/media";
         dataDir = "/mnt/paperless/data";
         environmentFile = config.age.secrets.paperless.path;
+        settings = {
+            #PAPERLESS_SECRET_KEY = "";
+        };
         exporter = {
             enable = true;
             directory = "/mnt/paperless/backup";
