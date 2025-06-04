@@ -31,7 +31,7 @@
         before = [ "paperless-scheduler.service" ];
     }];
 
-    age.secrets.paperless.file = {
+    age.secrets.paperless = {
         file = ../secrets/paperless.age;
         mode = "777";
         path = /home/andrew/paperless/env_file;
@@ -46,7 +46,7 @@
     # the PAPERLESS_SECRET_KEY so make sure to set it using secrets 
     # it can be any random string of characters
     services.paperless = {
-        enable = false;
+        enable = true;
         user = "andrew";
         consumptionDir = "/mnt/paperless/ingest";
         consumptionDirIsPublic = true;
