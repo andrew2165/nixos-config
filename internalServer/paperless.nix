@@ -33,19 +33,21 @@
 
     age.secrets.paperless.file = {
         file = ../secrets/paperless.age;
-        #path = /home/andrew/paperless/env_file;
+        mode = "777";
+        path = /home/andrew/paperless/env_file;
     };
     age.secrets.paperless-web-key = {
         file = ../secrets/paperless-web-key.age;
-        #path = /home/andrew/paperless/web-key;
+        mode = "777";
+        path = /home/andrew/paperless/web-key;
     };
 
     # Currently broken and the paperless-web.service fails bc it is missing
     # the PAPERLESS_SECRET_KEY so make sure to set it using secrets 
     # it can be any random string of characters
     services.paperless = {
-        enable = true;
-        #user = "andrew";
+        enable = false;
+        user = "andrew";
         consumptionDir = "/mnt/paperless/ingest";
         consumptionDirIsPublic = true;
         address = "100.122.79.75";
@@ -53,10 +55,8 @@
         mediaDir = "/mnt/paperless/media";
         dataDir = "/mnt/paperless/data";
         environmentFile = config.age.secrets.paperless.path;
-        settings = let 
-            key = builtins.readFile config.age.secrets.paperless-web-key.path; # doesn't matter here
-        in {
-            PAPERLESS_SECRET_KEY = "${key}";
+        settings = {
+            PAPERLESS_SECRET_KEY = builtins.readFile config.age.secrets.paperless-web-key.path;
         };
         exporter = {
             enable = true;
