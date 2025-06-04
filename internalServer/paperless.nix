@@ -34,36 +34,36 @@
     age.secrets.paperless = {
         file = ../secrets/paperless.age;
         mode = "777";
-        path = /home/andrew/paperless/env_file;
+        #path = /home/andrew/paperless/env_file;
     };
     age.secrets.paperless-web-key = {
         file = ../secrets/paperless-web-key.age;
         mode = "777";
-        path = /home/andrew/paperless/web-key;
+        #path = /home/andrew/paperless/web-key;
     };
 
     # Currently broken and the paperless-web.service fails bc it is missing
     # the PAPERLESS_SECRET_KEY so make sure to set it using secrets 
     # it can be any random string of characters
-    services.paperless = {
-        enable = true;
-        user = "andrew";
-        consumptionDir = "/mnt/paperless/ingest";
-        consumptionDirIsPublic = true;
-        address = "100.122.79.75";
-        port = 8092;
-        mediaDir = "/mnt/paperless/media";
-        dataDir = "/mnt/paperless/data";
-        environmentFile = config.age.secrets.paperless.path;
-        settings = {
-            PAPERLESS_SECRET_KEY = builtins.readFile config.age.secrets.paperless-web-key.path;
-        };
-        exporter = {
-            enable = true;
-            directory = "/mnt/paperless/backup";
-            # default backup time is 01:30:00
-        };
-        database.createLocally = true; # Configure a PostegreSWL database for Paperless
-    };
+    # services.paperless = {
+    #     enable = true;
+    #     user = "andrew";
+    #     consumptionDir = "/mnt/paperless/ingest";
+    #     consumptionDirIsPublic = true;
+    #     address = "100.122.79.75";
+    #     port = 8092;
+    #     mediaDir = "/mnt/paperless/media";
+    #     dataDir = "/mnt/paperless/data";
+    #     environmentFile = config.age.secrets.paperless.path;
+    #     settings = {
+    #         #PAPERLESS_SECRET_KEY = builtins.readFile config.age.secrets.paperless-web-key.path;
+    #     };
+    #     exporter = {
+    #         enable = true;
+    #         directory = "/mnt/paperless/backup";
+    #         # default backup time is 01:30:00
+    #     };
+    #     database.createLocally = true; # Configure a PostegreSWL database for Paperless
+    # };
 
 }
