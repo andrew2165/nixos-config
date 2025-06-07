@@ -10,7 +10,7 @@ services:
     ports:
       - 3000:3000
     env_file:
-      - /home/andrew/nixos-config/internalServer/.env
+      - path: /etc/karakeep/.env
     environment:
       MEILI_ADDR: http://meilisearch:7700
       BROWSER_WEB_URL: http://chrome:9222
@@ -21,16 +21,16 @@ services:
       DATA_DIR: /data # DON'T CHANGE THIS
       ######
       # moved from .env file
-      KARAKEEP_VERSION: 0.24.1
-      NEXTAUTH_SECRET: qbd7vJGcsp8q9f/wzIeRwiI6S/tq37icLd/Macl6erGLhpRR
-      MEILI_MASTER_KEY: S/tSFa2DkZThfWG8na+WPNzjRGX9h15GHKA1tGSMCeU4mbnH
-      NEXTAUTH_URL: http://localhost:3000
-      OLLAMA_BASE_URL: http://ollama:11434
-      INFERENCE_TEXT_MODEL: llama3.1:8b
-      INFERENCE_IMAGE_MODEL: llava:7b
-      INFERENCE_JOB_TIMEOUT_SEC: 250 
-      INFERENCE_CONTEXT_LENGTH: 10924 # or increase based on testing
-      OLLAMA_KEEP_ALIVE: 5m
+      # KARAKEEP_VERSION: 0.24.1
+      # NEXTAUTH_SECRET: qbd7vJGcsp8q9f/wzIeRwiI6S/tq37icLd/Macl6erGLhpRR
+      # MEILI_MASTER_KEY: S/tSFa2DkZThfWG8na+WPNzjRGX9h15GHKA1tGSMCeU4mbnH
+      # NEXTAUTH_URL: http://localhost:3000
+      # OLLAMA_BASE_URL: http://ollama:11434
+      # INFERENCE_TEXT_MODEL: llama3.1:8b
+      # INFERENCE_IMAGE_MODEL: llava:7b
+      # INFERENCE_JOB_TIMEOUT_SEC: 250 
+      # INFERENCE_CONTEXT_LENGTH: 10924 # or increase based on testing
+      # OLLAMA_KEEP_ALIVE: 5m
   chrome:
     image: gcr.io/zenika-hub/alpine-chrome:123
     restart: unless-stopped
