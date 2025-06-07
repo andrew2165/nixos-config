@@ -56,13 +56,13 @@ services:
       NEXTAUTH_URL: http://localhost:3000
     volumes:
       - /home/andrew/karakeep/meilisearch:/meili_data
-  ollama:
-    image: ollama/ollama:0.6.8
-    restart: unless-stopped
-    ports:
-      - 11434:11434
-    volumes:
-      - /home/andrew/ollama:/root/.ollama
+  # ollama:
+  #   image: ollama/ollama:0.6.8
+  #   restart: unless-stopped
+  #   ports:
+  #     - 11434:11434
+  #   volumes:
+  #     - /home/andrew/ollama:/root/.ollama
 
 volumes:
   meilisearch:

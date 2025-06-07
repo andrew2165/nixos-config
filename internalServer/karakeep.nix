@@ -23,8 +23,8 @@
     };
     age.secrets.karakeep-env-file = {
         file = ../secrets/karakeep-env-file.age;
-        path = /etc/karakeep/.env;
-    }
+        path = "/etc/karakeep/.env";
+    };
 
     # Mount karakeep share
     # BUT karakeep does not do well with the SMB share being the location for the Volumes, if I had to bet the database throws a hissy fit
