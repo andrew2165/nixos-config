@@ -8,7 +8,7 @@ services:
       # - /path/to/your/directory:/data
       - /home/andrew/karakeep/data:/data
     ports:
-      - 3000:3000
+      - 3050:3000
     env_file:
       - path: /etc/karakeep/.env
     environment:
