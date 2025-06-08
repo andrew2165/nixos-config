@@ -14,6 +14,7 @@
     ./pocket-id/pocket-id.nix
     ./caddy.nix
     ./paperless/paperless.nix
+    ./mealie/mealie.nix
   ];
 
   environment.systemPackages = with pkgs; [
