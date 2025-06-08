@@ -12,6 +12,9 @@
     # TODO: implement some kind of backup strategy for Mealie
     # outside of the daily vm images
 
+
+    # Must login through the tailscale IP using the user/pass in iCloud keychain
+    # to get at the settings
     systemd.services.mealie-docker-compose = {
         path = [ 
             pkgs.docker-compose
