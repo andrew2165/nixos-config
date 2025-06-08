@@ -10,7 +10,7 @@ services:
         limits:
           memory: 1000M # 
     volumes:
-      - ~/mealie/data:/app/data/
+      - /home/andrew/mealie/data:/app/data/
     env_file: "/etc/mealie/mealie/.env"
     depends_on:
       postgres:
@@ -21,7 +21,7 @@ services:
     image: postgres:15
     restart: always
     volumes:
-      - ~/mealie/mealie-pgdata:/var/lib/postgresql/data
+      - /home/andrew/mealie/mealie-pgdata:/var/lib/postgresql/data
     env_file: "/etc/mealie/postgres/.env"
     healthcheck:
       test: ["CMD", "pg_isready"]
