@@ -57,6 +57,9 @@
     [ "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" "ext4" ];
   boot.loader.grub.configurationLimit = 5; # Number of configs retained
 
+  nix.optimise.automatic = true;
+  nix.optimise.dates = [ "03:45" ]; # Optional; allows customizing optimisation schedule
+
   users.users = {
     root.hashedPassword = "!"; # Disable root login
     andrew = {

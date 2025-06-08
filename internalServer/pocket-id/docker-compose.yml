@@ -1,8 +1,8 @@
 services:
   pocket-id:
-    image: ghcr.io/pocket-id/pocket-id:latest
+    image: ghcr.io/pocket-id/pocket-id
     restart: unless-stopped
-    env_file: .env
+    env_file: "/etc/pocket-id/.env"
     ports:
       - 1411:1411
     volumes:
