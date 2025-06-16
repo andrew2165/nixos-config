@@ -11,7 +11,7 @@
 
     systemd.mounts = [{
         description = "mealie backup mount";
-        what = "//100.113.228.33/self-hosted-services/mealie";
+        what = "//100.113.228.33/self-hosted-services";
         where = "/mnt/mealie";
         type = "cifs";
         options = let
@@ -23,6 +23,22 @@
         where = "/mnt/mealie";
         wantedBy = [ "multi-user.target" ];
     }];
+
+    # rsync mealie homedir to smb share for backup
+    systemd.services.mealie-rsync = {
+        wantedBy = [ "multi-user.target" ];
+        path = [
+            pkgs.rsync
+        ];
+        script = ''
+        while :
+        do
+            rsync -avu --delete "/home/andrew/mealie" "/mnt/mealie/mealie"
+            sleep 21600
+            echo "synced - sleeping for 21600 seconds (6h)"
+        done
+        '';
+    };
 
 
     age.secrets.mealie-env = {
