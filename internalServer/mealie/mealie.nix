@@ -41,23 +41,25 @@
                 Unit = "mealie-trigger-backup.service";
             };
     };
-    systemd.services."mealie-trigger-backup" = {
-        path = [
-            (pkgs.python313.withPackages (python-pkgs: with python-pkgs; [
-                requests
-            ]))
-        ];
-        script = let
+    systemd.services."mealie-trigger-backup" = let
+            myPythonEnv = pkgs.python313.withPackages (ps: with ps; [ requests ]);
             python_backup_script = config.age.secrets.mealie-backup-py.path;
-        in ''
-            set -eu
-            ${pkgs.python313}/bin/python3.13 ${python_backup_script}
-        '';
-        serviceConfig = {
-            Type = "oneshot";
-            User = "root";
+        in {
+            path = [ myPythonEnv ];
+            script = ''
+                set -eu
+                ${myPythonEnv}/bin/python ${python_backup_script}
+            '';
+            serviceConfig = {
+                Type = "oneshot";
+                User = "root";
+            };
+            serviceConfig = {
+                Type = "oneshot";
+                User = "root";
+            };
         };
-    };
+
 
     # rsync mealie homedir to smb share for backup
     systemd.services.mealie-rsync = {
