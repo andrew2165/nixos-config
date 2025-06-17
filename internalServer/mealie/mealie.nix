@@ -27,29 +27,31 @@
     # Trigger a backup through api with python
     # https://github.com/mealie-recipes/mealie/discussions/4223
     # https://discourse.nixos.org/t/start-python-script-from-systemd-unit/4520 
-    # systemd.timers."hello-world" = {
-    #     wantedBy = [ "timers.target" ];
-    #         timerConfig = {
-    #             OnBootSec = "5m";
-    #             OnUnitActiveSec = "5m";
-    #             Unit = "mealie-trigger-backup.service";
-    #         };
-    # };
-    # systemd.services."mealie-trigger-backup" = {
-    #     path = [
-    #         pkgs.python313.withPackages (python-pkgs: [
-    #             python-pkgs.requests
-    #         ])
-    #     ];
-    #     script = ''
-    #         set -eu
-    #         ${pkgs.python} "Hello World"
-    #     '';
-    #     serviceConfig = {
-    #         Type = "oneshot";
-    #         User = "root";
-    #     };
-    # };
+    systemd.timers."mealie-backup" = {
+        wantedBy = [ "timers.target" ];
+            timerConfig = {
+                #OnBootSec = "5m";
+                #OnUnitActiveSec = "5m";
+                OnCalendar = "daily";
+                Persistent = true;
+                Unit = "mealie-trigger-backup.service";
+            };
+    };
+    systemd.services."mealie-trigger-backup" = {
+        path = [
+            pkgs.python313.withPackages (python-pkgs: [
+                python-pkgs.requests
+            ])
+        ];
+        script = ''
+            set -eu
+            ${pkgs.python} ${./mealie_backup.py}
+        '';
+        serviceConfig = {
+            Type = "oneshot";
+            User = "root";
+        };
+    };
 
     # rsync mealie homedir to smb share for backup
     systemd.services.mealie-rsync = {
