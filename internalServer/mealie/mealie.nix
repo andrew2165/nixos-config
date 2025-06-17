@@ -54,10 +54,6 @@
                 Type = "oneshot";
                 User = "root";
             };
-            serviceConfig = {
-                Type = "oneshot";
-                User = "root";
-            };
         };
 
 
