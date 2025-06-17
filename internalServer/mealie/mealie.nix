@@ -26,8 +26,7 @@
 
     age.secrets.mealie-backup-py = {
         file = ./../../secrets/mealie-backup-py.age;
-
-    }
+    };
 
     # Trigger a backup through api with python
     # https://github.com/mealie-recipes/mealie/discussions/4223
@@ -44,11 +43,12 @@
     };
     systemd.services."mealie-trigger-backup" = {
         path = [
-            pkgs.python313
-            pkgs.python313Packages.requests
+            (pkgs.python313.withPackages (python-pkgs: with python-pkgs; [
+                requests
+            ]))
         ];
         script = let
-                python_backup_script = config.age.secrets.mealie-backup-py.path;
+            python_backup_script = config.age.secrets.mealie-backup-py.path;
         in ''
             set -eu
             ${pkgs.python313}/bin/python3.13 ${python_backup_script}
