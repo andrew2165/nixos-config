@@ -127,6 +127,10 @@
     tmux
     colmena
     gnome-tweaks # tool to customize gnome
+    dive # look into docker image layers
+    podman-tui # status of containers in the terminal
+    #docker-compose # start group of containers for dev
+    podman-compose # start group of containers for dev
   ];
 
   programs.steam = {
@@ -184,14 +188,6 @@
       defaultNetwork.settings.dns_enabled = true;
     };
   };
-
-  # Useful other development tools
-  environment.systemPackages = with pkgs; [
-    dive # look into docker image layers
-    podman-tui # status of containers in the terminal
-    docker-compose # start group of containers for dev
-    #podman-compose # start group of containers for dev
-  ];
 
   # Fix for SVG icons not showing
   services.xserver.gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
