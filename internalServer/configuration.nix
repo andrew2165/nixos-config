@@ -10,9 +10,9 @@
   imports = [
     # Include hardware scan
     ./hardware-configuration.nix
-    ./karakeep.nix # also has some of the general system docker config, needs to fix TODO
+    ./karakeep/karakeep.nix # also has some of the general system docker config, needs to fix TODO
     ./pocket-id/pocket-id.nix
-    ./caddy.nix
+    ./caddy/caddy.nix
     ./paperless/paperless.nix
     ./mealie/mealie.nix
   ];

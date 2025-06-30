@@ -19,10 +19,10 @@
     #};
 
     age.secrets.tanker-karakeep-smb-pswd = {
-        file = ../secrets/tanker-karakeep-smb-pswd.age;
+        file = ./../../secrets/tanker-karakeep-smb-pswd.age;
     };
     age.secrets.karakeep-env-file = {
-        file = ../secrets/karakeep-env-file.age;
+        file = ./../../secrets/karakeep-env-file.age;
         path = "/etc/karakeep/.env";
     };
 
@@ -65,7 +65,7 @@
             pkgs.docker
         ];
         script = ''
-        docker-compose -f /home/andrew/nixos-config/internalServer/docker-compose.yml up --detach
+        docker-compose -f /home/andrew/nixos-config/internalServer/karakeep/docker-compose.yml up --detach
         '';
         ## For some reason this will frequently reload the systemd service
         ## not sure why so commented out 
