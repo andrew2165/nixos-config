@@ -54,7 +54,7 @@
      };
    };
    
-   security.sudo.wheelNeedsPassword = false;
+   security.sudo.wheelNeedsPassword = true;
    
    services.openssh = {
      enable = true;
