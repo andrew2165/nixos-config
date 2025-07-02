@@ -1,45 +1,48 @@
-{ pkgs, ... }:
- 
- {
-   nix.settings = {
-     experimental-features = "nix-command flakes";
-   };
+{ pkgs, ... }: {
+
+    nix.settings = {
+        experimental-features = "nix-command flakes";
+    };
    
-   environment.systemPackages = with pkgs; [
-     vim
-     tmux
-     git
-     htop
-     fastfetch
-     podman-tui
-     podman-compose # start group of containers for dev
-   ];
+    environment.systemPackages = with pkgs; [
+        vim
+        tmux
+        git
+        htop
+        fastfetch
+        podman-tui
+        podman-compose # start group of containers for dev
+    ];
+
+    fileSystems."/" = {
+        device = "/dev/disk/by-label/nixos";
+        fsType = "ext4";
+    };
+    fileSystems."/boot" = {
+        device = "/dev/disk/by-label/boot";
+        fsType = "ext4";
+    };
+    swapDevices = [
+        {
+            device = "/dev/disk/by-label/swap";
+        }
+    ];
    
-   fileSystems."/" = {
-     device = "/dev/disk/by-label/nixos";
-     fsType = "ext4";
-   };
-   fileSystems."/boot" = {
-     device = "/dev/disk/by-label/boot";
-     fsType = "ext4";
-   };
-   swapDevices = [
-     {
-       device = "/dev/disk/by-label/swap";
-     }
-   ];
-   
-   time.timeZone = "Europe/London";
-   i18n.defaultLocale = "en_US.UTF-8";
-   console.keyMap = "us";
-   
-   boot.loader.grub.enable = true;
-   boot.loader.grub.device = "/dev/sda";
-   boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" "ext4" ];
-   
-   users.users = {
-     root.hashedPassword = "!"; # Disable root login
-     andrew = {
+    time.timeZone = "America/New_York";
+    i18n.defaultLocale = "en_US.UTF-8";
+    console.keyMap = "us";
+
+    boot.loader.grub.enable = true;
+    boot.loader.grub.device = "/dev/sda";
+    boot.loader.grub.configurationLimit = 5; # Number of configs retained
+    boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" "ext4" ];
+
+    # Enable automatic garbage collection
+    nix.gc.automatic = true;
+
+    users.users = {
+        root.hashedPassword = "!"; # Disable root login
+        andrew = {
         name = "andrew";
         isNormalUser = true;
         extraGroups = [ 
@@ -51,19 +54,23 @@
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICZCeaMfoy/5Tef0FnIkLrqhE6BIvjL+XfIDXczkTiDR andrew"
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFTSJ+CahcqGec/tsOcZDxsAyFQ1h8TxCgVxq1bSePr jonathanstewart"
         ];
-     };
-   };
+        };
+    };
    
-   security.sudo.wheelNeedsPassword = true;
+    security.sudo.wheelNeedsPassword = true;
+
+    # Lock down Nix to only wheel
+    nix.allowedUsers = [ "@wheel" ];
    
-   services.openssh = {
-     enable = true;
-     settings = {
-       PermitRootLogin = "no";
-       PasswordAuthentication = false;
-       KbdInteractiveAuthentication = false;
-     };
-   };
+    services.openssh = {
+        enable = true;
+        allowSFTP = false;
+        settings = {
+        PermitRootLogin = "no";
+        PasswordAuthentication = false;
+        KbdInteractiveAuthentication = false;
+        };
+    };
 
    services.tailscale.enable = true;
    
@@ -83,6 +90,6 @@
         };
     };
 
-   networking.hostName = "wright-flyer2";
-   system.stateVersion = "25.05";
+    networking.hostName = "wright-flyer2";
+    system.stateVersion = "25.05";
  }
