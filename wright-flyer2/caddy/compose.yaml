@@ -1,0 +1,18 @@
+services:
+  caddy:
+    build: .
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "80:80" # Not sure if podman can bind to these
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - $PWD/conf:/etc/caddy # Caddyfile goes in the $PWD/conf dir
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:

@@ -7,6 +7,7 @@
    
    environment.systemPackages = with pkgs; [
      vim
+     tmux
      git
      htop
      fastfetch
@@ -81,6 +82,7 @@
             defaultNetwork.settings.dns_enabled = true;
         };
     };
-   
+
+   networking.hostName = "wright-flyer2";
    system.stateVersion = "25.05";
  }
