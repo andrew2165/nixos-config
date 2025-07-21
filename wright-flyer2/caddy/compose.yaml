@@ -2,6 +2,8 @@ services:
   caddy:
     build: .
     restart: unless-stopped
+    depends_on:
+      - 'crowdsec'
     cap_add:
       - NET_ADMIN
     ports:
@@ -9,9 +11,22 @@ services:
       - "443:443"
       - "443:443/udp"
     volumes:
-      - $PWD/conf:/etc/caddy # Caddyfile goes in the $PWD/conf dir
+      - ./conf:/etc/caddy # Caddyfile goes in the $PWD/conf dir
       - caddy_data:/data
-      - caddy_config:/config
+      - caddy_config:/config # TODO: also add in a volume for the logs
+  crowdsec:
+    image: crowdsecurity/crowdsec
+    restart: always
+    ports:
+      - 127.0.0.1:8080:8080
+    environment:
+      COLLECTIONS: "crowdsecurity/nginx"
+      GID: "${GID-1000}"
+    volumes:
+      - ./crowdsec/acquis.yaml:/etc/crowdsec/acquis.yaml
+      - logs:/var/log/nginx
+      - crowdsec-db:/var/lib/crowdsec/data/ ## Data Directory
+      - crowdsec-config:/etc/crowdsec/ ## Config Directory
 
 volumes:
   caddy_data:
