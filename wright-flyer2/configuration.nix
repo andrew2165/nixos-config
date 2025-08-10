@@ -1,5 +1,9 @@
 { pkgs, ... }: {
 
+    imports = [
+        ./caddy/caddy.nix
+    ];
+
     nix.settings = {
         experimental-features = "nix-command flakes";
     };
@@ -43,17 +47,17 @@
     users.users = {
         root.hashedPassword = "!"; # Disable root login
         andrew = {
-        name = "andrew";
-        isNormalUser = true;
-        extraGroups = [ 
-            "wheel" 
-            "docker"
-            "podman"
-        ];
-        openssh.authorizedKeys.keys = [
-            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICZCeaMfoy/5Tef0FnIkLrqhE6BIvjL+XfIDXczkTiDR andrew"
-            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFTSJ+CahcqGec/tsOcZDxsAyFQ1h8TxCgVxq1bSePr jonathanstewart"
-        ];
+            name = "andrew";
+            isNormalUser = true;
+            extraGroups = [ 
+                "wheel" 
+                "docker"
+                "podman"
+            ];
+            openssh.authorizedKeys.keys = [
+                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICZCeaMfoy/5Tef0FnIkLrqhE6BIvjL+XfIDXczkTiDR andrew"
+                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFTSJ+CahcqGec/tsOcZDxsAyFQ1h8TxCgVxq1bSePr jonathanstewart"
+            ];
         };
     };
    
@@ -66,15 +70,32 @@
         enable = true;
         allowSFTP = false;
         settings = {
-        PermitRootLogin = "no";
-        PasswordAuthentication = false;
-        KbdInteractiveAuthentication = false;
+            PermitRootLogin = "no";
+            PasswordAuthentication = false;
+            KbdInteractiveAuthentication = false;
         };
     };
 
    services.tailscale.enable = true;
    
-   networking.firewall.allowedTCPPorts = [  ];
+   networking.firewall = {
+        enable = true;
+        allowedTCPPorts = [ 
+            80
+            8000
+            #53
+            #5300
+            443
+            8443
+        ];
+        allowedUDPPorts = [
+            #53
+            #5300
+            443
+            8443
+        ];
+   };
+
 
     # Enable common container config files in /etc/containers
     virtualisation.containers.enable = true;

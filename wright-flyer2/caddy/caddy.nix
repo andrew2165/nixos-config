@@ -1,9 +1,20 @@
 { config, pkgs, ... }: {
 
-    # TODO: configure firewall port forwarding to allow for rootless container binding to lower ports
+    # Configure firewall port forwarding to allow for rootless container binding to lower ports
     # https://wiki.nixos.org/wiki/Docker
+    boot.kernel.sysctl = {
+        "net.ipv4.conf.eth0.forwarding" = 1;    # enable port forwarding
+    };
+    
+    networking = {
+        firewall.extraCommands = ''
+            iptables -A PREROUTING -t nat -i eth0 -p TCP --dport 80 -j REDIRECT --to-port 8000
+            iptables -A PREROUTING -t nat -i eth0 -p TCP --dport 53 -j REDIRECT --to-port 5300
+            iptables -A PREROUTING -t nat -i eth0 -p UDP --dport 53 -j REDIRECT --to-port 5300
+        '';
+    };
 
-    # TODO: configure systemd service to build and start the container
+    # Configure systemd service to build and start the container
     systemd.services.caddy-container = {
         path = [
             pkgs.podman
