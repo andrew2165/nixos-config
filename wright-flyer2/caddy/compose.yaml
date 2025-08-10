@@ -7,9 +7,9 @@ services:
     cap_add:
       - NET_ADMIN
     ports:
-      - "80:80" # Not sure if podman can bind to these
-      - "443:443"
-      - "443:443/udp"
+      - "8000:80" # Not sure if podman can bind to these
+      - "8443:443"
+      - "8443:443/udp"
     volumes:
       - ./conf:/etc/caddy # Caddyfile goes in the $PWD/conf dir
       - caddy_data:/data
@@ -31,3 +31,6 @@ services:
 volumes:
   caddy_data:
   caddy_config:
+  logs:
+  crowdsec-db:
+  crowdsec-config:
