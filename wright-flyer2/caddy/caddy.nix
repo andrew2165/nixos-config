@@ -1,16 +1,29 @@
 { config, pkgs, ... }: {
 
+    # Issue with caddy plugins in sub directories & the corresponding go structure
+    # that needed the install check to be overwridden.
+    # Might be resolved in next release / unstable
+    # https://github.com/NixOS/nixpkgs/issues/430090
     services.caddy = {
         enable = true;
-        package = pkgs.caddy.withPlugins {
+        package = (pkgs.caddy.withPlugins {
             plugins = [ 
-                "github.com/greenpau/caddy-security@1.1.31"
-                "github.com/hslatman/caddy-crowdsec-bouncer/crowdsec"
+                "github.com/greenpau/caddy-security@v1.1.31"
+                "github.com/hslatman/caddy-crowdsec-bouncer/http@v0.9.2"
             ];
-            hash = pkgs.lib.fakeSha256; # useful for finding the real one
-            # hash = "";
-        };
+            # hash = pkgs.lib.fakeSha256; # useful for finding the real one
+            hash = "sha256-3lz7YyErZiggjnmnABmEgZ9jHFgX9vp8ZO7wadyysn0=";
+        }).overrideAttrs (finalAttr: prevAttrs: {
+            doInstallCheck = false;
+        });
     };
+
+    # (caddy.withPlugins {
+    #     plugins = ["github.com/protomaps/go-pmtiles/caddy@v1.28.0"];
+    #     hash = "sha256-QVyV1PPYqQQnS531BDzp8Equ0le1AzyOHbsCjeOVlew=";
+    # }).overrideAttrs (finalAttr: prevAttrs: {
+    # doInstallCheck = false;
+    # })
 
     # # Configure firewall port forwarding to allow for rootless container binding to lower ports
     # # https://wiki.nixos.org/wiki/Docker
