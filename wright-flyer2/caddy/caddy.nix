@@ -7,8 +7,10 @@
             uid = 678;
             createHome = false;
             isSystemUser = true;
+            group = "caddyier";
         };
     };
+    users.groups.caddyier = {};
 
     age.secrets.wright-flyer-caddyfile = {
         file = ./../../secrets/wright-flyer-caddyfile.age;
