@@ -9,6 +9,8 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPuwH6/WPRkArKQT86nWzwBBWK7h8fv6/LEX3do5gevp";
   desktop-knvu2bv-wsl =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICZCeaMfoy/5Tef0FnIkLrqhE6BIvjL+XfIDXczkTiDR";
+  wright-flyer2 = 
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMoDWH+C9xdpqua4YQ3DiTz21flBO1l8hYDKEfncaPHL";
 in {
   "wifi-pswd.age".publicKeys = [ mbp endeavor-nixos desktop-knvu2bv-wsl ];
   "nixpi-andrew-pswd.age".publicKeys =
@@ -31,4 +33,6 @@ in {
     [ mbp endeavor-nixos-internalServer endeavor-nixos desktop-knvu2bv-wsl ];
   "mealie-backup-py.age".publicKeys = 
     [ mbp endeavor-nixos-internalServer endeavor-nixos desktop-knvu2bv-wsl ];
+  "wright-flyer-caddyfile.age".publicKeys =
+    [ mbp endeavor-nixos-internalServer endeavor-nixos desktop-knvu2bv-wsl wright-flyer2 ];
 }
