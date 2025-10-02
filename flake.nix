@@ -4,6 +4,7 @@
   inputs = {
 
     nixpkgs-24-11.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/unstable";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
 
     # home-manager, used for managing user configuration
@@ -28,8 +29,17 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-24-11, home-manager, nixos-generators, nixos-hardware
-    , agenix, ... }@input: {
+  outputs = {
+      self,
+      nixpkgs,
+      nixpkgs-24-11,
+      nixpkgs-unstable,
+      home-manager,
+      nixos-generators,
+      nixos-hardware,
+      agenix,
+      ...
+    }@input:{
       # Defining my Nixos Configurations
       nixosConfigurations = {
         nixosVM = nixpkgs.lib.nixosSystem {
@@ -38,14 +48,11 @@
             ./nixosVM/configuration.nix
             agenix.nixosModules.default
             {
-              environment.systemPackages =
-                [ agenix.packages."x86_64-linux".default ];
+              environment.systemPackages = [ agenix.packages."x86_64-linux".default ];
               age.identityPaths = [ "/home/andrew/.ssh/id_ed25519" ];
               age.secrets."wifi-pswd".file = ./secrets/wifi-pswd.age;
-              age.secrets."nixpi-andrew-pswd".file =
-                ./secrets/nixpi-andrew-pswd.age;
-              age.secrets."tailscale-auth-key1.age".file =
-                ./secrets/tailscale-auth-key1.age;
+              age.secrets."nixpi-andrew-pswd".file = ./secrets/nixpi-andrew-pswd.age;
+              age.secrets."tailscale-auth-key1.age".file = ./secrets/tailscale-auth-key1.age;
             }
 
             # make home-manager as a module of nixos
@@ -68,21 +75,19 @@
             ./internalServer/configuration.nix
             agenix.nixosModules.default
             {
-              environment.systemPackages =
-                [ agenix.packages."x86_64-linux".default ];
+              environment.systemPackages = [ agenix.packages."x86_64-linux".default ];
               age.identityPaths = [ "/home/andrew/.ssh/id_ed25519" ];
             }
           ];
         };
 
-        wright-flyer2 = nixpkgs.lib.nixosSystem{
+        wright-flyer2 = nixpkgs-unstable.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             ./wright-flyer2/configuration.nix
             agenix.nixosModules.default
             {
-              environment.systemPackages =
-                [ agenix.packages."x86_64-linux".default ];
+              environment.systemPackages = [ agenix.packages."x86_64-linux".default ];
               age.identityPaths = [ "/home/andrew/.ssh/id_ed25519" ];
             }
           ];
@@ -113,8 +118,7 @@
             ./raspberryPI/configuration2.nix
             nixos-hardware.nixosModules.raspberry-pi-3
             {
-              environment.systemPackages =
-                [ agenix.packages."aarch64-linux".default ];
+              environment.systemPackages = [ agenix.packages."aarch64-linux".default ];
               #age.identityPaths = [ "/home/andrew/.ssh/id_ed25519" ];
               #age.secrets."nixpi-andrew-pswd".file = ./secrets/nixpi-andrew-pswd.age;
               #age.secrets."tailscale-auth-key1.age".file = ./secrets/tailscale-auth-key1.age;
@@ -132,12 +136,10 @@
             ./liveISO/configuration.nix
             agenix.nixosModules.default
             {
-              environment.systemPackages =
-                [ agenix.packages."x86_64-linux".default ];
+              environment.systemPackages = [ agenix.packages."x86_64-linux".default ];
               age.identityPaths = [ "/home/andrew/.ssh/id_ed25519" ];
               age.secrets."wifi-pswd".file = ../secrets/wifi-pswd.age;
-              age.secrets."nixpi-andrew-pswd".file =
-                ../secrets/nixpi-andrew-pswd.age;
+              age.secrets."nixpi-andrew-pswd".file = ../secrets/nixpi-andrew-pswd.age;
             }
           ];
           format = "iso";

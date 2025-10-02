@@ -26,4 +26,6 @@
         }); # override bc of the location of the go 
     };
 
+    # TODO: Write a systemd service for crowdsec
+
 }
