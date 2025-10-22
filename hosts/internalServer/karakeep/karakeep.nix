@@ -19,10 +19,10 @@
     #};
 
     age.secrets.tanker-karakeep-smb-pswd = {
-        file = ./../../secrets/tanker-karakeep-smb-pswd.age;
+        file = ./../../../secrets/tanker-karakeep-smb-pswd.age;
     };
     age.secrets.karakeep-env-file = {
-        file = ./../../secrets/karakeep-env-file.age;
+        file = ./../../../secrets/karakeep-env-file.age;
         path = "/etc/karakeep/.env";
     };
 

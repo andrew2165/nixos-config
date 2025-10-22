@@ -1,7 +1,7 @@
 { config, pkgs, ... }: {
 
     age.secrets.pocket-id-env = {
-        file = ./../../secrets/pocket-id-env.age;
+        file = ./../../../secrets/pocket-id-env.age;
         path = "/etc/pocket-id/.env";
     };
 

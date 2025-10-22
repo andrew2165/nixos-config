@@ -14,7 +14,7 @@
 
     # https://discourse.nixos.org/t/systemd-mounts-and-systemd-automounts-options-causing-an-error/13796/2
     
-    age.secrets.tanker-paperless-smb-pswd.file = ./../../secrets/tanker-karakeep-smb-pswd.age;
+    age.secrets.tanker-paperless-smb-pswd.file = ./../../../secrets/tanker-karakeep-smb-pswd.age;
     systemd.mounts = [{
         description = "Paperless mount";
         what = "//100.113.228.33/paperless";
@@ -32,7 +32,7 @@
     }];
 
     age.secrets.paperless = {
-        file = ./../../secrets/paperless.age;
+        file = ./../../../secrets/paperless.age;
         mode = "777";
         path = "/home/andrew/nixos-config/internalServer/paperless/docker-compose.env";
     };

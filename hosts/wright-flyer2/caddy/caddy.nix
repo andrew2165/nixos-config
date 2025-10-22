@@ -1,7 +1,7 @@
 { config, pkgs, ... }: {
 
     age.secrets.wright-flyer-caddyfile = {
-        file = ./../../secrets/wright-flyer-caddyfile.age;
+        file = ./../../../secrets/wright-flyer-caddyfile.age;
         owner = "caddy";
     };
 

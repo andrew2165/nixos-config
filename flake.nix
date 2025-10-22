@@ -45,7 +45,7 @@
         nixosVM = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            ./nixosVM/configuration.nix
+            ./hosts/nixosVM/configuration.nix
             agenix.nixosModules.default
             {
               environment.systemPackages = [ agenix.packages."x86_64-linux".default ];
@@ -62,7 +62,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
 
-              home-manager.users.andrew = import ./nixosVM/home.nix;
+              home-manager.users.andrew = import ./hosts/nixosVM/home.nix;
 
               # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
             }
@@ -72,7 +72,7 @@
         internalServer = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            ./internalServer/configuration.nix
+            ./hosts/internalServer/configuration.nix
             agenix.nixosModules.default
             {
               environment.systemPackages = [ agenix.packages."x86_64-linux".default ];
@@ -84,7 +84,7 @@
         wright-flyer2 = nixpkgs-unstable.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            ./wright-flyer2/configuration.nix
+            ./hosts/wright-flyer2/configuration.nix
             agenix.nixosModules.default
             {
               environment.systemPackages = [ agenix.packages."x86_64-linux".default ];
@@ -114,8 +114,8 @@
           };
           imports = [
             agenix.nixosModules.default
-            ./raspberryPI/configuration.nix
-            ./raspberryPI/configuration2.nix
+            ./hosts/raspberryPI/configuration.nix
+            ./hosts/raspberryPI/configuration2.nix
             nixos-hardware.nixosModules.raspberry-pi-3
             {
               environment.systemPackages = [ agenix.packages."aarch64-linux".default ];
@@ -133,7 +133,7 @@
         liveISO = nixos-generators.nixosGenerate {
           system = "x86_64-linux";
           modules = [
-            ./liveISO/configuration.nix
+            ./hosts/liveISO/configuration.nix
             agenix.nixosModules.default
             {
               environment.systemPackages = [ agenix.packages."x86_64-linux".default ];
@@ -151,7 +151,7 @@
         raspberryPiSD = nixos-generators.nixosGenerate {
           system = "aarch64-linux";
           modules = [
-            ./raspberryPI/configuration.nix
+            ./hosts/raspberryPI/configuration.nix
             nixos-hardware.nixosModules.raspberry-pi-3
             # agenix.nixosModules.default
             # {
