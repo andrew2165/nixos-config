@@ -20,12 +20,16 @@
                 "github.com/hslatman/caddy-crowdsec-bouncer/http@v0.9.2"
             ];
             # hash = pkgs.lib.fakeSha256; # useful for finding the real one
-            hash = "sha256-3lz7YyErZiggjnmnABmEgZ9jHFgX9vp8ZO7wadyysn0=";
+            hash = "sha256-agvnkqYbE7tqJZDomaZ/RC8oUd8xicWUVdPcRUqloAM=";
         }).overrideAttrs (finalAttr: prevAttrs: {
             doInstallCheck = false;
         }); # override bc of the location of the go 
     };
 
     # TODO: Write a systemd service for crowdsec
+    services.crowdsec = {
+        enable = true;
+        
+    };
 
 }
