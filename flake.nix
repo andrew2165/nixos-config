@@ -69,6 +69,13 @@
           ];
         };
 
+        mbpVM = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./hosts/mbpVM/configuration.nix
+          ];
+        };
+
         internalServer = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
