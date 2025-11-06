@@ -11,10 +11,10 @@
   ];
 
   # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.useOSProber = true;
-  boot.loader.grub.configurationLimit = 5; # Number of configs retained
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
+  };
 
   # Enable automatic garbage collection
   nix.gc.automatic = true;
