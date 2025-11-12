@@ -65,7 +65,7 @@
             pkgs.docker
         ];
         script = ''
-        docker-compose -f /home/andrew/nixos-config/internalServer/karakeep/docker-compose.yml up --detach
+        docker compose -f ${./docker-compose.yml} up --detach
         '';
         ## For some reason this will frequently reload the systemd service
         ## not sure why so commented out 

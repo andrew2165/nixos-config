@@ -11,7 +11,7 @@
             pkgs.docker
         ];
         script = ''
-        docker-compose -f /home/andrew/nixos-config/internalServer/pocket-id/docker-compose.yml up --detach
+        docker compose -f ${./docker-compose.yml} up --detach
         '';
         wantedBy = ["multi-user.target"];
         # If you use podman
