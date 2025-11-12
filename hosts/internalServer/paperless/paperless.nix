@@ -14,7 +14,7 @@
 
     # https://discourse.nixos.org/t/systemd-mounts-and-systemd-automounts-options-causing-an-error/13796/2
     
-    age.secrets.tanker-paperless-smb-pswd.file = ./../../secrets/tanker-karakeep-smb-pswd.age;
+    age.secrets.tanker-paperless-smb-pswd.file = ./../../../secrets/tanker-karakeep-smb-pswd.age;
     systemd.mounts = [{
         description = "Paperless mount";
         what = "//100.113.228.33/paperless";
@@ -32,7 +32,7 @@
     }];
 
     age.secrets.paperless = {
-        file = ./../../secrets/paperless.age;
+        file = ./../../../secrets/paperless.age;
         mode = "777";
         path = "/home/andrew/nixos-config/internalServer/paperless/docker-compose.env";
     };
@@ -43,7 +43,7 @@
             pkgs.docker
         ];
         script = ''
-        docker-compose -f /home/andrew/nixos-config/internalServer/paperless/docker-compose.yml up --detach
+        docker compose -f ${./docker-compose.yml} up --detach
         '';
         ## For some reason this will frequently reload the systemd service
         ## not sure why so commented out 

@@ -6,7 +6,7 @@
     
     # Just using the karakeep user 
     age.secrets.tanker-mealie-smb-pswd = {
-        file = ./../../secrets/tanker-karakeep-smb-pswd.age;
+        file = ./../../../secrets/tanker-karakeep-smb-pswd.age;
     };
 
     systemd.mounts = [{
@@ -25,7 +25,7 @@
     }];
 
     age.secrets.mealie-backup-py = {
-        file = ./../../secrets/mealie-backup-py.age;
+        file = ./../../../secrets/mealie-backup-py.age;
     };
 
     # Trigger a backup through api with python
@@ -75,11 +75,11 @@
 
 
     age.secrets.mealie-env = {
-        file = ./../../secrets/mealie-env.age;
+        file = ./../../../secrets/mealie-env.age;
         path = "/etc/mealie/mealie/.env";
     };
     age.secrets.mealie-postgres-env = {
-        file = ./../../secrets/mealie-postgres-env.age;
+        file = ./../../../secrets/mealie-postgres-env.age;
         path = "/etc/mealie/postgres/.env";
     };
 
@@ -92,7 +92,7 @@
             pkgs.docker
         ];
         script = ''
-        docker-compose -f /home/andrew/nixos-config/internalServer/mealie/docker-compose.yml up --detach
+        docker compose -f ${./docker-compose.yml} up --detach
         '';
         wantedBy = ["multi-user.target"];
         # If you use podman
