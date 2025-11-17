@@ -8,7 +8,7 @@
             pkgs.podman
         ];
         script = ''
-        podman compose -f ${./crowdsec-compose.yml} up --detach
+        podman compose -f ${./compose.yml} up --detach
         '';
         ## For some reason this will frequently reload the systemd service
         ## not sure why so commented out 

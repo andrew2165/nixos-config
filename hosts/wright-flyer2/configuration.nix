@@ -66,7 +66,7 @@
     security.sudo.wheelNeedsPassword = true;
 
     # Lock down Nix to only wheel
-    nix.allowedUsers = [ "@wheel" ];
+    nix.settings.allowed-users = [ "@wheel" ];
    
     services.openssh = {
         enable = true;
