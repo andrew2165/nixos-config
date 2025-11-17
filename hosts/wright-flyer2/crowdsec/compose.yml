@@ -13,3 +13,6 @@ services:
       - crowdsec-db:/var/lib/crowdsec/data/
       - crowdsec-config:/etc/crowdsec/
     
+volumes:
+  crowdsec-db:
+  crowdsec-config:
