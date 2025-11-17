@@ -24,12 +24,8 @@
         }).overrideAttrs (finalAttr: prevAttrs: {
             doInstallCheck = false;
         }); # override bc of the location of the go 
+        logDir = "/var/log/caddy";
     };
 
-    # TODO: Write a systemd service for crowdsec
-    services.crowdsec = {
-        enable = true;
-        
-    };
-
+ 
 }
