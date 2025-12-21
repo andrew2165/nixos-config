@@ -34,7 +34,7 @@
     age.secrets.paperless = {
         file = ./../../../secrets/paperless.age;
         mode = "777";
-        path = "/home/andrew/nixos-config/internalServer/paperless/docker-compose.env";
+        path = "/home/andrew/nixos-config/hosts/internalServer/paperless/docker-compose.env";
     };
     
     systemd.services.paperless-docker-compose = {
