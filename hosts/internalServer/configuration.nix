@@ -33,22 +33,13 @@
     rsync
   ];
 
-  /* fileSystems."/" = {
-       device = "/dev/disk/by-label/nixos";
-       fsType = "ext4";
-     };
-     fileSystems."/boot" = {
-       device = "/dev/disk/by-label/boot";
-       fsType = "ext4";
-     };
-     swapDevices = [
-       {
-         device = "/dev/disk/by-label/swap";
-       }
-     ];
-  */
+  # Enable nightly auto updates for security patches
+  system.AutoUpgrade = {
+    enable = true;
+    flake = "github:andrew2165/nixos-config#internalServer";
+  };
 
-  time.timeZone = "Europe/London";
+  time.timeZone = "America/Los_Angeles";
   i18n.defaultLocale = "en_US.UTF-8";
   console.keyMap = "us";
 
