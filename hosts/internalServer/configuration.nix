@@ -34,7 +34,7 @@
   ];
 
   # Enable nightly auto updates for security patches
-  system.AutoUpgrade = {
+  system.autoUpgrade = {
     enable = true;
     flake = "github:andrew2165/nixos-config#internalServer";
   };
