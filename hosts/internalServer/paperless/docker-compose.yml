@@ -26,7 +26,7 @@ services:
       - /mnt/paperless/media:/usr/src/paperless/media
       - /mnt/paperless/backup:/usr/src/paperless/export
       - /mnt/paperless/ingest:/usr/src/paperless/consume
-    env_file: docker-compose.env
+    env_file: /home/andrew/nixos-config/hosts/internalServer/paperless/docker-compose.env
     environment:
       PAPERLESS_REDIS: redis://broker:6379
       PAPERLESS_DBHOST: db
