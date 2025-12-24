@@ -4,9 +4,10 @@
         path = [ 
             pkgs.podman-compose
             pkgs.podman
+            git
         ];
         script = ''
-        docker compose -f ${./docker-compose.yaml} up --build --detach
+        podman compose -f ${./docker-compose.yaml} up --build --detach
         '';
         wantedBy = ["multi-user.target"];
         # If you use podman
