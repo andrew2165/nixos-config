@@ -1,6 +1,7 @@
 { pkgs, ... }: {
 
     imports = [
+        ./tekkit-server/tekkit.nix
     ];
 
     nix.settings = {

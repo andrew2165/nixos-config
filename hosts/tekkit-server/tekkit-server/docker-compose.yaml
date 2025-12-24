@@ -1,0 +1,29 @@
+services:
+  tekkit:
+    build:
+      context: https://github.com/andrew2165/Tekkit-Classic-Docker.git
+      dockerfile: Dockerfile
+    image: tekkit-classic:local
+    container_name: tekkit-classic
+    restart: unless-stopped
+    ports:
+      - "${SERVER_PORT:-25565}:25565"
+    volumes:
+      - tekkit-server-data:/server
+    environment:
+      JAVA_MEMORY: ${JAVA_MEMORY:-2G}
+      JAVA_OPTS: ${JAVA_OPTS:--XX:+UseG1GC -XX:+UseStringDeduplication}
+      SERVER_PORT: ${SERVER_PORT:-25565}
+      MAX_PLAYERS: ${MAX_PLAYERS:-20}
+      DIFFICULTY: ${DIFFICULTY:-1}
+      GAMEMODE: ${GAMEMODE:-0}
+      MOTD: ${MOTD:-Tekkit Classic Server}
+      PVP: ${PVP:-true}
+      ALLOW_FLIGHT: ${ALLOW_FLIGHT:-true}
+      VIEW_DISTANCE: ${VIEW_DISTANCE:-10}
+      ONLINE_MODE: ${ONLINE_MODE:-true}
+    stdin_open: true
+    tty: true
+
+volumes:
+  tekkit-server-data:
