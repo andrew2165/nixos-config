@@ -78,7 +78,10 @@
         };
     };
 
-    services.fail2ban.enable = true;
+    services.fail2ban = {
+        enable = true;
+        bantime = "168h";
+    };
    
    networking.firewall = {
         enable = true;
