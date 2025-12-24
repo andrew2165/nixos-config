@@ -112,6 +112,6 @@
         };
     };
 
-    networking.hostName = "wright-flyer2";
-    system.stateVersion = "25.05";
+    networking.hostName = "tekkit-server";
+    system.stateVersion = "25.11";
  }
