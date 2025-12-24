@@ -4,7 +4,7 @@
         path = [ 
             pkgs.podman-compose
             pkgs.podman
-            git
+            pkgs.git
         ];
         script = ''
         podman compose -f ${./docker-compose.yaml} up --build --detach
