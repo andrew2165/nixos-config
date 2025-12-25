@@ -1,3 +1,6 @@
+# This file is used as the base and converted into compose2nix for ease of managing
+# all of the required systemd units to segment it away from any super users
+
 services:
   tekkit:
     build:
