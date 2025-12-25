@@ -4,7 +4,7 @@ services:
       context: https://github.com/andrew2165/Tekkit-Classic-Docker.git
       dockerfile: Dockerfile
     image: tekkit-classic:local
-    container_name: tekkit-classic
+    container_name: "tekkit-classic"
     restart: unless-stopped
     ports:
       - "${SERVER_PORT:-25565}:25565"
