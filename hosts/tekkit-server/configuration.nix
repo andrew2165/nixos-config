@@ -72,6 +72,7 @@
     services.openssh = {
         enable = true;
         allowSFTP = false;
+        challengeResponseAuthentication = false;
         settings = {
             PermitRootLogin = "no";
             PasswordAuthentication = false;
