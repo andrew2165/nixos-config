@@ -2,7 +2,7 @@
 
     imports = [
         ./caddy/caddy.nix
-        ./crowdsec/crowdsec.nix
+        #./crowdsec/crowdsec.nix
     ];
 
     nix.settings = {
