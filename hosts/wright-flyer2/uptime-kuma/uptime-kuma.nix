@@ -4,7 +4,7 @@
         enable = true;
         settings = {
             PORT = "4000";
-            DATA_DIR = "/var/lib/uptime-kuma/"
+            DATA_DIR = "/var/lib/uptime-kuma/";
         };
     };
 
