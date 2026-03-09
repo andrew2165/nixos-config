@@ -101,7 +101,10 @@
             # 5300
             443
             8443
+            config.services.tailscale.port
         ];
+        # Always allow traffic from Tailscale network
+        trustedInterfaces = [ "tailscale0" ];
    };
 
 
