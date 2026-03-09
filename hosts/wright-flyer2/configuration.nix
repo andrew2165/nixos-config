@@ -2,6 +2,7 @@
 
     imports = [
         ./caddy/caddy.nix
+        ./uptime-kuma/uptime-kuma.nix
         #./crowdsec/crowdsec.nix
     ];
 
