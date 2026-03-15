@@ -105,6 +105,10 @@
         ];
         # Always allow traffic from Tailscale network
         trustedInterfaces = [ "tailscale0" ];
+
+        # Possible issues with running as exit node
+        # see https://wiki.nixos.org/wiki/Tailscale
+        # checkReversePath = "loose";
    };
 
 
