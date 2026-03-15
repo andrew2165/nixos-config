@@ -88,7 +88,7 @@
           ];
         };
 
-        wright-flyer2 = nixpkgs-unstable.lib.nixosSystem {
+        wright-flyer2 = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             ./hosts/wright-flyer2/configuration.nix
