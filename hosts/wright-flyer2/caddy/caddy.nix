@@ -20,7 +20,7 @@
                 "github.com/hslatman/caddy-crowdsec-bouncer/http@v0.9.2"
             ];
             # hash = pkgs.lib.fakeSha256; # useful for finding the real one
-            hash = "sha256-IxKAYt6XgpCKDBJsRMyzeCq/uX7n5juySXP0sIOT4PQ=";
+            hash = "sha256-W6UnxbsA3FlzeCV1urXWOn/Ek79VJC8yoDO0yKnw3Uw=";
         }).overrideAttrs (finalAttr: prevAttrs: {
             doInstallCheck = false;
         }); # override bc of the location of the go 
