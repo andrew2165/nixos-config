@@ -3,7 +3,6 @@
     imports = [
         ./caddy/caddy.nix
         ./uptime-kuma/docker-compose.nix
-        #./uptime-kuma/uptime-kuma.nix
         #./crowdsec/crowdsec.nix
     ];
 
@@ -42,7 +41,7 @@
 
     boot.loader.grub.enable = true;
     boot.loader.grub.device = "/dev/sda";
-    boot.loader.grub.configurationLimit = 5; # Number of configs retained
+    boot.loader.grub.configurationLimit = 3; # Number of configs retained
     boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" "ext4" ];
 
     # Enable automatic garbage collection
