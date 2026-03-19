@@ -23,7 +23,7 @@
   virtualisation.oci-containers.containers."uptime-kuma-uptime-kuma" = {
     image = "louislam/uptime-kuma:2.2.1";
     volumes = [
-      "/var/lib/uptime-kuma/data:/app/data:rw"
+      "uptime_uptime-kuma-data:/app/data:rw"
     ];
     ports = [
       "8001:3001/tcp"
