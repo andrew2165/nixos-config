@@ -2,7 +2,7 @@
 
     imports = [
         ./caddy/caddy.nix
-        ./uptime-kuma/uptime-kuma.nix
+        #./uptime-kuma/uptime-kuma.nix
         #./crowdsec/crowdsec.nix
     ];
 
@@ -120,7 +120,9 @@
             enable = true;
 
             # Create a `docker` alias for podman, to use it as a drop-in replacement
-            dockerCompat = true;
+            dockerCompat = true;  
+            
+            autoPrune.enable = true;
 
             # Required for containers under podman-compose to be able to talk to each other.
             defaultNetwork.settings.dns_enabled = true;
