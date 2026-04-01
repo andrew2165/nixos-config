@@ -1,0 +1,17 @@
+services:
+  anki-server:
+    build:
+      context: https://github.com/ankitects/anki.git#main:docs/syncserver
+      dockerfile: Dockerfile
+      args:
+        ANKI_VERSION: "25.09.2"
+      no_cache: true
+    environment:
+      SYNC_USER1: "admin:admin"
+    ports:
+      - "8080:8080"
+    volumes:
+      - anki-sync-server-data:/anki_data
+
+volumes:
+  anki-sync-server-data:
