@@ -6,6 +6,7 @@ services:
       args:
         ANKI_VERSION: "25.09.2"
       no_cache: true
+    restart: always
     environment:
       SYNC_USER1: "admin:admin"
     ports:
