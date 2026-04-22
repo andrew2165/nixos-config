@@ -2,7 +2,8 @@
 
     imports = [
         #./tekkit-server/tekkit.nix
-        ./tekkit-server/docker-compose.nix
+        #./tekkit-server/docker-compose.nix
+        ./java-bedrock-server/docker-compose.nix
     ];
 
     nix.settings = {
