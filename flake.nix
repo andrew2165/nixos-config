@@ -90,6 +90,16 @@
 
         wright-flyer2 = nixpkgs-unstable.lib.nixosSystem {
           system = "x86_64-linux";
+          specialArgs = let
+            system = "x86_64-linux";
+          in {
+            pkgs = import nixpkgs-unstable {
+              inherit system;
+            };
+            pkgs-stable = import nixpkgs {
+              inherit system;
+            }
+          }
           modules = [
             ./hosts/wright-flyer2/configuration.nix
             agenix.nixosModules.default

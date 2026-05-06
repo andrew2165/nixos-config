@@ -1,8 +1,8 @@
-{ pkgs, ... }: {
+{ pkgs, pkgs-stable, ... }: {
 
     # Temporary fix to mitigate copy/fail vuln
     # https://discourse.nixos.org/t/is-nixos-affected-by-copy-fail-edit-yes-it-is/77317/5
-    boot.kernelPackages = pkgs.linuxPackages_6_18;
+    boot.kernelPackages = pkgs-stable.linuxPackages_6_18;
 
     imports = [
         ./caddy/caddy.nix
