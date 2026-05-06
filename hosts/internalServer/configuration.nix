@@ -2,6 +2,10 @@
 
 {
 
+  # Temporary fix to mitigate copy/fail vuln
+  # https://discourse.nixos.org/t/is-nixos-affected-by-copy-fail-edit-yes-it-is/77317/5
+  boot.kernelPackages = pkgs.linuxPackages_6_18;
+
   # Run as a vm, ename QEMU guest agent
   services.qemuGuest.enable = true;
 
