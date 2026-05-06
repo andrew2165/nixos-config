@@ -89,7 +89,9 @@
         };
 
         wright-flyer2 = nixpkgs-unstable.lib.nixosSystem {
-          system = "x86_64-linux";
+          # Temporarily pinned stable and unstable separately bc of copy/fail vuln
+          # Change this back to normal schema upon 26.05 release
+          #system = "x86_64-linux";
           specialArgs = let
             system = "x86_64-linux";
           in {
