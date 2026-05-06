@@ -4,8 +4,8 @@
 
   # Temporary fix to mitigate copy/fail vuln
   # https://discourse.nixos.org/t/is-nixos-affected-by-copy-fail-edit-yes-it-is/77317/5
-  boot.kernelPackages = lib.mkIf (lib.versionOlder pkgs.linux.version "6.18.22") (
-    lib.mkDefault pkgs.linuxPackages_6_18
+  boot.kernelPackages = pkgs.lib.mkIf (pkgs.lib.versionOlder pkgs.linux.version "6.18.22") (
+    pkgs.lib.mkDefault pkgs.linuxPackages_6_18
   );
 
   # Run as a vm, ename QEMU guest agent
