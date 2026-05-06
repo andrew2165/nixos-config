@@ -99,7 +99,7 @@
             pkgs-stable = import nixpkgs {
               inherit system;
             };
-          }
+          };
           modules = [
             ./hosts/wright-flyer2/configuration.nix
             agenix.nixosModules.default
