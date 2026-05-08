@@ -92,16 +92,6 @@
           # Temporarily pinned stable and unstable separately bc of copy/fail vuln
           # Change this back to normal schema upon 26.05 release
           system = "x86_64-linux";
-          specialArgs = let
-            system = "x86_64-linux";
-          in {
-            pkgs = import nixpkgs-unstable {
-              inherit system;
-            };
-            pkgs-stable = import nixpkgs {
-              inherit system;
-            };
-          };
           modules = [
             ./hosts/wright-flyer2/configuration.nix
             agenix.nixosModules.default
