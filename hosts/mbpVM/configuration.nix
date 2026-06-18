@@ -45,8 +45,8 @@
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
   services.gnome.games.enable = true;
 
   # Configure keymap in X11
@@ -59,7 +59,7 @@
   services.printing.enable = false;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -92,14 +92,13 @@
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     fastfetch
-    neofetch
     #fail2ban
     kdePackages.kate
     git
     manix # for looking up nix documentation
     #libreoffice-qt6-fresh
     htop
-    nixfmt-rfc-style # autoformatter
+    nixfmt # autoformatter
     #jupyter-all # jupyter packaged with ipython, etc.
     gnuchess
     bottles
@@ -141,7 +140,7 @@
   };
 
   # Fix for SVG icons not showing
-  services.xserver.gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
+  programs.gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
 
   # Enable binfmt emulation of aarch64-linux.
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];

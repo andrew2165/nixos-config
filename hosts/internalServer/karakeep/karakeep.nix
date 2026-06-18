@@ -59,24 +59,26 @@
     };
 
     # Start karakeep (& ollama) compose as systemd service
+    # Verify runtime status after deploy with:
+    #   systemctl status karakeep-docker-compose
+    #   docker compose -f ${./docker-compose.yml} ps
     systemd.services.karakeep-docker-compose = {
         path = [ 
             pkgs.docker-compose
             pkgs.docker
         ];
+        serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
+        };
         script = ''
         docker compose -f ${./docker-compose.yml} up --detach
         '';
-        ## For some reason this will frequently reload the systemd service
-        ## not sure why so commented out 
-        # reload = ''
-        # docker-compose -f /home/andrew/nixos-config/internalServer/docker-compose.yml down &&
-        # docker-compose -f /home/andrew/nixos-config/internalServer/docker-compose.yml up --detach
-        # '';
-        # preStop = ''
-        # docker-compose -f /home/andrew/nixos-config/internalServer/docker-compose.yml down
-        # '';
+        preStop = ''
+        docker compose -f ${./docker-compose.yml} down
+        '';
         wantedBy = ["multi-user.target"];
+        wants = ["docker.service"];
         # If you use podman
         #after = ["podman.service" "podman.socket"];
         # If you use docker

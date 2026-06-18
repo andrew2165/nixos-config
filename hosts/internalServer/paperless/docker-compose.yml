@@ -9,10 +9,10 @@ services:
     restart: unless-stopped
     volumes:
       - pgdata:/var/lib/postgresql/data
+    env_file: /etc/paperless/docker-compose.env
     environment:
       POSTGRES_DB: paperless
       POSTGRES_USER: paperless
-      POSTGRES_PASSWORD: paperless
   webserver:
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
     restart: unless-stopped
@@ -26,7 +26,7 @@ services:
       - /mnt/paperless/media:/usr/src/paperless/media
       - /mnt/paperless/backup:/usr/src/paperless/export
       - /mnt/paperless/ingest:/usr/src/paperless/consume
-    env_file: /home/andrew/nixos-config/hosts/internalServer/paperless/docker-compose.env
+    env_file: /etc/paperless/docker-compose.env
     environment:
       PAPERLESS_REDIS: redis://broker:6379
       PAPERLESS_DBHOST: db

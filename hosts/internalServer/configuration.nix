@@ -31,7 +31,7 @@
     htop
     tmux
     manix # for looking up nix documentation
-    nixfmt-rfc-style
+    nixfmt
     cifs-utils
     #podman-compose
     docker

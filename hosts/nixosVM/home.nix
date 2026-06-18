@@ -54,7 +54,7 @@
   # Install VS Code
   programs.vscode = {
     enable = true;
-    extensions = with pkgs.vscode-extensions; [
+    profiles.default.extensions = with pkgs.vscode-extensions; [
       dracula-theme.theme-dracula
       vscodevim.vim
       yzhang.markdown-all-in-one
@@ -64,8 +64,10 @@
   # basic configuration of git, please change to your own
   programs.git = {
     enable = true;
-    userName = "Andrew Stewart";
-    userEmail = "stewart.jonathan.a@gmail.com";
+    settings.user = {
+      name = "Andrew Stewart";
+      email = "letdown_headier_8u@icloud.com";
+    };
   };
 
   # This value determines the home Manager release that your

@@ -18,11 +18,10 @@
 
   # Endable Gnome desktop
   services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
   services.gnome.games.enable = true;
 
-  networking.wireless.enable = false;
   #networking.wireless.networks = {};
   #networking.wireless.wifi.backend = "iwd";
 

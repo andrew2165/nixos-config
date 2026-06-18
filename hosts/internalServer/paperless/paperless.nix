@@ -33,8 +33,12 @@
 
     age.secrets.paperless = {
         file = ./../../../secrets/paperless.age;
-        mode = "777";
-        path = "/home/andrew/nixos-config/hosts/internalServer/paperless/docker-compose.env";
+        # Keep POSTGRES_PASSWORD at the existing initialized value until a
+        # deliberate database password rotation is performed.
+        owner = "root";
+        group = "root";
+        mode = "400";
+        path = "/etc/paperless/docker-compose.env";
     };
     
     systemd.services.paperless-docker-compose = {
@@ -42,23 +46,22 @@
             pkgs.docker-compose
             pkgs.docker
         ];
+        serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
+        };
         script = ''
         docker compose -f ${./docker-compose.yml} up --detach
         '';
-        ## For some reason this will frequently reload the systemd service
-        ## not sure why so commented out 
-        # reload = ''
-        # docker-compose -f /home/andrew/nixos-config/internalServer/docker-compose.yml down &&
-        # docker-compose -f /home/andrew/nixos-config/internalServer/docker-compose.yml up --detach
-        # '';
-        # preStop = ''
-        # docker-compose -f /home/andrew/nixos-config/internalServer/docker-compose.yml down
-        # '';
+        preStop = ''
+        docker compose -f ${./docker-compose.yml} down
+        '';
         wantedBy = ["multi-user.target"];
+        wants = ["docker.service" "mnt-paperless.automount"];
         # If you use podman
         #after = ["podman.service" "podman.socket"];
         # If you use docker
-        after = ["docker.service" "docker.socket"];
+        after = ["docker.service" "docker.socket" "mnt-paperless.automount"];
     };
 
 }

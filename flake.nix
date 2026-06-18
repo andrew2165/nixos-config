@@ -4,12 +4,13 @@
   inputs = {
 
     nixpkgs-24-11.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-25-11.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
 
     # home-manager, used for managing user configuration
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -25,7 +26,6 @@
     };
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -33,6 +33,7 @@
       self,
       nixpkgs,
       nixpkgs-24-11,
+      nixpkgs-25-11,
       nixpkgs-unstable,
       home-manager,
       nixos-generators,
@@ -88,9 +89,7 @@
           ];
         };
 
-        wright-flyer2 = nixpkgs-unstable.lib.nixosSystem {
-          # Temporarily pinned stable and unstable separately bc of copy/fail vuln
-          # Change this back to normal schema upon 26.05 release
+        wright-flyer2 = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             ./hosts/wright-flyer2/configuration.nix
@@ -153,8 +152,8 @@
             {
               environment.systemPackages = [ agenix.packages."x86_64-linux".default ];
               age.identityPaths = [ "/home/andrew/.ssh/id_ed25519" ];
-              age.secrets."wifi-pswd".file = ../secrets/wifi-pswd.age;
-              age.secrets."nixpi-andrew-pswd".file = ../secrets/nixpi-andrew-pswd.age;
+              age.secrets."wifi-pswd".file = ./secrets/wifi-pswd.age;
+              age.secrets."nixpi-andrew-pswd".file = ./secrets/nixpi-andrew-pswd.age;
             }
           ];
           format = "iso";

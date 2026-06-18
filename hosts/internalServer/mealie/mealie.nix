@@ -1,7 +1,13 @@
 { config, pkgs, ... }: {
 
-    # TODO: implement some kind of backup strategy for Mealie
-    # outside of the daily vm images
+    # Mealie has three intentionally separate backup paths:
+    # 1. Daily API-triggered application backup.
+    # 2. Periodic rsync of /home/andrew/mealie.
+    # 3. Daily DB-aware pg_dumpall export to /mnt/mealie/mealie-db-dumps.
+    #
+    # Restore path:
+    # - Prefer the Mealie app backup for normal application-level restores.
+    # - Use the DB dump only when a Postgres-level restore is needed.
     # https://github.com/mealie-recipes/mealie/discussions/4223
     
     # Just using the karakeep user 
@@ -73,6 +79,41 @@
         '';
     };
 
+    systemd.timers."mealie-db-backup" = {
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+            OnCalendar = "daily";
+            Persistent = true;
+            Unit = "mealie-db-backup.service";
+        };
+    };
+    systemd.services."mealie-db-backup" = {
+        path = [
+            pkgs.coreutils
+            pkgs.docker
+            pkgs.docker-compose
+            pkgs.gzip
+        ];
+        script = ''
+            set -eu
+            umask 077
+
+            backup_dir="/mnt/mealie/mealie-db-dumps"
+            stamp="$(date -u +%Y%m%dT%H%M%SZ)"
+            install -d -m 700 "$backup_dir"
+
+            docker compose -f ${./docker-compose.yml} exec -T postgres \
+                sh -c 'PGPASSWORD="$POSTGRES_PASSWORD" pg_dumpall -U "$POSTGRES_USER"' \
+                | gzip -c > "$backup_dir/mealie-postgres-$stamp.sql.gz"
+        '';
+        serviceConfig = {
+            Type = "oneshot";
+            User = "root";
+        };
+        wants = [ "mnt-mealie.automount" "docker.service" ];
+        after = [ "mnt-mealie.automount" "docker.service" "docker.socket" ];
+    };
+
 
     age.secrets.mealie-env = {
         file = ./../../../secrets/mealie-env.age;
@@ -91,10 +132,18 @@
             pkgs.docker-compose
             pkgs.docker
         ];
+        serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
+        };
         script = ''
         docker compose -f ${./docker-compose.yml} up --detach
         '';
+        preStop = ''
+        docker compose -f ${./docker-compose.yml} down
+        '';
         wantedBy = ["multi-user.target"];
+        wants = ["docker.service"];
         # If you use podman
         #after = ["podman.service" "podman.socket"];
         # If you use docker

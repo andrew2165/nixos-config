@@ -10,10 +10,18 @@
             pkgs.docker-compose
             pkgs.docker
         ];
+        serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
+        };
         script = ''
         docker compose -f ${./docker-compose.yml} up --detach
         '';
+        preStop = ''
+        docker compose -f ${./docker-compose.yml} down
+        '';
         wantedBy = ["multi-user.target"];
+        wants = ["docker.service"];
         # If you use podman
         #after = ["podman.service" "podman.socket"];
         # If you use docker
