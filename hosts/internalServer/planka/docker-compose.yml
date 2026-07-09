@@ -1,0 +1,30 @@
+services:
+  planka:
+    image: ghcr.io/plankanban/planka:latest
+    restart: unless-stopped
+    volumes:
+      - /home/andrew/planka/data:/app/data
+    ports:
+      - "100.122.79.75:1337:1337"
+    env_file: "/etc/planka/.env"
+    environment:
+      BASE_URL: "http://100.122.79.75:1337"
+      OUTGOING_BLOCKED_HOSTS: "localhost,postgres"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    volumes:
+      - /home/andrew/planka/db-data:/var/lib/postgresql/data
+    env_file: "/etc/planka/.env"
+    environment:
+      POSTGRES_DB: planka
+      POSTGRES_USER: planka
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U planka -d planka"]
+      interval: 10s
+      timeout: 5s
+      retries: 5

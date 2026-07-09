@@ -21,6 +21,7 @@
     ./caddy/caddy.nix
     ./paperless/paperless.nix
     ./mealie/mealie.nix
+    ./planka/planka.nix
   ];
 
   environment.systemPackages = with pkgs; [

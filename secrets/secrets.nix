@@ -33,6 +33,8 @@ in {
     [ mbp endeavor-nixos-internalServer endeavor-nixos desktop-knvu2bv-wsl ];
   "mealie-backup-py.age".publicKeys = 
     [ mbp endeavor-nixos-internalServer endeavor-nixos desktop-knvu2bv-wsl ];
+  "planka-env.age".publicKeys =
+    [ mbp endeavor-nixos-internalServer endeavor-nixos desktop-knvu2bv-wsl ];
   "wright-flyer-caddyfile.age".publicKeys =
     [ mbp endeavor-nixos-internalServer endeavor-nixos desktop-knvu2bv-wsl wright-flyer2 ];
 }
