@@ -19,12 +19,19 @@ services:
     restart: unless-stopped
     volumes:
       - /home/andrew/planka/db-data:/var/lib/postgresql/data
-    env_file: "/etc/planka/.env"
+    secrets:
+      - planka-postgres-password
     environment:
       POSTGRES_DB: planka
       POSTGRES_USER: planka
+      POSTGRES_PASSWORD_FILE: /run/secrets/planka-postgres-password
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U planka -d planka"]
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U planka -d planka"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 12
+      start_period: 60s
+
+secrets:
+  planka-postgres-password:
+    file: /etc/planka/postgres-password

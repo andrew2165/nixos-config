@@ -7,6 +7,13 @@
         mode = "400";
         path = "/etc/planka/.env";
     };
+    age.secrets.planka-postgres-password = {
+        file = ./../../../secrets/planka-postgres-password.age;
+        owner = "root";
+        group = "root";
+        mode = "400";
+        path = "/etc/planka/postgres-password";
+    };
 
     systemd.services.planka-docker-compose = {
         path = [
