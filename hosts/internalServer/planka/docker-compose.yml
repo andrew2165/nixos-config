@@ -7,8 +7,13 @@ services:
     ports:
       - "100.122.79.75:1337:1337"
     env_file: "/etc/planka/.env"
+    secrets:
+      - planka-postgres-password
     environment:
       BASE_URL: "http://100.122.79.75:1337"
+      DATABASE_URL: "postgresql://planka:$${DATABASE_PASSWORD}@postgres/planka"
+      DATABASE_PASSWORD__FILE: "/run/secrets/planka-postgres-password"
+      OUTGOING_BLOCKED_IPS: "0.0.0.0/8,10.0.0.0/8,100.64.0.0/10,127.0.0.0/8,169.254.0.0/16,172.16.0.0/12,192.168.0.0/16,::1,fc00::/7,fe80::/10"
       OUTGOING_BLOCKED_HOSTS: "localhost,postgres"
     depends_on:
       postgres:
@@ -24,7 +29,7 @@ services:
     environment:
       POSTGRES_DB: planka
       POSTGRES_USER: planka
-      POSTGRES_PASSWORD_FILE: /run/secrets/planka-postgres-password
+      POSTGRES_PASSWORD_FILE: "/run/secrets/planka-postgres-password"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U planka -d planka"]
       interval: 10s
