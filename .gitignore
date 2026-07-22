@@ -3,3 +3,6 @@ result/
 iso_build_results/
 internalServer/paperless/docker-compose.env
 internalServer/mealie/mealie_backup.py
+
+# Local cleartext input for the Planka bootstrap secret. Never commit this file.
+/secrets/planka-bootstrap.env

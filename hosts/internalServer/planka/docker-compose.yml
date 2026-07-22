@@ -6,7 +6,12 @@ services:
       - /home/andrew/planka/data:/app/data
     ports:
       - "100.122.79.75:1337:1337"
-    env_file: "/etc/planka/.env"
+    env_file:
+      - path: /etc/planka/.env
+        required: true
+      # Declaratively provisions and maintains the break-glass administrator.
+      - path: /run/agenix/planka-bootstrap-env
+        required: false
     secrets:
       - planka-postgres-password
     environment:
