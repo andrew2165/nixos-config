@@ -55,6 +55,12 @@ in {
             exit 1
         fi
 
+        # Match Planka's secret reader: only the first line is used, with CR/LF removed.
+        if [ -z "$(head -n 1 /etc/planka/postgres-password | tr -d '\r\n')" ]; then
+            echo "The Planka database password secret must have a non-empty first line containing only the password" >&2
+            exit 1
+        fi
+
         if [ ! -s /etc/planka/.env ]; then
             echo "The Planka environment secret is missing or empty" >&2
             exit 1

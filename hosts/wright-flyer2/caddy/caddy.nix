@@ -15,10 +15,10 @@
         package = pkgs.caddy.withPlugins {
             plugins = [ 
                 "github.com/greenpau/caddy-security@v1.1.31"
-                "github.com/hslatman/caddy-crowdsec-bouncer/http@v0.9.2"
+                "github.com/hslatman/caddy-crowdsec-bouncer/http@v0.14.1"
             ];
-            # hash = pkgs.lib.fakeSha256; # useful for finding the real one
-            hash = "sha256-W6UnxbsA3FlzeCV1urXWOn/Ek79VJC8yoDO0yKnw3Uw=";
+            # Replace with the reported hash after changing plugin versions.
+            hash = "sha256-fxxKIJEires69ED4N02HRROZ39A7b+MRw55VlC+Etdc=";
             doInstallCheck = false;
         };
         logDir = "/var/log/caddy";
