@@ -3,21 +3,21 @@
 {
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
 
-  # Baseline for a BIOS VM with a /dev/sda disk and labeled ext4 partitions.
-  # Adjust to match talaria's hardware scan and partition layout before installing.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.configurationLimit = 5; # Number of configs retained
+  # Proxmox VM using OVMF (UEFI), with the EFI system partition at /boot.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 1; # Number of configs retained
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot";
   boot.initrd.availableKernelModules =
-    [ "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" "ext4" ];
+    [ "ata_piix" "uhci_hcd" "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" "ext4" ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-label/nixos";
+    device = "/dev/disk/by-label/NIXROOT";
     fsType = "ext4";
   };
   fileSystems."/boot" = {
-    device = "/dev/disk/by-label/boot";
-    fsType = "ext4";
+    device = "/dev/disk/by-label/NIXBOOT";
+    fsType = "vfat";
   };
 
   swapDevices = [ ];
