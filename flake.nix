@@ -101,6 +101,13 @@
           ];
         };
 
+        talaria = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./hosts/talaria/configuration.nix
+          ];
+        };
+
         tekkit-server = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
