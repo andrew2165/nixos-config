@@ -12,6 +12,7 @@ services:
     ports:
       - "100.115.7.109:9119:9119"
     volumes:
+      # TODO: Sort out a backup and restore strategy for Hermes's persistent data.
       - /var/lib/hermes/data:/opt/data
     # Hermes loads API keys and platform settings from /opt/data/.env,
     # written by the setup wizard. Do not put credentials in this file.
