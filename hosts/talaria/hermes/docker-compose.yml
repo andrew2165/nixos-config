@@ -5,11 +5,18 @@ services:
     container_name: hermes
     restart: unless-stopped
     command: ["gateway", "run"]
+    environment:
+      HERMES_DASHBOARD: "1"
+      HERMES_DASHBOARD_HOST: "0.0.0.0"
+    env_file: /run/agenix/hermes-dashboard-env
+    ports:
+      - "100.115.7.109:9119:9119"
     volumes:
       - /var/lib/hermes/data:/opt/data
     # Hermes loads API keys and platform settings from /opt/data/.env,
     # written by the setup wizard. Do not put credentials in this file.
-    # No published ports are needed for CLI use or outbound chat integrations.
+    # Dashboard credentials come from agenix via env_file above.
+    # Publish the Desktop backend only on talaria's Tailscale address.
     # Keep the image's default entrypoint: it initializes data permissions,
     # drops to the hermes user, and supervises the gateway.
     cpus: 1.0

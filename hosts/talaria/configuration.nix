@@ -8,6 +8,8 @@
 
   services.qemuGuest.enable = true;
 
+  age.identityPaths = [ "/home/andrew/.ssh/id_ed25519" ];
+
   nix.settings = {
     experimental-features = "nix-command flakes";
     allowed-users = [ "@wheel" ];
@@ -60,6 +62,7 @@
     enable = true;
     allowedTCPPorts = [ 22 ];
     allowedUDPPorts = [ config.services.tailscale.port ];
+    interfaces.tailscale0.allowedTCPPorts = [ 9119 ];
   };
 
   system.stateVersion = "26.05";

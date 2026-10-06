@@ -11,7 +11,13 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICZCeaMfoy/5Tef0FnIkLrqhE6BIvjL+XfIDXczkTiDR";
   wright-flyer2 = 
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMoDWH+C9xdpqua4YQ3DiTz21flBO1l8hYDKEfncaPHL";
+  # Copy talaria's andrew SSH public key here before encrypting its secret.
+  talariaKeys = if builtins.pathExists ./talaria.pub
+    then [ (builtins.readFile ./talaria.pub) ]
+    else [ ];
 in {
+  "hermes-dashboard-env.age".publicKeys =
+    [ mbp desktop-knvu2bv-wsl ] ++ talariaKeys;
   "wifi-pswd.age".publicKeys = [ mbp endeavor-nixos desktop-knvu2bv-wsl ];
   "nixpi-andrew-pswd.age".publicKeys =
     [ mbp endeavor-nixos desktop-knvu2bv-wsl ];
