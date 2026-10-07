@@ -44,8 +44,9 @@ against the same data directory. Use `docker exec` when the gateway is running.
 
 All persistent state is in `/var/lib/hermes/data`, including `.env` credentials,
 configuration, sessions, skills, and memories. Keep credentials out of Git and
-the Nix store. Stop the service before copying this directory for a consistent
-backup. `docker compose down` does not delete this bind-mounted data.
+the Nix store. The backup job below stops the service while copying this
+directory for a consistent snapshot. `docker compose down` does not delete
+this bind-mounted data.
 
 The dashboard/Desktop backend is published at `http://100.115.7.109:9119`, only
 on talaria's Tailscale address. Connect the desktop to the same tailnet, add a
@@ -63,6 +64,129 @@ Docker socket or infrastructure credentials.
 The container is limited to one CPU, 2 GiB RAM, and 512 processes. Leave enough
 memory for NixOS and adjust these limits for browser tools or parallel tasks.
 Docker logs rotate; Hermes's own state and logs still need disk monitoring.
+
+## Backups to Tanker
+
+`backup.nix` creates encrypted, deduplicated Restic snapshots on Tanker's
+existing `//100.113.228.33/self-hosted-services` SMB share, under
+`hermes-restic/`. This is Tanker's Tailscale address. The share is mounted on
+talaria at `/mnt/tanker-hermes`, with root-only local permissions. Tailnet
+policy must allow talaria to reach Tanker on TCP port 445, and the SMB account
+must have write access to this share.
+
+The timer runs daily at 03:00 Pacific time, with up to 15 minutes of jitter,
+and catches up after a missed run. It retains 14 daily, 8 weekly, and 12 monthly
+snapshots and checks repository metadata after each successful backup.
+
+The job first verifies the actual SMB mount, then stops Hermes if it was
+running, copies its state to `/var/lib/hermes-backup/staging`, and restarts it
+before uploading. A failed copy or timeout also attempts to restart Hermes.
+An intentionally stopped service stays stopped. The local staging copy is
+kept between runs to shorten later copies; allow disk space for a second copy
+of Hermes's data. Its parent directory is accessible only to root.
+
+Each snapshot contains:
+
+- `data/`: the entire `/var/lib/hermes/data` bind mount, including hidden
+  `.env` files, databases, sessions, skills, memories, and logs.
+- `config/`: dereferenced copies of the deployed Compose and managed MCP files.
+- `secrets/`: the dashboard and Home Assistant env files supplied by agenix.
+
+The NAS only receives encrypted Restic content. The SMB credential and Restic
+repository password are not included in snapshots. Keep this repository's
+encrypted secrets and an authorized editing SSH private key somewhere outside
+the VM so a lost VM does not also lose the ability to restore.
+
+### Enable and verify
+
+`secrets/hermes-restic-password.age` already contains a generated random
+repository password encrypted for the editing keys and talaria's key.
+Keep it: replacing its contents will not change the password on an existing
+Restic repository. Use `restic key` operations if you need to rotate it.
+
+Backups reuse `secrets/tanker-karakeep-smb-pswd.age`, the existing Tanker SMB
+credential used by Karakeep and Mealie. Its recipient rule includes
+`secrets/talaria.pub` alongside the existing recipients. When adding or changing
+talaria's public key, re-encrypt only this secret while retaining its contents:
+
+```sh
+cd ~/nixos-config/secrets
+AGENIX_RULES=./secrets.nix EDITOR=: agenix -e tanker-karakeep-smb-pswd.age
+```
+
+Until both backup secrets exist, the NixOS configuration remains rebuildable
+and warns that backups are disabled.
+
+Make the new files visible to Git-based flake evaluation before synchronizing
+the repo to talaria:
+
+```sh
+cd ~/nixos-config
+git add hosts/talaria/hermes secrets/secrets.nix secrets/hermes-restic-password.age secrets/tanker-karakeep-smb-pswd.age
+```
+
+On talaria, rebuild and run the first backup:
+
+```sh
+sudo nixos-rebuild switch --flake .#talaria
+sudo systemctl start restic-backups-hermes.service
+sudo journalctl -u restic-backups-hermes.service -n 100 --no-pager
+systemctl list-timers restic-backups-hermes.timer
+sudo restic-hermes snapshots --tag hermes
+```
+
+The first successful run initializes the repository automatically. The
+`restic-hermes` wrapper sets the repository, password file, cache, and CIFS
+compatibility environment. For manual access after the idle mount has gone
+away, start the mount first:
+
+```sh
+sudo systemctl start 'mnt-tanker\x2dhermes.mount'
+sudo restic-hermes check --read-data
+```
+
+The daily check verifies metadata; `check --read-data` additionally reads and
+verifies all stored data. A failed backup appears as a failed systemd unit
+and in its journal; external notifications are not configured.
+
+### Restore
+
+Mount Tanker, list snapshots, and restore a selected snapshot into a separate
+directory so it can be inspected before replacing live state:
+
+```sh
+sudo systemctl start 'mnt-tanker\x2dhermes.mount'
+sudo restic-hermes snapshots --tag hermes
+sudo install -d -m 700 /var/lib/hermes-restore
+sudo restic-hermes restore <snapshot-id> --target /var/lib/hermes-restore --verify
+```
+
+Restic preserves the backed-up path. Recovered `data/`, `config/`, and `secrets/`
+are under `/var/lib/hermes-restore/var/lib/hermes-backup/staging/`.
+Once verified, restore the data while Hermes is stopped:
+
+```sh
+sudo systemctl stop hermes-docker-compose.service
+sudo rsync -a --delete /var/lib/hermes-restore/var/lib/hermes-backup/staging/data/ /var/lib/hermes/data/
+sudo systemctl start hermes-docker-compose.service
+```
+
+This replaces the live data with the selected snapshot, preserving ownership
+and permissions. Compare the recovered Compose and MCP files with this repo
+if restoring across an image/configuration change; deploy the corresponding
+version through NixOS. For a replacement VM, recreate its agenix identity and
+re-encrypt secrets for its new public key before rebuilding. The original
+encrypted env files can be re-encrypted from an editing machine; the backed-up
+env files also provide recovery copies if needed. Do not copy plaintext
+secrets into Git or the Nix store.
+
+If restoring on another machine, decrypt `hermes-restic-password.age` with an
+authorized editing key into a private temporary file and pass it to Restic
+with `--password-file`. Mount the same NAS share and use the `hermes-restic`
+directory as `--repo`; the original VM is not required.
+
+References: [Restic repositories and CIFS compatibility](https://restic.readthedocs.io/en/stable/030_preparing_a_new_repo.html),
+[Restic restore](https://restic.readthedocs.io/en/stable/050_restore.html).
 
 ## Dashboard secrets with agenix
 

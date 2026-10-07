@@ -14,7 +14,7 @@ services:
     ports:
       - "100.115.7.109:9119:9119"
     volumes:
-      # TODO: Sort out a backup and restore strategy for Hermes's persistent data.
+      # Nightly consistent snapshots are managed by backup.nix.
       - /var/lib/hermes/data:/opt/data
       # Pin the MCP connection through Hermes's managed configuration layer.
       - type: bind

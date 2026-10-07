@@ -18,13 +18,15 @@ let
 in {
   "hermes-dashboard-env.age".publicKeys =
     [ mbp desktop-knvu2bv-wsl ] ++ talariaKeys;
+  "hermes-restic-password.age".publicKeys =
+    [ mbp desktop-knvu2bv-wsl ] ++ talariaKeys;
   "wifi-pswd.age".publicKeys = [ mbp endeavor-nixos desktop-knvu2bv-wsl ];
   "nixpi-andrew-pswd.age".publicKeys =
     [ mbp endeavor-nixos desktop-knvu2bv-wsl ];
   "tailscale-auth-key1.age".publicKeys =
     [ mbp endeavor-nixos nixPi-test desktop-knvu2bv-wsl ];
   "tanker-karakeep-smb-pswd.age".publicKeys =
-    [ mbp endeavor-nixos-internalServer desktop-knvu2bv-wsl ];
+    [ mbp endeavor-nixos-internalServer desktop-knvu2bv-wsl ] ++ talariaKeys;
   "karakeep-env-file.age".publicKeys =
     [ mbp endeavor-nixos-internalServer endeavor-nixos desktop-knvu2bv-wsl ];
   "paperless.age".publicKeys = 
