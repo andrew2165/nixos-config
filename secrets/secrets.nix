@@ -47,4 +47,6 @@ in {
     [ mbp endeavor-nixos-internalServer endeavor-nixos desktop-knvu2bv-wsl ];
   "wright-flyer-caddyfile.age".publicKeys =
     [ mbp endeavor-nixos-internalServer endeavor-nixos desktop-knvu2bv-wsl wright-flyer2 ];
+  "hermes-homeassistant-env.age".publicKeys =
+    [ mbp desktop-knvu2bv-wsl ] ++ talariaKeys;
 }

@@ -10,9 +10,10 @@ service recreates the container when its Compose definition changes.
 
 ## First setup
 
-Complete the dashboard secret setup below before running Compose: it requires
-`/run/agenix/hermes-dashboard-env`. Until the encrypted file exists, NixOS can
-still rebuild, but the gateway service will be skipped.
+Complete the dashboard and Home Assistant secret setup below before running
+Compose: it requires `/run/agenix/hermes-dashboard-env` and
+`/run/agenix/hermes-homeassistant-env`. Until both encrypted files exist, NixOS
+can still rebuild, but the gateway service will be skipped.
 
 After installing/rebuilding talaria, connect over SSH and run:
 
@@ -123,7 +124,85 @@ After rebuilding, follow the setup/start commands above. For subsequent
 secret changes, edit the encrypted file and rebuild: the Compose service
 restarts when the encrypted file changes.
 
+## Home Assistant MCP
+
+Enable the **Model Context Protocol Server** integration in Home Assistant and
+create a long-lived access token from your user profile's Security tab. Hermes
+connects directly to its Streamable HTTP endpoint with a bearer token.
+Choose a URL reachable from talaria's Docker container and expose the entities
+you want Hermes to use in Home Assistant. The base `/api/mcp` endpoint may
+require an administrator account, depending on the integration's settings.
+
+On your editing machine, edit the encrypted env file:
+
+```sh
+cd ~/nixos-config/secrets
+AGENIX_RULES=./secrets.nix EDITOR=nano nix run github:ryantm/agenix -- -e hermes-homeassistant-env.age
+```
+
+It must contain these assignments (replace both placeholders):
+
+```dotenv
+HA_TOKEN=<your-long-lived-access-token>
+HA_MCP_URL=http://<your-home-assistant-host>:8123/api/mcp
+```
+
+`HA_MCP_URL` is the complete MCP endpoint, including `/api/mcp`, not just the
+Home Assistant base URL. Use your instance's actual scheme, hostname and port.
+Keep `HA_TOKEN` as the raw token; Hermes adds `Bearer ` in the header. Remove
+duplicate `HA_TOKEN` or `HA_MCP_URL` entries from `/var/lib/hermes/data/.env` or
+profile env files so they do not override the injected values.
+
+The Nix module decrypts the secret into
+`/run/agenix/hermes-homeassistant-env` as root with mode `0400`. Compose reads
+it and injects the variables into the container. The plaintext secret is not
+included in the Nix store or mounted into the container.
+
+`mcp-config.yaml` is installed at `/etc/hermes/mcp-config.yaml` on talaria and
+mounted read-only at `/etc/hermes/config.yaml` inside the container. The pinned
+Hermes version loads this as its managed configuration layer and merges it
+over `/opt/data/config.yaml`. It adds the `homeassistant` MCP connection with
+environment references for the URL and Authorization header. Model settings,
+chat integrations and other MCP servers continue to come from your existing
+configuration. Change this connection through the repo; Hermes's interactive
+config editors cannot change the managed fields.
+
+Include the new files in the flake source before synchronizing the repo to
+talaria:
+
+```sh
+cd ~/nixos-config
+git add secrets/hermes-homeassistant-env.age hosts/talaria/hermes/mcp-config.yaml
+```
+
+Then, on talaria:
+
+```sh
+cd ~/nixos-config
+sudo nixos-rebuild switch --flake .#talaria
+sudo systemctl status hermes-docker-compose --no-pager
+```
+
+Check that Hermes resolves the token without displaying it:
+
+```sh
+sudo docker exec -u hermes hermes /opt/hermes/.venv/bin/python -c 'from tools.mcp_tool_config import _load_mcp_config; c = _load_mcp_config()["homeassistant"]; h = c["headers"]["Authorization"]; assert h.startswith("Bearer ") and len(h) > 7 and "${" not in h; assert c["url"].startswith(("http://", "https://")) and "${" not in c["url"]; print("Home Assistant MCP URL and bearer token resolved")'
+```
+
+This checks configuration, not connectivity or token validity. Start a fresh
+Hermes conversation and ask it to report the state of an exposed entity to
+verify the connection without changing devices. A `401` indicates an invalid
+token; a `404` can indicate a missing MCP integration or incorrect endpoint.
+If access is denied, also check the integration's administrator requirement.
+
+Subsequent token or URL changes use the same agenix edit command followed by
+a rebuild. The service restarts for either secret file or MCP config changes,
+recreating the container with the updated environment and bind mount.
+
 Upstream references:
 
 - [Docker deployment](https://hermes-agent.nousresearch.com/docs/user-guide/docker)
 - [Pinned release](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.9.24)
+- [Hermes MCP configuration](https://hermes-agent.nousresearch.com/docs/reference/mcp-config-reference/)
+- [Managed configuration in the pinned version](https://github.com/NousResearch/hermes-agent/blob/v2026.9.24/hermes_cli/managed_scope.py)
+- [Home Assistant MCP server](https://www.home-assistant.io/integrations/mcp_server/)

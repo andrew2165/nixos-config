@@ -8,15 +8,24 @@ services:
     environment:
       HERMES_DASHBOARD: "1"
       HERMES_DASHBOARD_HOST: "0.0.0.0"
-    env_file: /run/agenix/hermes-dashboard-env
+    env_file:
+      - /run/agenix/hermes-dashboard-env
+      - /run/agenix/hermes-homeassistant-env
     ports:
       - "100.115.7.109:9119:9119"
     volumes:
       # TODO: Sort out a backup and restore strategy for Hermes's persistent data.
       - /var/lib/hermes/data:/opt/data
+      # Pin the MCP connection through Hermes's managed configuration layer.
+      - type: bind
+        source: /etc/hermes/mcp-config.yaml
+        target: /etc/hermes/config.yaml
+        read_only: true
+        bind:
+          create_host_path: false
     # Hermes loads API keys and platform settings from /opt/data/.env,
     # written by the setup wizard. Do not put credentials in this file.
-    # Dashboard credentials come from agenix via env_file above.
+    # Dashboard credentials and the Home Assistant token come from agenix.
     # Publish the Desktop backend only on talaria's Tailscale address.
     # Keep the image's default entrypoint: it initializes data permissions,
     # drops to the hermes user, and supervises the gateway.

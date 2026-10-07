@@ -1,0 +1,8 @@
+# Managed settings are merged with /opt/data/config.yaml by Hermes at runtime.
+# The URL and token are supplied by the container environment, not this file.
+mcp_servers:
+  homeassistant:
+    url: "${HA_MCP_URL}"
+    headers:
+      Authorization: "Bearer ${HA_TOKEN}"
+    enabled: true
