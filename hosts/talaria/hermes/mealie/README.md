@@ -156,4 +156,4 @@ References:
 
 - [Mealie API token and API documentation](https://mealie.io/documentation/getting-started/api-usage/)
 - [Hermes skill creation and environment passthrough](https://hermes-agent.nousresearch.com/docs/developer-guide/creating-skills)
-- [Skill discovery in the pinned Hermes release](https://github.com/NousResearch/hermes-agent/blob/v2026.9.24/agent/skill_utils.py)
+- [Skill discovery in the pinned Hermes release](https://github.com/NousResearch/hermes-agent/blob/v0.21.6/agent/skill_utils.py)

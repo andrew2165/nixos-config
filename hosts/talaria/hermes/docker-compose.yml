@@ -1,7 +1,7 @@
 services:
   hermes:
-    # Update explicitly; avoid following the moving latest tag.
-    image: nousresearch/hermes-agent:v2026.9.24
+    # v0.21.6 release receipt; the digest freezes the promoted stable image.
+    image: nousresearch/hermes-agent:stable@sha256:9774f4f39a9bb8c2f68ce728ed5e99ddbad282163be56764afacf88ed952b784
     container_name: hermes
     restart: unless-stopped
     command: ["gateway", "run"]

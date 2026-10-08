@@ -4,9 +4,12 @@ The Nix module enables Docker and manages the Compose stack through
 `hermes-docker-compose.service`. The Compose file is also installed at
 `/etc/hermes/docker-compose.yml` for manual setup and maintenance.
 
-The image is pinned to the versioned `v2026.9.24` tag. Updates are made by
-changing the image in `docker-compose.yml` and rebuilding talaria. The systemd
-service recreates the container when its Compose definition changes.
+The image is pinned to the `v0.21.6` stable release by its immutable manifest
+digest, recorded in the upstream release receipt. The `stable` tag in the image
+reference cannot advance it automatically because the digest takes precedence.
+Updates are made by changing the image digest in `docker-compose.yml` and
+rebuilding talaria. The systemd service recreates the container when its Compose
+definition changes.
 
 ## First setup
 
@@ -337,7 +340,7 @@ recreating the container with the updated environment and bind mount.
 Upstream references:
 
 - [Docker deployment](https://hermes-agent.nousresearch.com/docs/user-guide/docker)
-- [Pinned release](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.9.24)
+- [Pinned release](https://github.com/NousResearch/hermes-agent/releases/tag/v0.21.6)
 - [Hermes MCP configuration](https://hermes-agent.nousresearch.com/docs/reference/mcp-config-reference/)
-- [Managed configuration in the pinned version](https://github.com/NousResearch/hermes-agent/blob/v2026.9.24/hermes_cli/managed_scope.py)
+- [Managed configuration in the pinned version](https://github.com/NousResearch/hermes-agent/blob/v0.21.6/hermes_cli/managed_scope.py)
 - [Home Assistant MCP server](https://www.home-assistant.io/integrations/mcp_server/)
