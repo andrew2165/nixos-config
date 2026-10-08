@@ -11,6 +11,9 @@ services:
     env_file:
       - /run/agenix/hermes-dashboard-env
       - /run/agenix/hermes-homeassistant-env
+      # Mealie can be configured after the gateway is deployed.
+      - path: /run/agenix/hermes-mealie-env
+        required: false
     ports:
       - "100.115.7.109:9119:9119"
     volumes:
@@ -25,7 +28,7 @@ services:
           create_host_path: false
     # Hermes loads API keys and platform settings from /opt/data/.env,
     # written by the setup wizard. Do not put credentials in this file.
-    # Dashboard credentials and the Home Assistant token come from agenix.
+    # Dashboard, Home Assistant, and Mealie credentials come from agenix.
     # Publish the Desktop backend only on talaria's Tailscale address.
     # Keep the image's default entrypoint: it initializes data permissions,
     # drops to the hermes user, and supervises the gateway.

@@ -90,7 +90,8 @@ Each snapshot contains:
 - `data/`: the entire `/var/lib/hermes/data` bind mount, including hidden
   `.env` files, databases, sessions, skills, memories, and logs.
 - `config/`: dereferenced copies of the deployed Compose and managed MCP files.
-- `secrets/`: the dashboard and Home Assistant env files supplied by agenix.
+- `secrets/`: the dashboard and Home Assistant env files supplied by agenix,
+  plus the Mealie env file when configured.
 
 The NAS only receives encrypted Restic content. The SMB credential and Restic
 repository password are not included in snapshots. Keep this repository's
@@ -247,6 +248,15 @@ data `.env`; this secret manages dashboard authentication only.
 After rebuilding, follow the setup/start commands above. For subsequent
 secret changes, edit the encrypted file and rebuild: the Compose service
 restarts when the encrypted file changes.
+
+## Mealie REST API
+
+The local [Mealie integration](mealie/README.md) provides a repository-owned
+Hermes skill and Python standard-library client for reading recipes, meal plans,
+and shopping lists. It uses a dedicated agenix env secret and calls Mealie
+directly. The skill folder is available for you to tell Hermes to learn; NixOS
+manages only the credentials. Follow that guide to fill in the URL/token,
+deploy the credentials, and teach Hermes the skill.
 
 ## Home Assistant MCP
 

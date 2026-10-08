@@ -40,6 +40,11 @@ fi
 rsync -a --delete -- /var/lib/hermes/data/ "$HERMES_BACKUP_STAGING/data/"
 cp -L --preserve=mode,timestamps -- /etc/hermes/docker-compose.yml /etc/hermes/mcp-config.yaml "$HERMES_BACKUP_STAGING/config/"
 cp -L --preserve=mode,timestamps -- /run/agenix/hermes-dashboard-env /run/agenix/hermes-homeassistant-env "$HERMES_BACKUP_STAGING/secrets/"
+if [ -r /run/agenix/hermes-mealie-env ]; then
+    cp -L --preserve=mode,timestamps -- /run/agenix/hermes-mealie-env "$HERMES_BACKUP_STAGING/secrets/"
+else
+    rm -f -- "$HERMES_BACKUP_STAGING/secrets/hermes-mealie-env"
+fi
 
 # Resume now; repository initialization, upload, pruning and checks run online.
 resume_hermes

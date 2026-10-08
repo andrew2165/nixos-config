@@ -7,7 +7,7 @@ let
   hasHomeAssistantSecret = builtins.pathExists homeAssistantSecretFile;
 in
 {
-  imports = [ ./backup.nix ];
+  imports = [ ./backup.nix ./mealie ];
 
   # Allow rebuilding the VM to bootstrap its SSH identity before encryption.
   age.secrets = lib.optionalAttrs hasDashboardSecret {
