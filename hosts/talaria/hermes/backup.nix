@@ -56,7 +56,7 @@ lib.mkMerge [
       paths = [ stagingDirectory ];
       extraBackupArgs = [ "--tag hermes" ];
       timerConfig = {
-        OnCalendar = "*-*-* 03:00:00";
+        OnCalendar = "Sun *-*-* 20:00:00";
         RandomizedDelaySec = "15min";
         Persistent = true;
       };

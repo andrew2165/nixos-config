@@ -74,9 +74,10 @@ talaria at `/mnt/tanker-hermes`, with root-only local permissions. Tailnet
 policy must allow talaria to reach Tanker on TCP port 445, and the SMB account
 must have write access to this share.
 
-The timer runs daily at 03:00 Pacific time, with up to 15 minutes of jitter,
-and catches up after a missed run. It retains 14 daily, 8 weekly, and 12 monthly
-snapshots and checks repository metadata after each successful backup.
+The timer runs weekly on Sundays at 20:00 Pacific time, with up to 15 minutes
+of jitter, and catches up after a missed run. Retention rules keep up to 14
+daily, 8 weekly, and 12 monthly snapshots. Repository metadata is checked after
+each successful backup.
 
 The job first verifies the actual SMB mount, then stops Hermes if it was
 running, copies its state to `/var/lib/hermes-backup/staging`, and restarts it
@@ -146,7 +147,7 @@ sudo systemctl start 'mnt-tanker\x2dhermes.mount'
 sudo restic-hermes check --read-data
 ```
 
-The daily check verifies metadata; `check --read-data` additionally reads and
+The scheduled check verifies metadata; `check --read-data` additionally reads and
 verifies all stored data. A failed backup appears as a failed systemd unit
 and in its journal; external notifications are not configured.
 
