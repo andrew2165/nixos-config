@@ -4,12 +4,44 @@ The Nix module enables Docker and manages the Compose stack through
 `hermes-docker-compose.service`. The Compose file is also installed at
 `/etc/hermes/docker-compose.yml` for manual setup and maintenance.
 
-The image is pinned to the `v0.21.6` stable release by its immutable manifest
+The image is pinned to the `v0.22.0` stable release by its immutable manifest
 digest, recorded in the upstream release receipt. The `stable` tag in the image
 reference cannot advance it automatically because the digest takes precedence.
 Updates are made by changing the image digest in `docker-compose.yml` and
 rebuilding talaria. The systemd service recreates the container when its Compose
 definition changes.
+
+### v0.22.0 upgrade
+
+The October 13, 2026 release uses manifest digest
+`sha256:c69536a39e885b8943329bda68cdf44492458b96aa74a212239bde9d2aeb406a`,
+verified against both Docker Hub's stable manifest and the annotated upstream
+release tag receipt. No Compose or managed Home Assistant MCP configuration
+migration is required from v0.21.6. This release fixes baked-in API server,
+messaging, and MCP dependencies being lost after a container restart.
+
+The upstream upgrade notes cover changes since v0.21.0, including a single
+multiplexed gateway and automatic pruning of ended sessions inactive for 90
+days. Those gateway and retention defaults already exist in v0.21.6. To retain
+all sessions, set `sessions.auto_prune: false` in the persistent config. The
+notes also flag retired idle/daily chat resets, integrations moved to plugins,
+removed legacy plugin imports and `hermes sync`, and KittenTTS being unavailable
+on Python 3.14. Review any custom plugins against the release notes.
+
+After synchronizing this repository to talaria, take a fresh backup before
+switching, then check the container:
+
+```sh
+sudo systemctl start restic-backups-hermes.service
+sudo nixos-rebuild switch --flake .#talaria
+sudo systemctl status hermes-docker-compose --no-pager
+sudo docker inspect --format '{{.Config.Image}} {{.State.Status}}' hermes
+sudo docker exec -u hermes hermes hermes --version
+```
+
+Confirm the dashboard and Home Assistant MCP connection after startup. For
+rollback, restore the previous image digest and rebuild; restore the backup
+while Hermes is stopped if persistent state also needs reverting.
 
 ## First setup
 
@@ -340,7 +372,7 @@ recreating the container with the updated environment and bind mount.
 Upstream references:
 
 - [Docker deployment](https://hermes-agent.nousresearch.com/docs/user-guide/docker)
-- [Pinned release](https://github.com/NousResearch/hermes-agent/releases/tag/v0.21.6)
+- [Pinned release](https://github.com/NousResearch/hermes-agent/releases/tag/v0.22.0)
 - [Hermes MCP configuration](https://hermes-agent.nousresearch.com/docs/reference/mcp-config-reference/)
-- [Managed configuration in the pinned version](https://github.com/NousResearch/hermes-agent/blob/v0.21.6/hermes_cli/managed_scope.py)
+- [Managed configuration in the pinned version](https://github.com/NousResearch/hermes-agent/blob/v0.22.0/hermes_cli/managed_scope.py)
 - [Home Assistant MCP server](https://www.home-assistant.io/integrations/mcp_server/)

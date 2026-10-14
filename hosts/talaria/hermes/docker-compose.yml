@@ -1,7 +1,7 @@
 services:
   hermes:
-    # v0.21.6 release receipt; the digest freezes the promoted stable image.
-    image: nousresearch/hermes-agent:stable@sha256:9774f4f39a9bb8c2f68ce728ed5e99ddbad282163be56764afacf88ed952b784
+    # v0.22.0 release receipt; the digest freezes the promoted stable image.
+    image: nousresearch/hermes-agent:stable@sha256:c69536a39e885b8943329bda68cdf44492458b96aa74a212239bde9d2aeb406a
     container_name: hermes
     restart: unless-stopped
     command: ["gateway", "run"]
