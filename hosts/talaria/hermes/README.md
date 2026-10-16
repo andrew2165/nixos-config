@@ -4,29 +4,20 @@ The Nix module enables Docker and manages the Compose stack through
 `hermes-docker-compose.service`. The Compose file is also installed at
 `/etc/hermes/docker-compose.yml` for manual setup and maintenance.
 
-The image is pinned to the `v0.22.0` stable release by its immutable manifest
-digest, recorded in the upstream release receipt. The `stable` tag in the image
-reference cannot advance it automatically because the digest takes precedence.
-Updates are made by changing the image digest in `docker-compose.yml` and
-rebuilding talaria. The systemd service recreates the container when its Compose
-definition changes.
+The image is pinned to upstream release `v0.22.2` in `docker-compose.yml`.
+Updates are made by changing the image tag and rebuilding talaria. The systemd
+service recreates the container when its Compose definition changes.
 
-### v0.22.0 upgrade
+### v0.22.2 upgrade
 
-The October 13, 2026 release uses manifest digest
-`sha256:c69536a39e885b8943329bda68cdf44492458b96aa74a212239bde9d2aeb406a`,
-verified against both Docker Hub's stable manifest and the annotated upstream
-release tag receipt. No Compose or managed Home Assistant MCP configuration
-migration is required from v0.21.6. This release fixes baked-in API server,
-messaging, and MCP dependencies being lost after a container restart.
+GitHub lists `v0.22.2` as the latest release (October 15, 2026). It replaces
+v0.22.1, which was built from the wrong commit. This release fixes supervised
+gateways refusing to start after reboot and improves long local-model turns.
+Known issue: sessions that ran under the v0.22.1 gateway cannot be deleted in
+v0.22.2.
 
-The upstream upgrade notes cover changes since v0.21.0, including a single
-multiplexed gateway and automatic pruning of ended sessions inactive for 90
-days. Those gateway and retention defaults already exist in v0.21.6. To retain
-all sessions, set `sessions.auto_prune: false` in the persistent config. The
-notes also flag retired idle/daily chat resets, integrations moved to plugins,
-removed legacy plugin imports and `hermes sync`, and KittenTTS being unavailable
-on Python 3.14. Review any custom plugins against the release notes.
+See the [upstream release notes](https://github.com/NousResearch/hermes-agent/releases/tag/v0.22.2)
+for details.
 
 After synchronizing this repository to talaria, take a fresh backup before
 switching, then check the container:
@@ -372,7 +363,7 @@ recreating the container with the updated environment and bind mount.
 Upstream references:
 
 - [Docker deployment](https://hermes-agent.nousresearch.com/docs/user-guide/docker)
-- [Pinned release](https://github.com/NousResearch/hermes-agent/releases/tag/v0.22.0)
+- [Pinned release](https://github.com/NousResearch/hermes-agent/releases/tag/v0.22.2)
 - [Hermes MCP configuration](https://hermes-agent.nousresearch.com/docs/reference/mcp-config-reference/)
-- [Managed configuration in the pinned version](https://github.com/NousResearch/hermes-agent/blob/v0.22.0/hermes_cli/managed_scope.py)
+- [Managed configuration in the pinned version](https://github.com/NousResearch/hermes-agent/blob/v0.22.2/hermes_cli/managed_scope.py)
 - [Home Assistant MCP server](https://www.home-assistant.io/integrations/mcp_server/)
