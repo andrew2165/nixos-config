@@ -10,7 +10,7 @@
     # - Use the DB dump only when a Postgres-level restore is needed.
     # https://github.com/mealie-recipes/mealie/discussions/4223
     
-    # Just using the karakeep user 
+    # Shared Tanker SMB credential; the filename predates this service.
     age.secrets.tanker-mealie-smb-pswd = {
         file = ./../../../secrets/tanker-karakeep-smb-pswd.age;
     };

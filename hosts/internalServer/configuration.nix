@@ -16,13 +16,16 @@
   imports = [
     # Include hardware scan
     ./hardware-configuration.nix
-    ./karakeep/karakeep.nix # also has some of the general system docker config, needs to fix TODO
     ./pocket-id/pocket-id.nix
     ./caddy/caddy.nix
     ./paperless/paperless.nix
     ./mealie/mealie.nix
     ./planka/planka.nix
   ];
+
+  # Shared runtime for Pocket ID, Paperless, Mealie, and Planka.
+  virtualisation.containers.enable = true;
+  virtualisation.docker.enable = true;
 
   environment.systemPackages = with pkgs; [
     vim
@@ -89,7 +92,7 @@
 
   networking.hostName = "internalServer"; # Define your hostname.
   networking.firewall = {
-    allowedTCPPorts = [ 22 80 443 3000 11434 8092 ];
+    allowedTCPPorts = [ 22 80 443 8092 ];
     allowedUDPPorts = [ 41641 ];
   };
 

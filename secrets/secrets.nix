@@ -25,10 +25,10 @@ in {
     [ mbp endeavor-nixos desktop-knvu2bv-wsl ];
   "tailscale-auth-key1.age".publicKeys =
     [ mbp endeavor-nixos nixPi-test desktop-knvu2bv-wsl ];
+  # Shared Tanker SMB credential for Mealie, Paperless, and Hermes backups.
+  # Keep the historical filename; this is not a Karakeep-only secret.
   "tanker-karakeep-smb-pswd.age".publicKeys =
     [ mbp endeavor-nixos-internalServer desktop-knvu2bv-wsl ] ++ talariaKeys;
-  "karakeep-env-file.age".publicKeys =
-    [ mbp endeavor-nixos-internalServer endeavor-nixos desktop-knvu2bv-wsl ];
   "paperless.age".publicKeys = 
     [ mbp endeavor-nixos-internalServer endeavor-nixos desktop-knvu2bv-wsl ];
   "paperless-web-key.age".publicKeys =

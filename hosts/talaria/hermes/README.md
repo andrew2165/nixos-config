@@ -132,7 +132,9 @@ Keep it: replacing its contents will not change the password on an existing
 Restic repository. Use `restic key` operations if you need to rotate it.
 
 Backups reuse `secrets/tanker-karakeep-smb-pswd.age`, the existing Tanker SMB
-credential used by Karakeep and Mealie. Its recipient rule includes
+credential shared with Mealie and Paperless. The historical filename is retained
+after Karakeep retirement; do not delete this secret or revoke its NAS account.
+Its recipient rule includes
 `secrets/talaria.pub` alongside the existing recipients. When adding or changing
 talaria's public key, re-encrypt only this secret while retaining its contents:
 
