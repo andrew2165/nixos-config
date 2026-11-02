@@ -27,6 +27,10 @@ in
   };
 
   virtualisation.docker.enable = true;
+  virtualisation.docker.autoPrune = {
+    enable = true;
+    flags = [ "--all" ];
+  };
 
   environment.systemPackages = with pkgs; [
     docker
