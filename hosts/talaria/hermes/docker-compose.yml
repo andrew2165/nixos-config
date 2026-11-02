@@ -1,7 +1,7 @@
 services:
   hermes:
     # Pin the latest upstream release tag.
-    image: nousresearch/hermes-agent:v0.22.3
+    image: nousresearch/hermes-agent:v0.22.5
     container_name: hermes
     restart: unless-stopped
     command: ["gateway", "run"]

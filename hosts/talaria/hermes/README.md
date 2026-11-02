@@ -4,18 +4,18 @@ The Nix module enables Docker and manages the Compose stack through
 `hermes-docker-compose.service`. The Compose file is also installed at
 `/etc/hermes/docker-compose.yml` for manual setup and maintenance.
 
-The image is pinned to upstream release `v0.22.3` in `docker-compose.yml`.
+The image is pinned to upstream release `v0.22.5` in `docker-compose.yml`.
 Updates are made by changing the image tag and rebuilding talaria. The systemd
 service recreates the container when its Compose definition changes.
 
-### v0.22.3 upgrade
+### v0.22.5 upgrade
 
-GitHub lists `v0.22.3` as the latest release (October 21, 2026). This patch
-release rolls up changes since v0.22.2 for the CLI, installer, Microsoft Store,
-Docker, and Hermes Cloud. The curated notes for this window are scheduled for
-v0.23.0.
+GitHub lists `v0.22.5` as the latest release (October 22, 2026). This patch
+release includes Docker and Hermes Cloud updates, with fixes across sign-in,
+gateway recovery, long Claude responses, plugin setup, and dashboard pairing.
+The curated notes for this window are scheduled for v0.23.0.
 
-See the [upstream release notes](https://github.com/NousResearch/hermes-agent/releases/tag/v0.22.3)
+See the [upstream release notes](https://github.com/NousResearch/hermes-agent/releases/tag/v0.22.5)
 for details.
 
 After synchronizing this repository to talaria, take a fresh backup before
@@ -362,7 +362,7 @@ recreating the container with the updated environment and bind mount.
 Upstream references:
 
 - [Docker deployment](https://hermes-agent.nousresearch.com/docs/user-guide/docker)
-- [Pinned release](https://github.com/NousResearch/hermes-agent/releases/tag/v0.22.3)
+- [Pinned release](https://github.com/NousResearch/hermes-agent/releases/tag/v0.22.5)
 - [Hermes MCP configuration](https://hermes-agent.nousresearch.com/docs/reference/mcp-config-reference/)
-- [Managed configuration in the pinned version](https://github.com/NousResearch/hermes-agent/blob/v0.22.3/hermes_cli/managed_scope.py)
+- [Managed configuration in the pinned version](https://github.com/NousResearch/hermes-agent/blob/v0.22.5/hermes_cli/managed_scope.py)
 - [Home Assistant MCP server](https://www.home-assistant.io/integrations/mcp_server/)
