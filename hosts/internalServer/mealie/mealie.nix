@@ -102,7 +102,7 @@
             stamp="$(date -u +%Y%m%dT%H%M%SZ)"
             install -d -m 700 "$backup_dir"
 
-            docker compose -f ${./docker-compose.yml} exec -T postgres \
+            docker compose --project-name mealie -f ${./docker-compose.yml} exec -T postgres \
                 sh -c 'PGPASSWORD="$POSTGRES_PASSWORD" pg_dumpall -U "$POSTGRES_USER"' \
                 | gzip -c > "$backup_dir/mealie-postgres-$stamp.sql.gz"
         '';
@@ -137,10 +137,10 @@
             RemainAfterExit = true;
         };
         script = ''
-        docker compose -f ${./docker-compose.yml} up --detach
+        docker compose --project-name mealie -f ${./docker-compose.yml} up --detach
         '';
         preStop = ''
-        docker compose -f ${./docker-compose.yml} down
+        docker compose --project-name mealie -f ${./docker-compose.yml} down
         '';
         wantedBy = ["multi-user.target"];
         wants = ["docker.service"];
