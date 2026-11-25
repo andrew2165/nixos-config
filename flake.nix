@@ -90,6 +90,7 @@
         };
 
         wright-flyer2 = nixpkgs.lib.nixosSystem {
+          specialArgs.caddyPkgs = import nixpkgs-unstable { system = "x86_64-linux"; };
           system = "x86_64-linux";
           modules = [
             ./hosts/wright-flyer2/configuration.nix
@@ -155,6 +156,7 @@
       # Nixos-Generators
       # run: sudo nix build .#liveISO
       packages.x86_64-linux = {
+        caddy-wright-flyer = self.nixosConfigurations.wright-flyer2.config.services.caddy.package;
         liveISO = nixos-generators.nixosGenerate {
           system = "x86_64-linux";
           modules = [
